@@ -1,0 +1,22 @@
+model = "gpt-5.4"
+model_reasoning_effort = "medium"
+model_provider = "codex-lb"
+
+[plugins."build-ios-apps@openai-curated"]
+enabled = true
+
+[plugins."gmail@openai-curated"]
+enabled = true
+
+[projects."/Users/vpen/.codex"]
+trust_level = "trusted"
+
+[projects."/Users/vpen/github-projects/codex-lb"]
+trust_level = "trusted"
+
+[model_providers.codex-lb]
+name = "OpenAI"
+base_url = "http://127.0.0.1:2455/backend-api/codex"
+wire_api = "responses"
+supports_websockets = true
+requires_openai_auth = true

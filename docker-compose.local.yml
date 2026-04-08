@@ -1,0 +1,18 @@
+services:
+  codex-lb:
+    image: codex-lb:local
+    build:
+      context: .
+      dockerfile: Dockerfile.distroless
+    env_file:
+      - .env
+    environment:
+      CODEX_LB_DATABASE_URL: sqlite+aiosqlite:////var/lib/codex-lb/store.db
+      CODEX_LB_ENCRYPTION_KEY_FILE: /var/lib/codex-lb/encryption.key
+      CODEX_LB_OAUTH_CALLBACK_HOST: 0.0.0.0
+    ports:
+      - "2455:2455"
+      - "1455:1455"
+    volumes:
+      - /Users/vpen/docker-volume:/var/lib/codex-lb
+    restart: unless-stopped

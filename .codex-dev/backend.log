@@ -1,0 +1,102 @@
+
+   FastAPI   Starting production server 🚀
+ 
+             Searching for package file structure from directories with         
+             __init__.py files                                                  
+             Importing from /Users/vpen/github-projects/codex-lb
+ 
+    module   📁 app            
+             ├── 🐍 __init__.py
+             └── 🐍 main.py    
+ 
+      code   Importing the FastAPI app object from the module with the following
+             code:                                                              
+ 
+             from app.main import app
+ 
+       app   Using import string: app.main:app
+ 
+    server   Server started at http://0.0.0.0:2455
+    server   Documentation at http://0.0.0.0:2455/docs
+ 
+             Logs:
+ 
+      INFO   Will watch for changes in these directories:                       
+             ['/Users/vpen/github-projects/codex-lb']
+      INFO   Uvicorn running on http://0.0.0.0:2455 (Press CTRL+C to quit)
+      INFO   Started reloader process [27631] using WatchFiles
+      INFO   Started server process [27775]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+      INFO   127.0.0.1:54302 - "GET /docs HTTP/1.1" 200
+      INFO   127.0.0.1:54324 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54327 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54326 - "GET /api/settings HTTP/1.1" 200
+      INFO   127.0.0.1:54329 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54325 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54323 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54362 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54361 - "GET /api/settings HTTP/1.1" 200
+      INFO   127.0.0.1:54359 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54364 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54360 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54358 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54385 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54386 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54389 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54440 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54441 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54444 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54490 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54491 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54494 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54557 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54558 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54561 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54571 - "POST /backend-api/codex/responses HTTP/1.1" 200
+      INFO   127.0.0.1:54606 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54605 - "GET /api/settings HTTP/1.1" 200
+      INFO   127.0.0.1:54603 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54604 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54608 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54602 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54625 - "POST /backend-api/codex/responses HTTP/1.1" 200
+      INFO   127.0.0.1:54661 - "GET /api/settings HTTP/1.1" 200
+      INFO   127.0.0.1:54662 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54659 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54660 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54664 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:54658 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54641 - "POST /backend-api/codex/responses HTTP/1.1" 200
+      INFO   127.0.0.1:54684 - "POST /backend-api/codex/responses HTTP/1.1" 200
+      INFO   127.0.0.1:54821 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54822 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54819 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54864 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54865 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54868 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54883 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54884 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54887 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
