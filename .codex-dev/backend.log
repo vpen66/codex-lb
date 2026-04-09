@@ -24,78 +24,273 @@
       INFO   Will watch for changes in these directories:                       
              ['/Users/vpen/github-projects/codex-lb']
       INFO   Uvicorn running on http://0.0.0.0:2455 (Press CTRL+C to quit)
-      INFO   Started reloader process [55832] using WatchFiles
-      INFO   Started server process [55834]
+      INFO   Started reloader process [74443] using WatchFiles
+      INFO   Started server process [74445]
       INFO   Waiting for application startup.
       INFO   Application startup complete.
-      INFO   127.0.0.1:62522 - "GET /docs HTTP/1.1" 200
-      INFO   127.0.0.1:62553 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:62550 - "GET /api/request-logs?limit=25&offset=0         
+      INFO   127.0.0.1:62098 - "GET /docs HTTP/1.1" 200
+      INFO   127.0.0.1:62139 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:62136 - "GET /api/request-logs?limit=25&offset=0         
              HTTP/1.1" 200
-      INFO   127.0.0.1:62552 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:62555 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:62551 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:62549 - "GET /api/dashboard/overview?timeframe=7d        
+      INFO   127.0.0.1:62138 - "GET /api/settings HTTP/1.1" 200
+      INFO   127.0.0.1:62137 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:62141 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:62135 - "GET /api/dashboard/overview?timeframe=7d        
              HTTP/1.1" 200
-      INFO   127.0.0.1:62594 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62595 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:62598 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62627 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:62626 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:62629 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:62624 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62625 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:62623 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62656 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62657 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:62660 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62666 - "POST /backend-api/codex/responses HTTP/1.1" 200
-      INFO   127.0.0.1:62714 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62715 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:62718 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62980 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:62979 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:62983 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63063 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63062 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:63066 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63116 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63117 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:63120 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63149 - "GET /api/dashboard/overview?timeframe=30d       
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63195 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63196 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:63215 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63260 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63261 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:63280 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:63283 - "GET                                             
-             /api/accounts/2620acea-0399-4ede-ae1a-edbea2acb085_df5d5e83/trends 
-             HTTP/1.1" 200
-      INFO   127.0.0.1:63289 - "GET /api/api-keys/ HTTP/1.1" 200
-      INFO   127.0.0.1:63292 - "GET /api/models HTTP/1.1" 200
-      INFO   127.0.0.1:51924 - "WebSocket /backend-api/codex/responses"
-      INFO   connection open
-      INFO   127.0.0.1:52142 - "WebSocket /backend-api/codex/responses"
-      INFO   connection open
-      INFO   connection closed
-      INFO   127.0.0.1:52579 - "WebSocket /backend-api/codex/responses"
-      INFO   connection open
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [55834]
+Failed to fetch latest Codex release from GitHub
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/codex_version.py", line 64, in _fetch_latest_version
+    async with session.get(_GITHUB_RELEASES_URL, headers=headers) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.github.com:443 ssl:default [None]
+GitHub fetch failed and no cached version; falling back to settings default 0.101.0
+Unexpected error during model fetch account=2620acea-0399-4ede-ae1a-edbea2acb085_df5d5e83 plan=plus
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/openai/model_refresh_scheduler.py", line 128, in _fetch_with_failover
+    return await fetch_models_for_plan(access_token, account_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/model_fetcher.py", line 114, in fetch_models_for_plan
+    async with session.get(url, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host chatgpt.com:443 ssl:default [None]
+Failed to fetch latest Codex release from GitHub
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/codex_version.py", line 64, in _fetch_latest_version
+    async with session.get(_GITHUB_RELEASES_URL, headers=headers) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.github.com:443 ssl:default [None]
+GitHub fetch failed and no cached version; falling back to settings default 0.101.0
+Usage fetch error request_id=None error=Cannot connect to host chatgpt.com:443 ssl:default [None]
+Unexpected error during model fetch account=c66b67e5-fa28-4364-8479-5e9ef15e70ce_9ae46c79 plan=free
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/openai/model_refresh_scheduler.py", line 128, in _fetch_with_failover
+    return await fetch_models_for_plan(access_token, account_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/model_fetcher.py", line 114, in fetch_models_for_plan
+    async with session.get(url, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host chatgpt.com:443 ssl:default [None]
+Failed to fetch latest Codex release from GitHub
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/codex_version.py", line 64, in _fetch_latest_version
+    async with session.get(_GITHUB_RELEASES_URL, headers=headers) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.github.com:443 ssl:default [None]
+GitHub fetch failed and no cached version; falling back to settings default 0.101.0
