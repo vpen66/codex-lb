@@ -46,6 +46,8 @@ async def fetch_usage(
     *,
     access_token: str,
     account_id: str | None,
+    log_account_id: str | None = None,
+    log_account_email: str | None = None,
     base_url: str | None = None,
     timeout_seconds: float | None = None,
     max_retries: int | None = None,
@@ -72,9 +74,15 @@ async def fetch_usage(
             if resp.status >= 400:
                 message = _extract_error_message(data) or f"Usage fetch failed ({resp.status})"
                 logger.warning(
-                    "Usage fetch failed request_id=%s status=%s message=%s",
+                    (
+                        "Usage fetch failed request_id=%s status=%s "
+                        "account_id=%s upstream_account_id=%s email=%s message=%s"
+                    ),
                     get_request_id(),
                     resp.status,
+                    log_account_id,
+                    account_id,
+                    log_account_email,
                     message,
                 )
                 raise UsageFetchError(resp.status, message)

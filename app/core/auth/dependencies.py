@@ -158,7 +158,11 @@ async def validate_codex_usage_identity(request: Request) -> None:
         raise ProxyAuthError("Unknown or inactive chatgpt-account-id")
 
     try:
-        await fetch_usage(access_token=token, account_id=account_id)
+        await fetch_usage(
+            access_token=token,
+            account_id=account_id,
+            log_account_id=account_id,
+        )
     except UsageFetchError as exc:
         if exc.status_code == 429:
             from app.core.exceptions import ProxyRateLimitError

@@ -5,7 +5,7 @@ export const STATUS_DOT: Record<DashboardAccountStatus, string> = {
   paused: "bg-amber-500",
   limited: "bg-orange-500",
   exceeded: "bg-red-500",
-  deactivated: "bg-zinc-400",
+  deactivated: "bg-red-500",
 };
 
 export function quotaBarColor(percent: number): string {

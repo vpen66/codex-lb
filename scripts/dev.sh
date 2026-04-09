@@ -169,8 +169,8 @@ start_backend() {
   : >"$BACKEND_LOG_FILE"
   (
     cd "$ROOT_DIR"
-    exec uv run fastapi run app/main.py --reload --port 2455
-  ) >>"$BACKEND_LOG_FILE" 2>&1 &
+    exec nohup uv run fastapi run app/main.py --reload --port 2455 </dev/null >>"$BACKEND_LOG_FILE" 2>&1
+  ) &
   backend_pid=$!
 }
 
@@ -180,8 +180,8 @@ start_frontend() {
   : >"$FRONTEND_LOG_FILE"
   (
     cd "$FRONTEND_DIR"
-    exec bun run dev
-  ) >>"$FRONTEND_LOG_FILE" 2>&1 &
+    exec nohup bun run dev </dev/null >>"$FRONTEND_LOG_FILE" 2>&1
+  ) &
   frontend_pid=$!
 }
 
@@ -262,10 +262,34 @@ cmd_start() {
     exit 1
   fi
 
-  if load_pid_file && { is_pid_alive "${backend_pid:-}" || is_pid_alive "${frontend_pid:-}"; }; then
-    echo "${YELLOW}[dev] services already running${RESET}" >&2
-    echo "backend pid=${backend_pid:-none} frontend pid=${frontend_pid:-none}"
-    exit 1
+  if load_pid_file; then
+    local backend_running=0
+    local frontend_running=0
+
+    if is_pid_alive "${backend_pid:-}"; then
+      backend_running=1
+    fi
+
+    if is_pid_alive "${frontend_pid:-}"; then
+      frontend_running=1
+    fi
+
+    if [[ "$backend_running" -eq 1 && "$frontend_running" -eq 1 ]]; then
+      echo "${YELLOW}[dev] services already running${RESET}" >&2
+      echo "backend pid=${backend_pid:-none} frontend pid=${frontend_pid:-none}"
+      exit 1
+    fi
+
+    if [[ "$backend_running" -eq 1 || "$frontend_running" -eq 1 ]]; then
+      echo "${YELLOW}[dev] found partial running state; cleaning up before start${RESET}"
+      stop_pid_if_alive "${backend_pid:-}"
+      stop_pid_if_alive "${frontend_pid:-}"
+      wait "${backend_pid:-}" 2>/dev/null || true
+      wait "${frontend_pid:-}" 2>/dev/null || true
+      stop_port_if_listening 2455 "backend"
+      stop_port_if_listening 5173 "frontend"
+      remove_pid_file
+    fi
   fi
 
   backend_pid=""

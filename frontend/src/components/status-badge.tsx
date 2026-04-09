@@ -9,7 +9,7 @@ const statusClassMap: Record<StatusValue, string> = {
   paused: "bg-amber-500/15 text-amber-700 border-amber-500/20 hover:bg-amber-500/20 dark:text-amber-400",
   limited: "bg-orange-500/15 text-orange-700 border-orange-500/20 hover:bg-orange-500/20 dark:text-orange-400",
   exceeded: "bg-red-500/15 text-red-700 border-red-500/20 hover:bg-red-500/20 dark:text-red-400",
-  deactivated: "bg-zinc-500/15 text-zinc-600 border-zinc-500/20 hover:bg-zinc-500/20 dark:text-zinc-400",
+  deactivated: "bg-red-500/15 text-red-700 border-red-500/20 hover:bg-red-500/20 dark:text-red-400",
 };
 
 export type StatusBadgeProps = {

@@ -265,9 +265,11 @@ class UsageUpdater:
             payload = await fetch_usage(
                 access_token=access_token,
                 account_id=usage_account_id,
+                log_account_id=account.id,
+                log_account_email=account.email,
             )
         except UsageFetchError as exc:
-            if _should_deactivate_for_usage_error(exc.status_code):
+            if _should_deactivate_for_usage_error(exc.status_code, exc.message):
                 await self._deactivate_for_client_error(account, exc)
                 return AccountRefreshResult(usage_written=False, fetch_succeeded=False)
             if exc.status_code != 401 or not self._auth_manager:
@@ -281,9 +283,11 @@ class UsageUpdater:
                 payload = await fetch_usage(
                     access_token=access_token,
                     account_id=usage_account_id,
+                    log_account_id=account.id,
+                    log_account_email=account.email,
                 )
             except UsageFetchError as retry_exc:
-                if _should_deactivate_for_usage_error(retry_exc.status_code):
+                if _should_deactivate_for_usage_error(retry_exc.status_code, retry_exc.message):
                     await self._deactivate_for_client_error(account, retry_exc)
                 return AccountRefreshResult(usage_written=False, fetch_succeeded=False)
 
@@ -676,5 +680,10 @@ def _reset_at(reset_at: int | None, reset_after_seconds: int | None, now_epoch: 
 _DEACTIVATING_USAGE_STATUS_CODES = {402, 404}
 
 
-def _should_deactivate_for_usage_error(status_code: int) -> bool:
-    return status_code in _DEACTIVATING_USAGE_STATUS_CODES
+def _should_deactivate_for_usage_error(status_code: int, message: str | None = None) -> bool:
+    if status_code in _DEACTIVATING_USAGE_STATUS_CODES:
+        return True
+    if status_code != 401:
+        return False
+    normalized_message = (message or "").strip().lower()
+    return "deactivated" in normalized_message

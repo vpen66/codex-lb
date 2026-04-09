@@ -146,3 +146,24 @@ async def test_fetch_usage_raises_after_retries(failing_usage_server):
     exc = excinfo.value
     assert isinstance(exc, UsageFetchError)
     assert exc.status_code == 503
+
+
+@pytest.mark.asyncio
+async def test_fetch_usage_logs_account_context_on_error(failing_usage_server, caplog):
+    base_url, client = failing_usage_server
+    with caplog.at_level("WARNING"):
+        with pytest.raises(UsageFetchError):
+            await fetch_usage(
+                access_token="access-token",
+                account_id="chatgpt_acc_123",
+                log_account_id="db_acc_123",
+                log_account_email="owner@example.com",
+                base_url=base_url,
+                max_retries=0,
+                timeout_seconds=1.0,
+                client=client,
+            )
+
+    assert "account_id=db_acc_123" in caplog.text
+    assert "upstream_account_id=chatgpt_acc_123" in caplog.text
+    assert "email=owner@example.com" in caplog.text
