@@ -23,6 +23,7 @@ usage() {
   cat <<'EOF'
 Usage:
   ./scripts/dev.sh start [--log]
+  ./scripts/dev.sh restart [--log]
   ./scripts/dev.sh stop
   ./scripts/dev.sh status
 EOF
@@ -86,6 +87,62 @@ stop_pid_if_alive() {
   if is_pid_alive "$pid"; then
     kill "$pid" 2>/dev/null || true
   fi
+}
+
+port_listener_pids() {
+  local port="$1"
+  lsof -tiTCP:"$port" -sTCP:LISTEN 2>/dev/null || true
+}
+
+wait_for_port_to_close() {
+  local port="$1"
+  local attempts="${2:-20}"
+  local attempt=1
+
+  while [[ "$attempt" -le "$attempts" ]]; do
+    if [[ -z "$(port_listener_pids "$port")" ]]; then
+      return 0
+    fi
+
+    sleep 0.5
+    attempt=$((attempt + 1))
+  done
+
+  return 1
+}
+
+stop_port_if_listening() {
+  local port="$1"
+  local label="$2"
+  local pids
+
+  pids="$(port_listener_pids "$port")"
+  if [[ -z "$pids" ]]; then
+    return 0
+  fi
+
+  echo "[dev] cleaning up $label listeners on port $port: $(echo "$pids" | tr '\n' ' ' | xargs)"
+  while IFS= read -r pid; do
+    [[ -n "$pid" ]] || continue
+    kill "$pid" 2>/dev/null || true
+  done <<<"$pids"
+
+  if wait_for_port_to_close "$port" 10; then
+    return 0
+  fi
+
+  pids="$(port_listener_pids "$port")"
+  if [[ -z "$pids" ]]; then
+    return 0
+  fi
+
+  echo "[dev] force stopping $label listeners on port $port: $(echo "$pids" | tr '\n' ' ' | xargs)"
+  while IFS= read -r pid; do
+    [[ -n "$pid" ]] || continue
+    kill -9 "$pid" 2>/dev/null || true
+  done <<<"$pids"
+
+  wait_for_port_to_close "$port" 10
 }
 
 cleanup_start() {
@@ -216,16 +273,18 @@ cmd_start() {
   remove_pid_file
 
   echo "[dev] starting backend on http://127.0.0.1:2455"
-  echo "[dev] switching frontend to Node 22 with nvm"
-  echo "[dev] starting frontend in $FRONTEND_DIR"
-
   start_backend
-  start_frontend
   write_pid_file
 
   if ! wait_for_http "backend" "http://127.0.0.1:2455/docs" "$backend_pid" "$BACKEND_LOG_FILE" 60; then
     cleanup_start
   fi
+
+  echo "[dev] switching frontend to Node 22 with nvm"
+  echo "[dev] starting frontend in $FRONTEND_DIR"
+
+  start_frontend
+  write_pid_file
 
   if ! wait_for_http "frontend" "http://localhost:5173" "$frontend_pid" "$FRONTEND_LOG_FILE" 60; then
     cleanup_start
@@ -246,6 +305,8 @@ cmd_start() {
 cmd_stop() {
   if ! load_pid_file; then
     echo "[dev] no running services found"
+    stop_port_if_listening 2455 "backend"
+    stop_port_if_listening 5173 "frontend"
     exit 0
   fi
 
@@ -265,6 +326,12 @@ cmd_stop() {
   if [[ "$found_running" -eq 0 ]]; then
     echo "[dev] no running services found"
   fi
+
+  wait "${backend_pid:-}" 2>/dev/null || true
+  wait "${frontend_pid:-}" 2>/dev/null || true
+
+  stop_port_if_listening 2455 "backend"
+  stop_port_if_listening 5173 "frontend"
 
   remove_pid_file
 }
@@ -290,6 +357,11 @@ cmd_status() {
   echo "frontend: $frontend_state"
 }
 
+cmd_restart() {
+  cmd_stop
+  cmd_start
+}
+
 main() {
   local command="${1:-start}"
 
@@ -298,6 +370,11 @@ main() {
       shift
       parse_start_args "$@"
       cmd_start
+      ;;
+    restart)
+      shift
+      parse_start_args "$@"
+      cmd_restart
       ;;
     stop)
       cmd_stop

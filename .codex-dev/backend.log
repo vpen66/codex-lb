@@ -1,16 +1,14 @@
 
    FastAPI   Starting production server 🚀
  
-             Searching for package file structure from directories with         
-             __init__.py files                                                  
+             Searching for package file structure from directories with __init__.py files
              Importing from /Users/vpen/github-projects/codex-lb
  
     module   📁 app            
              ├── 🐍 __init__.py
              └── 🐍 main.py    
  
-      code   Importing the FastAPI app object from the module with the following
-             code:                                                              
+      code   Importing the FastAPI app object from the module with the following code:
  
              from app.main import app
  
@@ -21,82 +19,630 @@
  
              Logs:
  
-      INFO   Will watch for changes in these directories:                       
-             ['/Users/vpen/github-projects/codex-lb']
+      INFO   Will watch for changes in these directories: ['/Users/vpen/github-projects/codex-lb']
       INFO   Uvicorn running on http://0.0.0.0:2455 (Press CTRL+C to quit)
-      INFO   Started reloader process [27631] using WatchFiles
-      INFO   Started server process [27775]
+      INFO   Started reloader process [12708] using WatchFiles
+      INFO   Started server process [12710]
       INFO   Waiting for application startup.
       INFO   Application startup complete.
-      INFO   127.0.0.1:54302 - "GET /docs HTTP/1.1" 200
-      INFO   127.0.0.1:54324 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54327 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54326 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:54329 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54325 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54323 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54362 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54361 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:54359 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54364 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54360 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54358 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54385 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54386 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54389 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54440 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54441 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54444 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54490 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54491 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54494 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54557 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54558 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54561 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54571 - "POST /backend-api/codex/responses HTTP/1.1" 200
-      INFO   127.0.0.1:54606 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54605 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:54603 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54604 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54608 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54602 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54625 - "POST /backend-api/codex/responses HTTP/1.1" 200
-      INFO   127.0.0.1:54661 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:54662 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54659 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54660 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54664 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54658 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54641 - "POST /backend-api/codex/responses HTTP/1.1" 200
-      INFO   127.0.0.1:54684 - "POST /backend-api/codex/responses HTTP/1.1" 200
-      INFO   127.0.0.1:54821 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54822 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54819 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54864 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54865 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54868 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54883 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54884 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54887 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
+      INFO   127.0.0.1:54743 - "GET /docs HTTP/1.1" 200
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+      INFO   127.0.0.1:54976 - "WebSocket /backend-api/codex/responses"
+      INFO   connection open
+Usage fetch error request_id=None error=Cannot connect to host chatgpt.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage refresh failed account_id=267220f9-c7e0-4db9-94da-df86c5694259_1354bba6 request_id=None error=Cannot connect to host auth.openai.com:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 214, in refresh_accounts
+    result = await _USAGE_REFRESH_SINGLEFLIGHT.run(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 142, in run
+    return await asyncio.shield(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 148, in _run_factory
+    return await factory()
+           ^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 251, in _refresh_account_if_stale
+    return await self._refresh_account(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 276, in _refresh_account
+    account = await self._auth_manager.ensure_fresh(account, force=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 49, in ensure_fresh
+    account = await self.refresh_account(account)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 55, in refresh_account
+    result = await refresh_access_token(refresh_token)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/auth/refresh.py", line 80, in refresh_access_token
+    async with client_session.post(url, json=payload, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host auth.openai.com:443 ssl:default [None]
+Usage fetch error request_id=None error=Cannot connect to host chatgpt.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Unexpected error during model fetch account=2620acea-0399-4ede-ae1a-edbea2acb085_df5d5e83 plan=plus
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/openai/model_refresh_scheduler.py", line 128, in _fetch_with_failover
+    return await fetch_models_for_plan(access_token, account_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/model_fetcher.py", line 114, in fetch_models_for_plan
+    async with session.get(url, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host chatgpt.com:443 ssl:default [None]
+Unexpected error during model fetch account=c66b67e5-fa28-4364-8479-5e9ef15e70ce_9ae46c79 plan=free
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/openai/model_refresh_scheduler.py", line 128, in _fetch_with_failover
+    return await fetch_models_for_plan(access_token, account_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/model_fetcher.py", line 114, in fetch_models_for_plan
+    async with session.get(url, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host chatgpt.com:443 ssl:default [None]
+Usage fetch error request_id=None error=Cannot connect to host chatgpt.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch error request_id=None error=Cannot connect to host chatgpt.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Unexpected error during model fetch account=2620acea-0399-4ede-ae1a-edbea2acb085_df5d5e83 plan=plus
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/openai/model_refresh_scheduler.py", line 128, in _fetch_with_failover
+    return await fetch_models_for_plan(access_token, account_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/model_fetcher.py", line 114, in fetch_models_for_plan
+    async with session.get(url, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host chatgpt.com:443 ssl:default [None]
+Unexpected error during model fetch account=c66b67e5-fa28-4364-8479-5e9ef15e70ce_9ae46c79 plan=free
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/core/openai/model_refresh_scheduler.py", line 128, in _fetch_with_failover
+    return await fetch_models_for_plan(access_token, account_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/model_fetcher.py", line 114, in fetch_models_for_plan
+    async with session.get(url, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host chatgpt.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage refresh failed account_id=267220f9-c7e0-4db9-94da-df86c5694259_1354bba6 request_id=None error=Cannot connect to host auth.openai.com:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 214, in refresh_accounts
+    result = await _USAGE_REFRESH_SINGLEFLIGHT.run(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 142, in run
+    return await asyncio.shield(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 148, in _run_factory
+    return await factory()
+           ^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 251, in _refresh_account_if_stale
+    return await self._refresh_account(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 276, in _refresh_account
+    account = await self._auth_manager.ensure_fresh(account, force=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 49, in ensure_fresh
+    account = await self.refresh_account(account)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 55, in refresh_account
+    result = await refresh_access_token(refresh_token)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/auth/refresh.py", line 80, in refresh_access_token
+    async with client_session.post(url, json=payload, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host auth.openai.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage refresh failed account_id=267220f9-c7e0-4db9-94da-df86c5694259_1354bba6 request_id=None error=Cannot connect to host auth.openai.com:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 214, in refresh_accounts
+    result = await _USAGE_REFRESH_SINGLEFLIGHT.run(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 142, in run
+    return await asyncio.shield(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 148, in _run_factory
+    return await factory()
+           ^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 251, in _refresh_account_if_stale
+    return await self._refresh_account(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 276, in _refresh_account
+    account = await self._auth_manager.ensure_fresh(account, force=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 49, in ensure_fresh
+    account = await self.refresh_account(account)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 55, in refresh_account
+    result = await refresh_access_token(refresh_token)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/auth/refresh.py", line 80, in refresh_access_token
+    async with client_session.post(url, json=payload, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host auth.openai.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage refresh failed account_id=267220f9-c7e0-4db9-94da-df86c5694259_1354bba6 request_id=None error=Cannot connect to host auth.openai.com:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 214, in refresh_accounts
+    result = await _USAGE_REFRESH_SINGLEFLIGHT.run(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 142, in run
+    return await asyncio.shield(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 148, in _run_factory
+    return await factory()
+           ^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 251, in _refresh_account_if_stale
+    return await self._refresh_account(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 276, in _refresh_account
+    account = await self._auth_manager.ensure_fresh(account, force=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 49, in ensure_fresh
+    account = await self.refresh_account(account)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 55, in refresh_account
+    result = await refresh_access_token(refresh_token)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/auth/refresh.py", line 80, in refresh_access_token
+    async with client_session.post(url, json=payload, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host auth.openai.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage refresh failed account_id=267220f9-c7e0-4db9-94da-df86c5694259_1354bba6 request_id=None error=Cannot connect to host auth.openai.com:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1462, in _start_tls_connection
+    tls_transport = await self._loop.start_tls(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "uvloop/loop.pyx", line 1639, in start_tls
+    raise
+  File "uvloop/loop.pyx", line 1632, in uvloop.loop.Loop.start_tls
+    await waiter
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 214, in refresh_accounts
+    result = await _USAGE_REFRESH_SINGLEFLIGHT.run(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 142, in run
+    return await asyncio.shield(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 148, in _run_factory
+    return await factory()
+           ^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 251, in _refresh_account_if_stale
+    return await self._refresh_account(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 276, in _refresh_account
+    account = await self._auth_manager.ensure_fresh(account, force=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 49, in ensure_fresh
+    account = await self.refresh_account(account)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/accounts/auth_manager.py", line 55, in refresh_account
+    result = await refresh_access_token(refresh_token)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/core/auth/refresh.py", line 80, in refresh_access_token
+    async with client_session.post(url, json=payload, headers=headers, timeout=timeout) as resp:
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 1510, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 734, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1237, in _create_connection
+    _, proto = await self._create_proxy_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1705, in _create_proxy_connection
+    return await self._start_tls_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/connector.py", line 1495, in _start_tls_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host auth.openai.com:443 ssl:default [None]
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
+Usage fetch failed request_id=None status=401 message=Your OpenAI account has been deactivated, please check your email for more information. If you feel this is an error, contact us through our help center at help.openai.com.
