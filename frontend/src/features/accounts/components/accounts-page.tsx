@@ -148,6 +148,8 @@ export function AccountsPage() {
     return persistedGroups.find((group) => group.id === resolvedSelectedGroup.id) ?? null;
   }, [persistedGroups, resolvedSelectedGroup]);
 
+  const hasAnyGroupData = allGroups.length > 0;
+
   return (
     <div className="animate-fade-in-up space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -177,7 +179,7 @@ export function AccountsPage() {
 
       {!accountsQuery.data || !groupsQuery.data ? (
         <AccountsSkeleton />
-      ) : groups.length === 0 ? (
+      ) : !hasAnyGroupData ? (
         <EmptyState
           icon={FolderOpen}
           title={statusFilter === "all" ? "No accounts connected yet" : "No accounts match this status"}

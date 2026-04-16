@@ -52,6 +52,12 @@ The Accounts page SHALL provide group-oriented account management. It MUST let o
 - **AND** it only renders groups that still contain at least one member account with the selected status
 - **AND** each rendered group only lists member accounts that match the selected status
 
+#### Scenario: Recover from an empty filtered state
+
+- **WHEN** an operator applies a status filter that matches no accounts
+- **THEN** the Accounts page keeps the filter controls visible
+- **AND** the operator can switch back to another status without reloading the page
+
 #### Scenario: Open an account from request logs
 
 - **WHEN** an operator navigates to the Accounts page from a request-log account link

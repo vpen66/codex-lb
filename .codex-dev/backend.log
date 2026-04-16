@@ -24,11 +24,29 @@
       INFO   Will watch for changes in these directories:                       
              ['/Users/vpen/github-projects/codex-lb']
       INFO   Uvicorn running on http://0.0.0.0:2455 (Press CTRL+C to quit)
-      INFO   Started reloader process [59679] using WatchFiles
-      INFO   Started server process [59681]
+      INFO   Started reloader process [73344] using WatchFiles
+      INFO   Started server process [73346]
       INFO   Waiting for application startup.
       INFO   Application startup complete.
-      INFO   127.0.0.1:55206 - "GET /docs HTTP/1.1" 200
-      INFO   127.0.0.1:55224 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55225 - "GET /api/request-logs?limit=25&offset=0         
+      INFO   127.0.0.1:57717 - "GET /docs HTTP/1.1" 200
+      INFO   127.0.0.1:57733 - "GET /settings HTTP/1.1" 200
+      INFO   127.0.0.1:57733 - "GET /assets/index-D1iyD1lZ.js HTTP/1.1" 200
+      INFO   127.0.0.1:57734 - "GET /assets/vendor-react-Jcoa8pf9.js HTTP/1.1"  
+             200
+      INFO   127.0.0.1:57739 - "GET /assets/vendor-ui-BF3FW0f8.js HTTP/1.1" 200
+      INFO   127.0.0.1:57740 - "GET /assets/index-BqseOz10.css HTTP/1.1" 200
+      INFO   127.0.0.1:57741 - "GET /assets/vendor-charts-DkE8TXkz.js HTTP/1.1" 
+             200
+      INFO   127.0.0.1:57739 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:57733 - "GET /api/settings HTTP/1.1" 200
+      INFO   127.0.0.1:57739 - "GET /api/firewall/ips HTTP/1.1" 200
+      INFO   127.0.0.1:57733 - "GET /api/api-keys/ HTTP/1.1" 200
+      INFO   127.0.0.1:57740 - "GET                                             
+             /api/sticky-sessions?staleOnly=false&offset=0&limit=10&sortBy=updat
+             ed_at&sortDir=desc HTTP/1.1" 200
+      INFO   127.0.0.1:57741 - "GET /api/dashboard/overview?timeframe=7d        
              HTTP/1.1" 200
+      INFO   127.0.0.1:57794 - "GET /api/firewall/ips HTTP/1.1" 200
+      INFO   127.0.0.1:57795 - "GET                                             
+             /api/sticky-sessions?staleOnly=false&offset=0&limit=10&sortBy=updat
+             ed_at&sortDir=desc HTTP/1.1" 200

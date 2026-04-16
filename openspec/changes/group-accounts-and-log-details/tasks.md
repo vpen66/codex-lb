@@ -17,6 +17,7 @@
 - [x] 3.2 Redesign the Accounts page around group browsing and group editing while preserving account import/add/action flows
 - [x] 3.3 Add a request-log detail route and navigation from the recent-requests table
 - [x] 3.4 Move member-account usage details into a modal dialog opened from the selected account card
+- [x] 3.5 Keep Accounts page filter controls available when a status filter yields no matching accounts
 
 ## 4. Tests
 
@@ -24,3 +25,4 @@
 - [x] 4.2 Add backend coverage for request-log detail retrieval
 - [x] 4.3 Update frontend mocks, schema tests, and integration tests for grouped dashboard/accounts flows and request-log detail navigation
 - [x] 4.4 Update Accounts page integration coverage for modal account details
+- [x] 4.5 Add Accounts page integration coverage for recovering from an empty filtered state

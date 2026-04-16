@@ -22,7 +22,14 @@ describe("accounts flow integration", () => {
     expect((await screen.findAllByText("secondary@example.com")).length).toBeGreaterThan(0);
 
     await user.click(screen.getByRole("combobox"));
+    await user.click(await screen.findByText("Quota exceeded"));
+    expect(await screen.findByText("No accounts match this status")).toBeInTheDocument();
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("combobox"));
     await user.click(await screen.findByRole("option", { name: "All statuses" }));
+    expect(await screen.findByRole("button", { name: /Operations/ })).toBeInTheDocument();
+    expect((await screen.findAllByText("primary@example.com")).length).toBeGreaterThan(0);
 
     const membersHeading = await screen.findByRole("heading", { name: "Members" });
     const membersSection = membersHeading.closest("section");
