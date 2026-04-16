@@ -4,7 +4,9 @@ import { z } from "zod";
 import { LIMIT_TYPES, LIMIT_WINDOWS } from "@/features/api-keys/schemas";
 import {
 	type AccountSummary,
+	type AccountGroup,
 	type ApiKey,
+	createAccountGroup,
 	createAccountSummary,
 	createAccountTrends,
 	createApiKey,
@@ -15,12 +17,14 @@ import {
 	createDashboardOverview,
 	createDashboardSettings,
 	createDefaultAccounts,
+	createDefaultAccountGroups,
 	createDefaultApiKeys,
 	createDefaultRequestLogs,
 	createOauthCompleteResponse,
 	createOauthStartResponse,
 	createOauthStatusResponse,
 	createRequestLogFilterOptions,
+	createRequestLogDetail,
 	createRequestLogsResponse,
 	type DashboardAuthSession,
 	type DashboardSettings,
@@ -86,6 +90,13 @@ const SettingsPayloadSchema = z
 	})
 	.passthrough();
 
+const AccountGroupPayloadSchema = z
+	.object({
+		name: z.string().optional(),
+		accountIds: z.array(z.string()).optional(),
+	})
+	.passthrough();
+
 // ── Helpers ──
 
 async function parseJsonBody<T>(
@@ -103,6 +114,7 @@ async function parseJsonBody<T>(
 
 type MockState = {
 	accounts: AccountSummary[];
+	accountGroups: AccountGroup[];
 	requestLogs: RequestLogEntry[];
 	authSession: DashboardAuthSession;
 	settings: DashboardSettings;
@@ -122,6 +134,7 @@ type MockState = {
 function createInitialState(): MockState {
 	return {
 		accounts: createDefaultAccounts(),
+		accountGroups: createDefaultAccountGroups(),
 		requestLogs: createDefaultRequestLogs(),
 		authSession: createDashboardAuthSession(),
 		settings: createDashboardSettings(),
@@ -132,9 +145,11 @@ function createInitialState(): MockState {
 }
 
 let state: MockState = createInitialState();
+syncAccountGroupsToAccounts();
 
 export function resetMockState(): void {
 	state = createInitialState();
+	syncAccountGroupsToAccounts();
 }
 
 function parseDateValue(value: string | null): number | null {
@@ -271,8 +286,53 @@ function findAccount(accountId: string): AccountSummary | undefined {
 	return state.accounts.find((account) => account.accountId === accountId);
 }
 
+function findGroup(groupId: string): AccountGroup | undefined {
+	return state.accountGroups.find((group) => group.id === groupId);
+}
+
+function findRequestLog(logId: number): RequestLogEntry | undefined {
+	return state.requestLogs.find((entry) => entry.logId === logId);
+}
+
 function findApiKey(keyId: string): ApiKey | undefined {
 	return state.apiKeys.find((item) => item.id === keyId);
+}
+
+function syncAccountGroupsToAccounts(): void {
+	state.accounts = state.accounts.map((account) => {
+		const group = state.accountGroups.find((candidate) =>
+			candidate.accountIds.includes(account.accountId),
+		);
+		return createAccountSummary({
+			...account,
+			accountGroupId: group?.id ?? null,
+			accountGroupName: group?.name ?? null,
+		});
+	});
+	state.accountGroups = state.accountGroups.map((group) =>
+		createAccountGroup({
+			...group,
+			accountCount: group.accountIds.length,
+		}),
+	);
+}
+
+function upsertGroupMemberships(groupId: string, payload: { name: string; accountIds: string[] }) {
+	const normalizedAccountIds = [...new Set(payload.accountIds ?? [])];
+	state.accountGroups = state.accountGroups.map((group) => {
+		const nextAccountIds =
+			group.id === groupId
+				? normalizedAccountIds
+				: group.accountIds.filter((accountId) => !normalizedAccountIds.includes(accountId));
+		return createAccountGroup({
+			...group,
+			name: group.id === groupId ? payload.name : group.name,
+			accountIds: nextAccountIds,
+			accountCount: nextAccountIds.length,
+			updatedAt: new Date().toISOString(),
+		});
+	});
+	syncAccountGroupsToAccounts();
 }
 
 export const handlers = [
@@ -311,8 +371,93 @@ export const handlers = [
 		return HttpResponse.json(requestLogOptionsFromEntries(filtered));
 	}),
 
+	http.get("/api/request-logs/:logId", ({ params }) => {
+		const logId = Number(params.logId);
+		const entry = findRequestLog(logId);
+		if (!entry) {
+			return HttpResponse.json(
+				{ error: { code: "request_log_not_found", message: "Request log not found" } },
+				{ status: 404 },
+			);
+		}
+		const account = entry.accountId ? findAccount(entry.accountId) : undefined;
+		return HttpResponse.json(
+			createRequestLogDetail({
+				...entry,
+				accountEmail: account?.email ?? null,
+				accountGroupName: account?.accountGroupName ?? null,
+			}),
+		);
+	}),
+
 	http.get("/api/accounts", () => {
 		return HttpResponse.json({ accounts: state.accounts });
+	}),
+
+	http.get("/api/account-groups", () => {
+		return HttpResponse.json({ groups: state.accountGroups });
+	}),
+
+	http.post("/api/account-groups", async ({ request }) => {
+		const payload = await parseJsonBody(request, AccountGroupPayloadSchema);
+		const name = String(payload?.name ?? "").trim();
+		if (!name) {
+			return HttpResponse.json(
+				{ error: { code: "account_group_invalid", message: "Group name is required" } },
+				{ status: 400 },
+			);
+		}
+		const created = createAccountGroup({
+			id: `grp_${state.accountGroups.length + 1}`,
+			name,
+			accountIds: payload?.accountIds ?? [],
+			accountCount: (payload?.accountIds ?? []).length,
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
+		});
+		state.accountGroups = [...state.accountGroups, created];
+		upsertGroupMemberships(created.id, {
+			name: created.name,
+			accountIds: created.accountIds,
+		});
+		return HttpResponse.json(findGroup(created.id));
+	}),
+
+	http.put("/api/account-groups/:groupId", async ({ params, request }) => {
+		const groupId = String(params.groupId);
+		const existing = findGroup(groupId);
+		if (!existing) {
+			return HttpResponse.json(
+				{ error: { code: "account_group_not_found", message: "Account group not found" } },
+				{ status: 404 },
+			);
+		}
+		const payload = await parseJsonBody(request, AccountGroupPayloadSchema);
+		const name = String(payload?.name ?? "").trim();
+		if (!name) {
+			return HttpResponse.json(
+				{ error: { code: "account_group_invalid", message: "Group name is required" } },
+				{ status: 400 },
+			);
+		}
+		upsertGroupMemberships(groupId, {
+			name,
+			accountIds: payload?.accountIds ?? [],
+		});
+		return HttpResponse.json(findGroup(groupId));
+	}),
+
+	http.delete("/api/account-groups/:groupId", ({ params }) => {
+		const groupId = String(params.groupId);
+		if (!findGroup(groupId)) {
+			return HttpResponse.json(
+				{ error: { code: "account_group_not_found", message: "Account group not found" } },
+				{ status: 404 },
+			);
+		}
+		state.accountGroups = state.accountGroups.filter((group) => group.id !== groupId);
+		syncAccountGroupsToAccounts();
+		return HttpResponse.json({ status: "deleted" });
 	}),
 
 	http.post("/api/accounts/import", async () => {
@@ -322,6 +467,8 @@ export const handlers = [
 			email: `imported-${sequence}@example.com`,
 			displayName: `imported-${sequence}@example.com`,
 			status: "active",
+			accountGroupId: null,
+			accountGroupName: null,
 		});
 		state.accounts = [...state.accounts, created];
 		return HttpResponse.json({
@@ -384,6 +531,15 @@ export const handlers = [
 		state.accounts = state.accounts.filter(
 			(account) => account.accountId !== accountId,
 		);
+		state.accountGroups = state.accountGroups.map((group) => {
+			const nextAccountIds = group.accountIds.filter((candidate) => candidate !== accountId);
+			return createAccountGroup({
+				...group,
+				accountIds: nextAccountIds,
+				accountCount: nextAccountIds.length,
+			});
+		});
+		syncAccountGroupsToAccounts();
 		return HttpResponse.json({ status: "deleted" });
 	}),
 

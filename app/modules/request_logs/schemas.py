@@ -8,6 +8,7 @@ from app.modules.shared.schemas import DashboardModel
 
 
 class RequestLogEntry(DashboardModel):
+    log_id: int
     requested_at: datetime
     account_id: str | None = None
     api_key_name: str | None = None
@@ -22,6 +23,33 @@ class RequestLogEntry(DashboardModel):
     error_message: str | None = None
     tokens: int | None = None
     cached_input_tokens: int | None = None
+    reasoning_effort: str | None = None
+    cost_usd: float | None = None
+    latency_ms: int | None = None
+    latency_first_token_ms: int | None = None
+
+
+class RequestLogDetailResponse(DashboardModel):
+    log_id: int
+    requested_at: datetime
+    account_id: str | None = None
+    account_email: str | None = None
+    account_group_name: str | None = None
+    api_key_name: str | None = None
+    request_id: str
+    model: str
+    transport: str | None = None
+    service_tier: str | None = None
+    requested_service_tier: str | None = None
+    actual_service_tier: str | None = None
+    status: str
+    error_code: str | None = None
+    error_message: str | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    cached_input_tokens: int | None = None
+    reasoning_tokens: int | None = None
+    tokens: int | None = None
     reasoning_effort: str | None = None
     cost_usd: float | None = None
     latency_ms: int | None = None

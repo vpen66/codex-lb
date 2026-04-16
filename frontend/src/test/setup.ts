@@ -34,6 +34,22 @@ if (typeof globalThis.ResizeObserver === "undefined") {
   globalThis.ResizeObserver = ResizeObserverMock;
 }
 
+if (typeof Element !== "undefined" && typeof Element.prototype.hasPointerCapture !== "function") {
+  Element.prototype.hasPointerCapture = () => false;
+}
+
+if (typeof Element !== "undefined" && typeof Element.prototype.setPointerCapture !== "function") {
+  Element.prototype.setPointerCapture = () => {};
+}
+
+if (typeof Element !== "undefined" && typeof Element.prototype.releasePointerCapture !== "function") {
+  Element.prototype.releasePointerCapture = () => {};
+}
+
+if (typeof HTMLElement !== "undefined" && typeof HTMLElement.prototype.scrollIntoView !== "function") {
+  HTMLElement.prototype.scrollIntoView = () => {};
+}
+
 beforeAll(() => {
   configure({ asyncUtilTimeout: 10_000 });
   startMockServer();

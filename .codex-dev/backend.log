@@ -24,357 +24,116 @@
       INFO   Will watch for changes in these directories:                       
              ['/Users/vpen/github-projects/codex-lb']
       INFO   Uvicorn running on http://0.0.0.0:2455 (Press CTRL+C to quit)
-      INFO   Started reloader process [2178] using WatchFiles
-      INFO   Started server process [2187]
+      INFO   Started reloader process [17212] using WatchFiles
+      INFO   Started server process [17214]
       INFO   Waiting for application startup.
       INFO   Application startup complete.
-      INFO   127.0.0.1:50541 - "GET /docs HTTP/1.1" 200
-      INFO   127.0.0.1:50782 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:50783 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:50781 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:50936 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:50936 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:50936 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:50978 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:50979 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:50977 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:50977 - "GET /assets/oauth-dialog-BKjG1eV8.js HTTP/1.1"  
+      INFO   127.0.0.1:52828 - "GET /docs HTTP/1.1" 200
+      INFO   127.0.0.1:52838 - "GET /dashboard HTTP/1.1" 200
+      INFO   127.0.0.1:52838 - "GET /assets/index-Cb_0Qm21.js HTTP/1.1" 200
+      INFO   127.0.0.1:52839 - "GET /assets/index-800C89H2.css HTTP/1.1" 200
+      INFO   127.0.0.1:52843 - "GET /assets/vendor-charts-BN0PcMGy.js HTTP/1.1" 
              200
-      INFO   127.0.0.1:50979 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:50979 - "GET                                             
-             /api/accounts/75237d40-86d2-412b-be15-3c8bbf7d9e78_376cf752/trends 
-             HTTP/1.1" 200
-      INFO   127.0.0.1:51011 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:51115 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:51649 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:51649 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:51662 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:51667 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:51682 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:51683 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:51686 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:51874 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:51874 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:51875 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:51874 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:51874 - "GET /dashboard HTTP/1.1" 200
-      INFO   127.0.0.1:51874 - "GET /assets/index-C-NOXFf7.js HTTP/1.1" 200
-      INFO   127.0.0.1:51875 - "GET /assets/index-CjX9kTJO.css HTTP/1.1" 200
-      INFO   127.0.0.1:51880 - "GET /assets/vendor-query-DXFmKafw.js HTTP/1.1"  
+      INFO   127.0.0.1:52845 - "GET /assets/vendor-react-Jcoa8pf9.js HTTP/1.1"  
              200
-      INFO   127.0.0.1:51881 - "GET /assets/vendor-charts-DugavTq-.js HTTP/1.1" 
+      INFO   127.0.0.1:52846 - "GET /assets/vendor-ui-BCnQCVzR.js HTTP/1.1" 200
+      INFO   127.0.0.1:52845 - "GET /api/dashboard-auth/session HTTP/1.1" 200
+      INFO   127.0.0.1:52839 - "GET /api/settings HTTP/1.1" 200
+      INFO   127.0.0.1:52846 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:52843 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52838 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52847 - "GET /assets/oauth-dialog-BfE7joEU.js HTTP/1.1"  
              200
-      INFO   127.0.0.1:51882 - "GET /assets/vendor-react-BuboTVMM.js HTTP/1.1"  
-             200
-      INFO   127.0.0.1:51883 - "GET /assets/vendor-ui-o8MULjCw.js HTTP/1.1" 200
-      INFO   127.0.0.1:51880 - "GET /fonts/GeistSans-Variable.woff2 HTTP/1.1"   
-             200
-      INFO   127.0.0.1:51882 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:51882 - "GET /favicon.svg HTTP/1.1" 200
-      INFO   127.0.0.1:51881 - "GET /api/request-logs?limit=25&offset=0         
+      INFO   127.0.0.1:52848 - "GET /api/account-groups HTTP/1.1" 200
+      INFO   127.0.0.1:52847 - "GET /api/accounts HTTP/1.1" 200
+      INFO   127.0.0.1:52847 - "GET                                             
+             /api/accounts/2620acea-0399-4ede-ae1a-edbea2acb085_df5d5e83/trends 
              HTTP/1.1" 200
-      INFO   127.0.0.1:51875 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:51883 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:51874 - "GET /api/dashboard/overview?timeframe=7d        
+      INFO   127.0.0.1:52851 - "GET /api/request-logs?limit=25&offset=25        
              HTTP/1.1" 200
-      INFO   127.0.0.1:51884 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:51884 - "GET                                             
+      INFO   127.0.0.1:52851 - "GET                                             
+             /api/accounts/3f2b8551-5b8a-4399-a5bb-0429bbad4217_36e6248d/trends 
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52868 - "GET                                             
+             /api/accounts/92232dfb-f941-4807-abe3-3fd7d75cdfec_2b32253f/trends 
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52868 - "GET                                             
+             /api/accounts/4249eb4f-a539-453f-adf9-5d6e414e9251_cd38ee71/trends 
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52868 - "GET                                             
+             /api/accounts/a520365d-7b54-4ac6-a813-aa4717033cde_ae97eb1c/trends 
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52868 - "GET                                             
              /api/accounts/75237d40-86d2-412b-be15-3c8bbf7d9e78_376cf752/trends 
              HTTP/1.1" 200
-      INFO   127.0.0.1:51889 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:51982 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:52321 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:52321 - "GET /accounts HTTP/1.1" 200
-      INFO   127.0.0.1:52327 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:52328 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:52321 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:52321 - "GET                                             
-             /api/accounts/75237d40-86d2-412b-be15-3c8bbf7d9e78_376cf752/trends 
-             HTTP/1.1" 200
-      INFO   127.0.0.1:52324 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:52324 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:54323 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:54382 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54397 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54397 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54404 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54405 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54405 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54641 - "GET /accounts HTTP/1.1" 200
-dashboard_error_response request_id=f1368045-494c-4b68-abe0-877fff8c9077 method=POST path=/api/oauth/start status=400 code=http_400 message=There was an error parsing the body
-      INFO   127.0.0.1:54670 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:54671 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54662 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54662 - "GET                                             
-             /api/accounts/75237d40-86d2-412b-be15-3c8bbf7d9e78_376cf752/trends 
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54669 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54669 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:54842 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:54878 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:54916 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54921 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54920 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54916 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54916 - "GET /accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54921 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:54924 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:54916 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:54916 - "GET                                             
-             /api/accounts/75237d40-86d2-412b-be15-3c8bbf7d9e78_376cf752/trends 
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54920 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54945 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:54944 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:54962 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:55044 - "POST /api/oauth/start HTTP/1.1" 200
-      INFO   127.0.0.1:55087 - "GET /accounts HTTP/1.1" 200
-      INFO   127.0.0.1:55093 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:55092 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:55087 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:55087 - "GET                                             
-             /api/accounts/75237d40-86d2-412b-be15-3c8bbf7d9e78_376cf752/trends 
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55088 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55087 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55088 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55088 - "GET /dashboard HTTP/1.1" 200
-      INFO   127.0.0.1:55098 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:55097 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:55087 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55096 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55088 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55106 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55106 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55106 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55265 - "GET /dashboard HTTP/1.1" 200
-      INFO   127.0.0.1:55266 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:55283 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:55284 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:55281 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55282 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55265 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55403 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55403 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55403 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55424 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55424 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55424 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55441 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55441 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55441 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55457 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55457 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55457 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55623 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55623 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55623 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55644 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55644 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55644 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55669 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55669 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55669 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55670 - "POST /backend-api/codex/responses HTTP/1.1" 200
-      INFO   127.0.0.1:55671 - "POST /backend-api/codex/responses HTTP/1.1" 200
-      INFO   127.0.0.1:55676 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55676 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55676 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55681 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55681 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55681 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55696 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55696 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55696 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55701 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55701 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55701 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55718 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55718 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55718 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55725 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55725 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55725 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55737 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55737 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55737 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55742 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55742 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55742 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55759 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55759 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55759 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55778 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55778 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55778 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55807 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55807 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55807 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55810 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55810 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55810 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55813 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55813 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55813 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55818 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55818 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55818 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55841 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55841 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55841 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55846 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55846 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55846 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55851 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55851 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55851 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55900 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55900 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55900 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55919 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55919 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55919 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55924 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55924 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55924 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55938 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55938 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55938 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55945 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55945 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55945 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55971 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:55971 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:55971 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56023 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56022 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56021 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56087 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56088 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56088 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56132 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56133 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56131 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56140 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56140 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56140 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56143 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56143 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56143 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56327 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56329 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56326 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56334 - "GET /dashboard HTTP/1.1" 200
-      INFO   127.0.0.1:56340 - "GET /api/dashboard-auth/session HTTP/1.1" 200
-      INFO   127.0.0.1:56339 - "GET /api/settings HTTP/1.1" 200
-      INFO   127.0.0.1:56335 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56338 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56334 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56355 - "GET /api/accounts HTTP/1.1" 200
-      INFO   127.0.0.1:56355 - "GET                                             
-             /api/accounts/75237d40-86d2-412b-be15-3c8bbf7d9e78_376cf752/trends 
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56360 - "GET /api/request-logs/options HTTP/1.1" 200
-      INFO   127.0.0.1:56359 - "GET /api/request-logs?limit=25&offset=0         
-             HTTP/1.1" 200
-      INFO   127.0.0.1:56358 - "GET /api/dashboard/overview?timeframe=7d        
-             HTTP/1.1" 200
+      INFO   127.0.0.1:52893 - "GET                                             
+             /api/accounts/750bb2ac-6e64-411a-9ae3-f7be1524c0d3_b3643996/trends 
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52894 - "GET /api/account-groups HTTP/1.1" 200
+      INFO   127.0.0.1:52893 - "GET /api/accounts HTTP/1.1" 200
+      INFO   127.0.0.1:52901 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52916 - "GET                                             
+             /api/accounts/609ef71e-5646-4501-8da9-e70891acf2a7_b3f31d75/trends 
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52917 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:52916 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52989 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:52990 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:52988 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+AssertionError exception in shielded future
+future: <Task finished name='Task-204' coro=<_UsageRefreshSingleflight._run_factory() done, defined at /Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py:144> exception=AssertionError()>
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 148, in _run_factory
+    return await factory()
+           ^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 251, in _refresh_account_if_stale
+    return await self._refresh_account(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/modules/usage/updater.py", line 265, in _refresh_account
+    payload = await fetch_usage(
+              ^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/app/core/clients/usage.py", line 66, in fetch_usage
+    async with retry_client.request(
+               ~~~~~~~~~~~~~~~~~~~~^
+        "GET",
+        ^^^^^^
+    ...<3 lines>...
+        retry_options=retry_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as resp:
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp_retry/client.py", line 158, in __aenter__
+    return await self._do_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp_retry/client.py", line 119, in _do_request
+    response: ClientResponse = await self._request_func(
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 779, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/aiohttp/client.py", line 732, in _connect_and_send_request
+    assert self._connector is not None
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+      INFO   Application shutdown complete.
+      INFO   Finished server process [17214]
+      INFO   Stopping reloader process [17212]
+

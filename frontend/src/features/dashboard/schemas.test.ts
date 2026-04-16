@@ -7,6 +7,7 @@ import {
   DashboardOverviewSchema,
   DepletionSchema,
   parseOverviewTimeframe,
+  RequestLogDetailSchema,
   RequestLogsResponseSchema,
   UsageWindowSchema,
 } from "@/features/dashboard/schemas";
@@ -132,6 +133,7 @@ describe("RequestLogsResponseSchema", () => {
     const parsed = RequestLogsResponseSchema.parse({
       requests: [
         {
+          logId: 1,
           requestedAt: ISO,
           accountId: "acc-1",
           apiKeyName: "Key A",
@@ -154,6 +156,41 @@ describe("RequestLogsResponseSchema", () => {
 
     expect(parsed.requests[0]?.apiKeyName).toBe("Key A");
     expect(parsed.requests[0]?.transport).toBe("websocket");
+  });
+});
+
+describe("RequestLogDetailSchema", () => {
+  it("parses detail payload with token breakdown", () => {
+    const parsed = RequestLogDetailSchema.parse({
+      logId: 42,
+      requestedAt: ISO,
+      accountId: "acc-1",
+      accountEmail: "user@example.com",
+      accountGroupName: "Operations",
+      apiKeyName: "Key A",
+      requestId: "req-1",
+      model: "gpt-5.4",
+      transport: "websocket",
+      serviceTier: "priority",
+      requestedServiceTier: "priority",
+      actualServiceTier: "priority",
+      status: "ok",
+      errorCode: null,
+      errorMessage: null,
+      inputTokens: 100,
+      outputTokens: 50,
+      cachedInputTokens: 25,
+      reasoningTokens: 10,
+      tokens: 150,
+      reasoningEffort: "high",
+      costUsd: 0.12,
+      latencyMs: 250,
+      latencyFirstTokenMs: 80,
+    });
+
+    expect(parsed.logId).toBe(42);
+    expect(parsed.accountGroupName).toBe("Operations");
+    expect(parsed.latencyFirstTokenMs).toBe(80);
   });
 });
 
@@ -201,27 +238,28 @@ describe("UsageWindowSchema", () => {
 });
 
 describe("AccountSummarySchema light contract", () => {
-  it("does not expose removed legacy fields", () => {
+  it("accepts current camelCase quota and group fields while dropping legacy snake_case fields", () => {
     const parsed = AccountSummarySchema.parse({
       accountId: "acc-1",
       email: "user@example.com",
       displayName: "User",
       planType: "pro",
       status: "active",
-      capacity_credits_primary: 500,
-      remaining_credits_primary: 300,
-      capacity_credits_secondary: 2000,
-      remaining_credits_secondary: 900,
-      last_refresh_at: ISO,
-      deactivation_reason: "manual",
+      accountGroupId: "grp-1",
+      accountGroupName: "Operations",
+      capacityCreditsPrimary: 500,
+      remainingCreditsPrimary: 300,
+      capacityCreditsSecondary: 2000,
+      remainingCreditsSecondary: 900,
+      capacity_credits_primary: 999,
+      remaining_credits_primary: 999,
     });
 
+    expect(parsed.accountGroupName).toBe("Operations");
+    expect(parsed.capacityCreditsPrimary).toBe(500);
+    expect(parsed.remainingCreditsSecondary).toBe(900);
     expect(parsed).not.toHaveProperty("capacity_credits_primary");
     expect(parsed).not.toHaveProperty("remaining_credits_primary");
-    expect(parsed).not.toHaveProperty("capacity_credits_secondary");
-    expect(parsed).not.toHaveProperty("remaining_credits_secondary");
-    expect(parsed).not.toHaveProperty("last_refresh_at");
-    expect(parsed).not.toHaveProperty("deactivation_reason");
   });
 });
 

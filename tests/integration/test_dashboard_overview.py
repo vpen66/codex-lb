@@ -71,6 +71,8 @@ async def test_dashboard_overview_combines_data(async_client, db_setup):
     payload = response.json()
 
     assert payload["accounts"][0]["accountId"] == "acc_dash"
+    assert payload["accounts"][0]["accountGroupId"] is None
+    assert payload["accounts"][0]["accountGroupName"] is None
     assert payload["timeframe"] == {
         "key": "7d",
         "windowMinutes": 10080,

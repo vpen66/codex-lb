@@ -1,20 +1,12 @@
 import { Inbox } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { isEmailLabel } from "@/components/blur-email";
-import { CopyButton } from "@/components/copy-button";
 import { usePrivacyStore } from "@/hooks/use-privacy";
 import { EmptyState } from "@/components/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -25,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import { PaginationControls } from "@/features/dashboard/components/filters/pagination-controls";
 import type { AccountSummary, RequestLog } from "@/features/dashboard/schemas";
+import { UNGROUPED_GROUP_KEY } from "@/features/account-groups/utils";
 import { REQUEST_STATUS_LABELS } from "@/utils/constants";
 import {
   formatCompactNumber,
@@ -71,7 +64,7 @@ export function RecentRequestsTable({
   onLimitChange,
   onOffsetChange,
 }: RecentRequestsTableProps) {
-  const [selectedRequest, setSelectedRequest] = useState<RequestLog | null>(null);
+  const navigate = useNavigate();
   const blurred = usePrivacyStore((s) => s.blurred);
 
   const accountLabelMap = useMemo(() => {
@@ -92,6 +85,18 @@ export function RecentRequestsTable({
       }
     }
     return ids;
+  }, [accounts]);
+
+  const accountRouteMap = useMemo(() => {
+    const index = new Map<string, string>();
+    for (const account of accounts) {
+      const params = new URLSearchParams({
+        group: account.accountGroupId ?? UNGROUPED_GROUP_KEY,
+        account: account.accountId,
+      });
+      index.set(account.accountId, `/accounts?${params.toString()}`);
+    }
+    return index;
   }, [accounts]);
 
   if (requests.length === 0) {
@@ -126,6 +131,9 @@ export function RecentRequestsTable({
             {requests.map((request) => {
               const time = formatTimeLong(request.requestedAt);
               const accountLabel = request.accountId ? (accountLabelMap.get(request.accountId) ?? request.accountId) : "—";
+              const accountRoute = request.accountId
+                ? (accountRouteMap.get(request.accountId) ?? `/accounts?${new URLSearchParams({ account: request.accountId }).toString()}`)
+                : null;
               const isEmailLabel = !!(request.accountId && emailLabelIds.has(request.accountId));
               const errorPreview = request.errorMessage || request.errorCode || "-";
               const hasError = !!(request.errorCode || request.errorMessage);
@@ -142,10 +150,24 @@ export function RecentRequestsTable({
                     </div>
                   </TableCell>
                   <TableCell className="truncate align-top text-sm">
-                    {isEmailLabel && blurred ? (
-                      <span className="privacy-blur">{accountLabel}</span>
+                    {accountRoute ? (
+                      <button
+                        type="button"
+                        className="max-w-full truncate text-left font-medium text-foreground transition-colors hover:text-primary"
+                        onClick={() => navigate(accountRoute)}
+                      >
+                        {isEmailLabel && blurred ? (
+                          <span className="privacy-blur">{accountLabel}</span>
+                        ) : (
+                          accountLabel
+                        )}
+                      </button>
                     ) : (
-                      accountLabel
+                      isEmailLabel && blurred ? (
+                        <span className="privacy-blur">{accountLabel}</span>
+                      ) : (
+                        accountLabel
+                      )
                     )}
                   </TableCell>
                   <TableCell className="truncate align-top text-xs text-muted-foreground">
@@ -214,13 +236,21 @@ export function RecentRequestsTable({
                           variant="ghost"
                           size="sm"
                           className="h-6 px-2 text-[11px]"
-                          onClick={() => setSelectedRequest(request)}
+                          onClick={() => navigate(`/request-logs/${request.logId}`)}
                         >
                           View Details
                         </Button>
                       </div>
                     ) : (
-                      <span className="text-xs text-muted-foreground">-</span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-[11px]"
+                        onClick={() => navigate(`/request-logs/${request.logId}`)}
+                      >
+                        View Details
+                      </Button>
                     )}
                   </TableCell>
                 </TableRow>
@@ -240,85 +270,6 @@ export function RecentRequestsTable({
           onLimitChange={onLimitChange}
           onOffsetChange={onOffsetChange}
         />
-      </div>
-
-      <Dialog open={selectedRequest !== null} onOpenChange={(open) => { if (!open) setSelectedRequest(null); }}>
-        <DialogContent className="max-h-[85vh] sm:max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Request Details</DialogTitle>
-            <DialogDescription>Inspect request metadata and copy the fields you need.</DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 overflow-y-auto">
-            <div className="space-y-3 rounded-md border bg-muted/30 p-4">
-              <RequestDetailField
-                label="Request ID"
-                value={selectedRequest?.requestId ?? "—"}
-                mono
-                copyValue={selectedRequest?.requestId ?? ""}
-                copyLabel="Copy Request ID"
-                compactCopy
-              />
-              <div className="grid gap-3 sm:grid-cols-3">
-                <RequestDetailField label="Status" value={selectedRequest ? (REQUEST_STATUS_LABELS[selectedRequest.status] ?? selectedRequest.status) : "—"} />
-                <RequestDetailField label="Model" value={selectedRequest ? formatModelLabel(selectedRequest.model, selectedRequest.reasoningEffort, selectedRequest.actualServiceTier ?? selectedRequest.serviceTier) : "—"} mono />
-                <RequestDetailField label="Transport" value={selectedRequest?.transport ? (TRANSPORT_LABELS[selectedRequest.transport] ?? selectedRequest.transport) : "—"} />
-                <RequestDetailField label="Time" value={selectedRequest ? `${formatTimeLong(selectedRequest.requestedAt).time} ${formatTimeLong(selectedRequest.requestedAt).date}` : "—"} />
-                <RequestDetailField label="Error Code" value={selectedRequest?.errorCode ?? "—"} mono />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <h3 className="text-sm font-medium">Full Error</h3>
-                {selectedRequest?.errorMessage ? (
-                  <CopyButton value={selectedRequest.errorMessage} label="Copy Error" iconOnly />
-                ) : null}
-              </div>
-              <div className="max-h-[36vh] overflow-y-auto rounded-md bg-muted/50 p-3">
-                <p className="whitespace-pre-wrap break-words font-mono text-xs leading-relaxed">
-                  {selectedRequest?.errorMessage ?? selectedRequest?.errorCode ?? "No error detail recorded."}
-                </p>
-              </div>
-            </div>
-          </div>
-          <DialogFooter showCloseButton />
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-}
-
-type RequestDetailFieldProps = {
-  label: string;
-  value: string;
-  mono?: boolean;
-  copyValue?: string;
-  copyLabel?: string;
-  compactCopy?: boolean;
-};
-
-function RequestDetailField({
-  label,
-  value,
-  mono = false,
-  copyValue,
-  copyLabel = "Copy",
-  compactCopy = false,
-}: RequestDetailFieldProps) {
-  return (
-    <div className="space-y-1">
-      <div className="flex items-center gap-2">
-        <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/80">
-          {label}
-        </div>
-        {copyValue ? (
-          <CopyButton value={copyValue} label={copyLabel} iconOnly={compactCopy} />
-        ) : null}
-      </div>
-      <div className="flex flex-col items-start gap-2">
-        <p className={`min-w-0 flex-1 break-all text-sm leading-relaxed ${mono ? "font-mono" : ""}`}>
-          {value}
-        </p>
       </div>
     </div>
   );

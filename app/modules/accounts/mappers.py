@@ -100,6 +100,8 @@ def _account_to_summary(
         display_name=account.email,
         plan_type=plan_type,
         status=account.status.value,
+        account_group_id=account.account_group_id,
+        account_group_name=account.account_group.name if account.account_group is not None else None,
         usage=AccountUsage(
             primary_remaining_percent=primary_remaining_percent,
             secondary_remaining_percent=secondary_remaining_percent,

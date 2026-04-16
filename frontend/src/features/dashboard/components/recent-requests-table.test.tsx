@@ -1,21 +1,20 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import type { ReactElement } from "react";
+import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { RecentRequestsTable } from "@/features/dashboard/components/recent-requests-table";
 
 const ISO = "2026-01-01T12:00:00+00:00";
+const navigateMock = vi.fn();
 
-const { toastSuccess, toastError } = vi.hoisted(() => ({
-  toastSuccess: vi.fn(),
-  toastError: vi.fn(),
-}));
-
-vi.mock("sonner", () => ({
-  toast: {
-    success: toastSuccess,
-    error: toastError,
-  },
-}));
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => navigateMock,
+  };
+});
 
 const PAGINATION_PROPS = {
   total: 1,
@@ -26,36 +25,34 @@ const PAGINATION_PROPS = {
   onOffsetChange: vi.fn(),
 };
 
+function renderTable(ui: ReactElement) {
+  return render(<MemoryRouter>{ui}</MemoryRouter>);
+}
+
 describe("RecentRequestsTable", () => {
   beforeEach(() => {
-    toastSuccess.mockReset();
-    toastError.mockReset();
+    navigateMock.mockReset();
   });
 
-  it("renders rows with status badges and supports request details and copy actions", async () => {
-    const longError = "Rate limit reached while processing this request ".repeat(3);
-    const writeText = vi.fn().mockResolvedValue(undefined);
-
-    Object.defineProperty(navigator, "clipboard", {
-      configurable: true,
-      value: { writeText },
-    });
-
-    render(
+  it("renders rows with status badges and navigates to account and request details", () => {
+    renderTable(
       <RecentRequestsTable
         {...PAGINATION_PROPS}
-         accounts={[
-           {
-             accountId: "acc-primary",
-             email: "primary@example.com",
-             displayName: "Primary Account",
-             planType: "plus",
-             status: "active",
-             additionalQuotas: [],
-           },
-         ]}
+        accounts={[
+          {
+            accountId: "acc-primary",
+            email: "primary@example.com",
+            displayName: "Primary Account",
+            planType: "plus",
+            status: "active",
+            accountGroupId: "grp-ops",
+            accountGroupName: "Operations",
+            additionalQuotas: [],
+          },
+        ]}
         requests={[
           {
+            logId: 1,
             requestedAt: ISO,
             accountId: "acc-primary",
             apiKeyName: "Key Alpha",
@@ -67,7 +64,7 @@ describe("RecentRequestsTable", () => {
             transport: "websocket",
             status: "rate_limit",
             errorCode: "rate_limit_exceeded",
-            errorMessage: longError,
+            errorMessage: "Rate limit reached",
             tokens: 1200,
             cachedInputTokens: 200,
             reasoningEffort: "high",
@@ -86,44 +83,26 @@ describe("RecentRequestsTable", () => {
     expect(screen.getByText("Rate limit")).toBeInTheDocument();
     expect(screen.getByText("rate_limit_exceeded")).toBeInTheDocument();
 
-    const viewButton = screen.getByRole("button", { name: "View Details" });
-    fireEvent.click(viewButton);
-    const dialog = screen.getByRole("dialog");
-    expect(dialog).toBeInTheDocument();
-    expect(screen.getByText("Request Details")).toBeInTheDocument();
-    expect(screen.getByText("req-1")).toBeInTheDocument();
-    expect(screen.getAllByText("rate_limit_exceeded")[0]).toBeInTheDocument();
-    expect(dialog.textContent).toContain("Rate limit reached while processing this request");
+    fireEvent.click(screen.getByRole("button", { name: "Primary Account" }));
+    expect(navigateMock).toHaveBeenCalledWith("/accounts?group=grp-ops&account=acc-primary");
 
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: "Copy Request ID" }));
-      await Promise.resolve();
-    });
-
-    expect(writeText).toHaveBeenCalledWith("req-1");
-    expect(toastSuccess).toHaveBeenCalledWith("Copied to clipboard");
-    expect(screen.getByRole("button", { name: "Copy Request ID Copied" })).toBeInTheDocument();
-
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: "Copy Error" }));
-      await Promise.resolve();
-    });
-
-    expect(writeText).toHaveBeenCalledWith(longError);
+    fireEvent.click(screen.getByRole("button", { name: "View Details" }));
+    expect(navigateMock).toHaveBeenCalledWith("/request-logs/1");
   });
 
   it("renders empty state", () => {
-    render(<RecentRequestsTable {...PAGINATION_PROPS} total={0} accounts={[]} requests={[]} />);
+    renderTable(<RecentRequestsTable {...PAGINATION_PROPS} total={0} accounts={[]} requests={[]} />);
     expect(screen.getByText("No request logs match the current filters.")).toBeInTheDocument();
   });
 
   it("renders placeholder transport for legacy rows", () => {
-    render(
+    renderTable(
       <RecentRequestsTable
         {...PAGINATION_PROPS}
         accounts={[]}
         requests={[
           {
+            logId: 2,
             requestedAt: ISO,
             accountId: "acc-legacy",
             apiKeyName: null,
@@ -149,13 +128,14 @@ describe("RecentRequestsTable", () => {
     expect(screen.getAllByText("--")[0]).toBeInTheDocument();
   });
 
-  it("shows details action for error-code-only rows", async () => {
-    render(
+  it("shows details action for non-error rows too", () => {
+    renderTable(
       <RecentRequestsTable
         {...PAGINATION_PROPS}
         accounts={[]}
         requests={[
           {
+            logId: 3,
             requestedAt: ISO,
             accountId: "acc-legacy",
             apiKeyName: null,
@@ -178,10 +158,7 @@ describe("RecentRequestsTable", () => {
       />,
     );
 
-    expect(screen.getAllByText("upstream_error")[0]).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "View Details" }));
-
-    expect(screen.getByRole("dialog")).toHaveTextContent("upstream_error");
-    expect(screen.getByRole("dialog")).toHaveTextContent("Full Error");
+    expect(navigateMock).toHaveBeenCalledWith("/request-logs/3");
   });
 });

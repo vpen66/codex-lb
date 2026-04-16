@@ -26,8 +26,13 @@ const EXPECTED_ENDPOINTS = [
 	"GET /api/dashboard/overview",
 	"GET /api/request-logs",
 	"GET /api/request-logs/options",
+	"GET /api/request-logs/:logId",
 	// accounts
 	"GET /api/accounts",
+	"GET /api/account-groups",
+	"POST /api/account-groups",
+	"PUT /api/account-groups/:groupId",
+	"DELETE /api/account-groups/:groupId",
 	"POST /api/accounts/import",
 	"POST /api/accounts/:accountId/pause",
 	"POST /api/accounts/:accountId/reactivate",

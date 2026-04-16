@@ -13,13 +13,21 @@ from app.core.usage.logs import RequestLogLike, calculated_cost_from_log
 from app.core.usage.types import BucketModelAggregate, RequestActivityAggregate
 from app.core.utils.request_id import ensure_request_id
 from app.core.utils.time import utcnow
-from app.db.models import Account, ApiKey, RequestLog
+from app.db.models import Account, AccountGroup, ApiKey, RequestLog
 
 
 @dataclass(frozen=True, slots=True)
 class _RequestLogFilters:
     conditions: list
     needs_related_search_joins: bool
+
+
+@dataclass(frozen=True, slots=True)
+class RequestLogDetailRow:
+    log: RequestLog
+    account_email: str | None
+    account_group_name: str | None
+    api_key_name: str | None
 
 
 class RequestLogsRepository:
@@ -284,6 +292,25 @@ class RequestLogsRepository:
             return {}
         result = await self._session.execute(select(ApiKey.id, ApiKey.name).where(ApiKey.id.in_(unique_ids)))
         return {key_id: name for key_id, name in result.all() if key_id and name}
+
+    async def get_log_detail(self, log_id: int) -> RequestLogDetailRow | None:
+        result = await self._session.execute(
+            select(RequestLog, Account.email, AccountGroup.name, ApiKey.name)
+            .outerjoin(Account, Account.id == RequestLog.account_id)
+            .outerjoin(AccountGroup, AccountGroup.id == Account.account_group_id)
+            .outerjoin(ApiKey, ApiKey.id == RequestLog.api_key_id)
+            .where(RequestLog.id == log_id)
+        )
+        row = result.first()
+        if row is None:
+            return None
+        log, account_email, account_group_name, api_key_name = row
+        return RequestLogDetailRow(
+            log=typing_cast(RequestLog, log),
+            account_email=typing_cast(str | None, account_email),
+            account_group_name=typing_cast(str | None, account_group_name),
+            api_key_name=typing_cast(str | None, api_key_name),
+        )
 
     def _build_filters(
         self,

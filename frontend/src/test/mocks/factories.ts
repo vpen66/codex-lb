@@ -29,6 +29,7 @@ import type { AuthSession } from "@/features/auth/schemas";
 import { AuthSessionSchema } from "@/features/auth/schemas";
 import type {
 	DashboardOverview,
+	RequestLogDetail,
 	RequestLog,
 	RequestLogFilterOptions,
 	RequestLogsResponse,
@@ -37,10 +38,13 @@ import type {
 import {
 	DEFAULT_OVERVIEW_TIMEFRAME,
 	DashboardOverviewSchema,
+	RequestLogDetailSchema,
 	RequestLogFilterOptionsSchema,
 	RequestLogSchema,
 	RequestLogsResponseSchema,
 } from "@/features/dashboard/schemas";
+import type { AccountGroup } from "@/features/account-groups/schemas";
+import { AccountGroupSchema } from "@/features/account-groups/schemas";
 import type { DashboardSettings } from "@/features/settings/schemas";
 import { DashboardSettingsSchema } from "@/features/settings/schemas";
 
@@ -52,7 +56,9 @@ export type OauthCompleteResponse = z.infer<typeof OauthCompleteResponseSchema>;
 export type {
 	AccountSummary,
 	AccountTrendsResponse,
+	AccountGroup,
 	DashboardOverview,
+	RequestLogDetail,
 	RequestLogsResponse,
 	RequestLogFilterOptions,
 	DashboardSettings,
@@ -79,6 +85,8 @@ export function createAccountSummary(
 		displayName: "primary@example.com",
 		planType: "plus",
 		status: "active",
+		accountGroupId: "grp_operations",
+		accountGroupName: "Operations",
 		usage: {
 			primaryRemainingPercent: 82,
 			secondaryRemainingPercent: 67,
@@ -87,6 +95,10 @@ export function createAccountSummary(
 		resetAtSecondary: offsetIso(24 * 60),
 		windowMinutesPrimary: 300,
 		windowMinutesSecondary: 10_080,
+		capacityCreditsPrimary: 225,
+		remainingCreditsPrimary: 184.5,
+		capacityCreditsSecondary: 7560,
+		remainingCreditsSecondary: 5065.2,
 		auth: {
 			access: { expiresAt: offsetIso(30), state: null },
 			refresh: { state: "stored" },
@@ -108,8 +120,30 @@ export function createDefaultAccounts(): AccountSummary[] {
 				primaryRemainingPercent: 45,
 				secondaryRemainingPercent: 12,
 			},
+			capacityCreditsPrimary: 225,
+			remainingCreditsPrimary: 101.25,
+			capacityCreditsSecondary: 7560,
+			remainingCreditsSecondary: 907.2,
 		}),
 	];
+}
+
+export function createAccountGroup(
+	overrides: Partial<AccountGroup> = {},
+): AccountGroup {
+	return AccountGroupSchema.parse({
+		id: "grp_operations",
+		name: "Operations",
+		accountIds: ["acc_primary", "acc_secondary"],
+		accountCount: 2,
+		createdAt: offsetIso(-240),
+		updatedAt: offsetIso(-10),
+		...overrides,
+	});
+}
+
+export function createDefaultAccountGroups(): AccountGroup[] {
+	return [createAccountGroup()];
 }
 
 function createTrendPoints(
@@ -244,6 +278,7 @@ export function createRequestLogEntry(
 	overrides: Partial<RequestLogEntry> = {},
 ): RequestLogEntry {
 	return RequestLogSchema.parse({
+		logId: 1,
 		requestedAt: offsetIso(-1),
 		accountId: "acc_primary",
 		apiKeyName: "Primary Key",
@@ -269,6 +304,7 @@ export function createDefaultRequestLogs(): RequestLogEntry[] {
 	return [
 		createRequestLogEntry(),
 		createRequestLogEntry({
+			logId: 2,
 			requestId: "req_2",
 			accountId: "acc_secondary",
 			apiKeyName: "Secondary Key",
@@ -281,6 +317,7 @@ export function createDefaultRequestLogs(): RequestLogEntry[] {
 			requestedAt: offsetIso(-2),
 		}),
 		createRequestLogEntry({
+			logId: 3,
 			requestId: "req_3",
 			apiKeyName: null,
 			status: "quota",
@@ -303,6 +340,22 @@ export function createRequestLogsResponse(
 		requests,
 		total,
 		hasMore,
+	});
+}
+
+export function createRequestLogDetail(
+	overrides: Partial<RequestLogDetail> = {},
+): RequestLogDetail {
+	const base = createRequestLogEntry();
+	return RequestLogDetailSchema.parse({
+		...base,
+		accountEmail: "primary@example.com",
+		accountGroupName: "Operations",
+		inputTokens: 1200,
+		outputTokens: 600,
+		reasoningTokens: 150,
+		latencyFirstTokenMs: 220,
+		...overrides,
 	});
 }
 

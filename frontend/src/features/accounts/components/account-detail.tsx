@@ -52,7 +52,11 @@ export function AccountDetail({
   const idSuffix = showAccountId ? ` (${compactId})` : "";
 
   return (
-    <div key={account.accountId} className="animate-fade-in-up space-y-4 rounded-xl border bg-card p-5">
+    <section
+      key={account.accountId}
+      aria-label="Selected account details"
+      className="animate-fade-in-up space-y-4 rounded-xl border bg-card p-5"
+    >
       {/* Account header */}
       <div>
         <h2 className="text-base font-semibold">
@@ -75,6 +79,6 @@ export function AccountDetail({
         onDelete={onDelete}
         onReauth={onReauth}
       />
-    </div>
+    </section>
   );
 }

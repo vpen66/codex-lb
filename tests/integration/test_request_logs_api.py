@@ -94,3 +94,43 @@ async def test_request_logs_api_returns_recent(async_client, db_setup):
     assert older["tokens"] == 300
     assert older["cachedInputTokens"] is None
     assert older["transport"] == "http"
+
+
+@pytest.mark.asyncio
+async def test_request_logs_api_returns_detail(async_client, db_setup):
+    async with SessionLocal() as session:
+        accounts_repo = AccountsRepository(session)
+        logs_repo = RequestLogsRepository(session)
+        await accounts_repo.upsert(_make_account("acc_logs_detail", "logs-detail@example.com"))
+
+        now = utcnow()
+        created = await logs_repo.add_log(
+            account_id="acc_logs_detail",
+            request_id="req_logs_detail",
+            model="gpt-5.4",
+            input_tokens=120,
+            output_tokens=30,
+            latency_ms=640,
+            latency_first_token_ms=210,
+            status="error",
+            error_code="rate_limit_exceeded",
+            error_message="Rate limit reached",
+            requested_at=now,
+            cached_input_tokens=40,
+            reasoning_tokens=15,
+            reasoning_effort="high",
+            transport="websocket",
+        )
+
+    response = await async_client.get(f"/api/request-logs/{created.id}")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["logId"] == created.id
+    assert payload["requestId"] == "req_logs_detail"
+    assert payload["accountEmail"] == "logs-detail@example.com"
+    assert payload["status"] == "rate_limit"
+    assert payload["inputTokens"] == 120
+    assert payload["outputTokens"] == 30
+    assert payload["cachedInputTokens"] == 40
+    assert payload["reasoningTokens"] == 15
+    assert payload["latencyFirstTokenMs"] == 210

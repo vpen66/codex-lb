@@ -7,10 +7,11 @@ from app.modules.request_logs.mappers import (
     QUOTA_CODES,
     RATE_LIMIT_CODES,
     normalize_log_status,
+    to_request_log_detail,
     to_request_log_entry,
 )
 from app.modules.request_logs.repository import RequestLogsRepository
-from app.modules.request_logs.schemas import RequestLogEntry
+from app.modules.request_logs.schemas import RequestLogDetailResponse, RequestLogEntry
 
 
 @dataclass(frozen=True, slots=True)
@@ -119,6 +120,17 @@ class RequestLogsService:
                 for model, reasoning_effort in option_model_options
             ],
             statuses=_normalize_status_values(status_values),
+        )
+
+    async def get_detail(self, log_id: int) -> RequestLogDetailResponse | None:
+        detail = await self._repo.get_log_detail(log_id)
+        if detail is None:
+            return None
+        return to_request_log_detail(
+            detail.log,
+            account_email=detail.account_email,
+            account_group_name=detail.account_group_name,
+            api_key_name=detail.api_key_name,
         )
 
 

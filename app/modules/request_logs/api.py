@@ -5,8 +5,10 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, Query
 
 from app.core.auth.dependencies import set_dashboard_error_format, validate_dashboard_session
+from app.core.exceptions import DashboardNotFoundError
 from app.dependencies import RequestLogsContext, get_request_logs_context
 from app.modules.request_logs.schemas import (
+    RequestLogDetailResponse,
     RequestLogFilterOptionsResponse,
     RequestLogModelOption,
     RequestLogsResponse,
@@ -105,3 +107,14 @@ async def list_request_log_filter_options(
         ],
         statuses=options.statuses,
     )
+
+
+@router.get("/{log_id}", response_model=RequestLogDetailResponse)
+async def get_request_log_detail(
+    log_id: int,
+    context: RequestLogsContext = Depends(get_request_logs_context),
+) -> RequestLogDetailResponse:
+    detail = await context.service.get_detail(log_id)
+    if detail is None:
+        raise DashboardNotFoundError("Request log not found", code="request_log_not_found")
+    return detail

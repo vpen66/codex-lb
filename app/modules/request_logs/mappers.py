@@ -4,7 +4,7 @@ from typing import cast as typing_cast
 
 from app.core.usage.logs import RequestLogLike, cached_input_tokens_from_log, cost_from_log, total_tokens_from_log
 from app.db.models import RequestLog
-from app.modules.request_logs.schemas import RequestLogEntry
+from app.modules.request_logs.schemas import RequestLogDetailResponse, RequestLogEntry
 
 RATE_LIMIT_CODES = {"rate_limit_exceeded", "usage_limit_reached"}
 QUOTA_CODES = {"insufficient_quota", "usage_not_included", "quota_exceeded"}
@@ -27,6 +27,7 @@ def log_status(log: RequestLog) -> str:
 def to_request_log_entry(log: RequestLog, *, api_key_name: str | None = None) -> RequestLogEntry:
     log_like = typing_cast(RequestLogLike, log)
     return RequestLogEntry(
+        log_id=log.id,
         requested_at=log.requested_at,
         account_id=log.account_id,
         api_key_name=api_key_name,
@@ -42,6 +43,42 @@ def to_request_log_entry(log: RequestLog, *, api_key_name: str | None = None) ->
         error_message=log.error_message,
         tokens=total_tokens_from_log(log_like),
         cached_input_tokens=cached_input_tokens_from_log(log_like),
+        cost_usd=cost_from_log(log_like, precision=6),
+        latency_ms=log.latency_ms,
+        latency_first_token_ms=log.latency_first_token_ms,
+    )
+
+
+def to_request_log_detail(
+    log: RequestLog,
+    *,
+    account_email: str | None = None,
+    account_group_name: str | None = None,
+    api_key_name: str | None = None,
+) -> RequestLogDetailResponse:
+    log_like = typing_cast(RequestLogLike, log)
+    return RequestLogDetailResponse(
+        log_id=log.id,
+        requested_at=log.requested_at,
+        account_id=log.account_id,
+        account_email=account_email,
+        account_group_name=account_group_name,
+        api_key_name=api_key_name,
+        request_id=log.request_id,
+        model=log.model,
+        transport=log.transport,
+        service_tier=log.service_tier,
+        requested_service_tier=log.requested_service_tier,
+        actual_service_tier=log.actual_service_tier,
+        reasoning_effort=log.reasoning_effort,
+        status=log_status(log),
+        error_code=log.error_code,
+        error_message=log.error_message,
+        input_tokens=log.input_tokens,
+        output_tokens=log.output_tokens,
+        cached_input_tokens=cached_input_tokens_from_log(log_like),
+        reasoning_tokens=log.reasoning_tokens,
+        tokens=total_tokens_from_log(log_like),
         cost_usd=cost_from_log(log_like, precision=6),
         latency_ms=log.latency_ms,
         latency_first_token_ms=log.latency_first_token_ms,

@@ -100,6 +100,7 @@ export const DashboardOverviewSchema = z.object({
 });
 
 export const RequestLogSchema = z.object({
+  logId: z.number().int().nonnegative(),
   requestedAt: z.string().datetime({ offset: true }),
   accountId: z.string().nullable(),
   apiKeyName: z.string().nullable(),
@@ -117,6 +118,33 @@ export const RequestLogSchema = z.object({
   reasoningEffort: z.string().nullable(),
   costUsd: z.number().nullable(),
   latencyMs: z.number().nullable(),
+});
+
+export const RequestLogDetailSchema = z.object({
+  logId: z.number().int().nonnegative(),
+  requestedAt: z.string().datetime({ offset: true }),
+  accountId: z.string().nullable(),
+  accountEmail: z.string().nullable().optional().default(null),
+  accountGroupName: z.string().nullable().optional().default(null),
+  apiKeyName: z.string().nullable(),
+  requestId: z.string(),
+  model: z.string(),
+  transport: z.string().nullable().optional().default(null),
+  serviceTier: z.string().nullable().optional().default(null),
+  requestedServiceTier: z.string().nullable().optional().default(null),
+  actualServiceTier: z.string().nullable().optional().default(null),
+  status: z.string(),
+  errorCode: z.string().nullable(),
+  errorMessage: z.string().nullable(),
+  inputTokens: z.number().nullable(),
+  outputTokens: z.number().nullable(),
+  cachedInputTokens: z.number().nullable(),
+  reasoningTokens: z.number().nullable(),
+  tokens: z.number().nullable(),
+  reasoningEffort: z.string().nullable(),
+  costUsd: z.number().nullable(),
+  latencyMs: z.number().nullable(),
+  latencyFirstTokenMs: z.number().nullable().optional().default(null),
 });
 
 export const RequestLogsResponseSchema = z.object({
@@ -153,6 +181,7 @@ export type TrendPoint = z.infer<typeof TrendPointSchema>;
 export type MetricsTrends = z.infer<typeof MetricsTrendsSchema>;
 export type UsageWindow = z.infer<typeof UsageWindowSchema>;
 export type RequestLog = z.infer<typeof RequestLogSchema>;
+export type RequestLogDetail = z.infer<typeof RequestLogDetailSchema>;
 export type RequestLogsResponse = z.infer<typeof RequestLogsResponseSchema>;
 export type RequestLogFilterOptions = z.infer<typeof RequestLogFilterOptionsSchema>;
 export type FilterState = z.infer<typeof FilterStateSchema>;

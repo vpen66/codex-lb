@@ -1,5 +1,6 @@
 import { Activity, AlertTriangle, Coins, DollarSign, type LucideIcon } from "lucide-react";
 
+import { buildAccountGroupBuckets, groupRemainingItems, type AccountGroupBucket } from "@/features/account-groups/utils";
 import type {
   AccountSummary,
   DashboardOverview,
@@ -48,6 +49,7 @@ export type DashboardView = {
   stats: DashboardStat[];
   primaryUsageItems: RemainingItem[];
   secondaryUsageItems: RemainingItem[];
+  groups: AccountGroupBucket[];
   /** Sum of visible primary remaining items shown in the donut center label. */
   primaryTotal: number;
   /** Sum of visible secondary remaining items shown in the donut center label. */
@@ -240,13 +242,17 @@ export function buildDashboardView(
   const primaryUsageItems = secondaryWindow
     ? applySecondaryConstraint(rawPrimaryItems, secondaryUsageItems)
     : rawPrimaryItems;
+  const groups = buildAccountGroupBuckets(overview.accounts).filter((group) => group.accountCount > 0);
+  const groupedPrimaryUsageItems = groupRemainingItems(primaryUsageItems, overview.accounts, isDark);
+  const groupedSecondaryUsageItems = groupRemainingItems(secondaryUsageItems, overview.accounts, isDark);
 
   return {
     stats,
-    primaryUsageItems,
-    secondaryUsageItems,
-    primaryTotal: sumRemaining(primaryUsageItems),
-    secondaryTotal: sumRemaining(secondaryUsageItems),
+    primaryUsageItems: groupedPrimaryUsageItems,
+    secondaryUsageItems: groupedSecondaryUsageItems,
+    groups,
+    primaryTotal: sumRemaining(groupedPrimaryUsageItems),
+    secondaryTotal: sumRemaining(groupedSecondaryUsageItems),
     requestLogs,
     safeLinePrimary: buildDepletionView(overview.depletionPrimary),
     safeLineSecondary: buildDepletionView(overview.depletionSecondary),
