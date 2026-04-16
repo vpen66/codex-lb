@@ -24,10 +24,19 @@ describe("accounts flow integration", () => {
     await user.click(screen.getByRole("combobox"));
     await user.click(await screen.findByRole("option", { name: "All statuses" }));
 
-    await user.click(await screen.findByText("secondary@example.com"));
+    const membersHeading = await screen.findByRole("heading", { name: "Members" });
+    const membersSection = membersHeading.closest("section");
+    if (!membersSection) {
+      throw new Error("Members section not found");
+    }
+
+    await user.click(within(membersSection).getByText("secondary@example.com"));
+    const initialAccountDialog = await screen.findByRole("dialog", { name: "Account details" });
     expect(
-      await within(await screen.findByRole("region", { name: "Selected account details" })).findByText("secondary@example.com"),
+      await within(initialAccountDialog).findByRole("region", { name: "Selected account details" }),
     ).toBeInTheDocument();
+    expect(await within(initialAccountDialog).findByText("secondary@example.com")).toBeInTheDocument();
+    await user.click(within(initialAccountDialog).getByRole("button", { name: "Close" }));
 
     await user.click(screen.getByRole("button", { name: "New Group" }));
     await user.type(await screen.findByLabelText("Group Name"), "VIP");
@@ -43,10 +52,11 @@ describe("accounts flow integration", () => {
       window.dispatchEvent(new PopStateEvent("popstate"));
     });
 
-    expect(await screen.findByRole("heading", { name: "VIP" })).toBeInTheDocument();
-    const accountDetail = await screen.findByRole("region", { name: "Selected account details" });
+    expect(await screen.findByRole("heading", { name: "VIP", hidden: true })).toBeInTheDocument();
+    const accountDialog = await screen.findByRole("dialog", { name: "Account details" });
+    const accountDetail = within(accountDialog).getByRole("region", { name: "Selected account details" });
     expect(await within(accountDetail).findByText("secondary@example.com")).toBeInTheDocument();
-    expect(await screen.findByText("Token Status")).toBeInTheDocument();
+    expect(await within(accountDialog).findByText("Token Status")).toBeInTheDocument();
 
     const resumeButton = within(accountDetail).queryByRole("button", { name: "Resume" });
     if (resumeButton) {

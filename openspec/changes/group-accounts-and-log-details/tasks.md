@@ -16,9 +16,11 @@
 - [x] 3.1 Redesign dashboard quota/account sections to aggregate by group
 - [x] 3.2 Redesign the Accounts page around group browsing and group editing while preserving account import/add/action flows
 - [x] 3.3 Add a request-log detail route and navigation from the recent-requests table
+- [x] 3.4 Move member-account usage details into a modal dialog opened from the selected account card
 
 ## 4. Tests
 
 - [x] 4.1 Add backend coverage for account-group CRUD and account-summary group fields
 - [x] 4.2 Add backend coverage for request-log detail retrieval
 - [x] 4.3 Update frontend mocks, schema tests, and integration tests for grouped dashboard/accounts flows and request-log detail navigation
+- [x] 4.4 Update Accounts page integration coverage for modal account details

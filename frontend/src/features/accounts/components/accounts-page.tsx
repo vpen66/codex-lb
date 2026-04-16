@@ -7,6 +7,7 @@ import { AlertMessage } from "@/components/alert-message";
 import { LoadingOverlay } from "@/components/layout/loading-overlay";
 import { EmptyState } from "@/components/empty-state";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useDialogState } from "@/hooks/use-dialog-state";
 import { AccountGroupDialog } from "@/features/accounts/components/account-group-dialog";
 import { AccountGroupSidebar } from "@/features/accounts/components/account-group-sidebar";
@@ -75,6 +76,15 @@ export function AccountsPage() {
     setSearchParams(nextSearchParams);
   }, [searchParams, setSearchParams]);
 
+  const handleCloseAccountDetail = useCallback(() => {
+    if (!selectedAccountId) {
+      return;
+    }
+    const nextSearchParams = new URLSearchParams(searchParams);
+    nextSearchParams.delete("account");
+    setSearchParams(nextSearchParams);
+  }, [searchParams, selectedAccountId, setSearchParams]);
+
   const selectedAccountGroup = useMemo(() => {
     if (!selectedAccountId) {
       return null;
@@ -104,23 +114,12 @@ export function AccountsPage() {
     setSearchParams(nextSearchParams);
   }, [resolvedSelectedGroup, searchParams, setSearchParams]);
 
-  const resolvedSelectedAccountId = useMemo(() => {
-    const groupAccounts = resolvedSelectedGroup?.accounts ?? [];
-    if (groupAccounts.length === 0) {
-      return null;
-    }
-    if (selectedAccountId && groupAccounts.some((account) => account.accountId === selectedAccountId)) {
-      return selectedAccountId;
-    }
-    return groupAccounts[0].accountId;
-  }, [resolvedSelectedGroup, selectedAccountId]);
-
   const selectedAccount = useMemo(
     () =>
-      resolvedSelectedAccountId
-        ? resolvedSelectedGroup?.accounts.find((account) => account.accountId === resolvedSelectedAccountId) ?? null
+      selectedAccountId
+        ? resolvedSelectedGroup?.accounts.find((account) => account.accountId === selectedAccountId) ?? null
         : null,
-    [resolvedSelectedAccountId, resolvedSelectedGroup],
+    [resolvedSelectedGroup, selectedAccountId],
   );
 
   const mutationBusy =
@@ -228,7 +227,7 @@ export function AccountsPage() {
                       {resolvedSelectedGroup.accounts.map((account) => (
                         <div
                           key={account.accountId}
-                          className={selectedAccount?.accountId === account.accountId ? "rounded-2xl ring-2 ring-primary/25" : ""}
+                          className={selectedAccountId === account.accountId ? "rounded-2xl ring-2 ring-primary/25" : ""}
                         >
                           <AccountCard
                             account={account}
@@ -254,16 +253,6 @@ export function AccountsPage() {
                     </div>
                   )}
                 </section>
-
-                <AccountDetail
-                  account={selectedAccount}
-                  showAccountId={selectedAccount ? duplicateAccountIds.has(selectedAccount.accountId) : false}
-                  busy={mutationBusy}
-                  onPause={(accountId) => void pauseMutation.mutateAsync(accountId)}
-                  onResume={(accountId) => void resumeMutation.mutateAsync(accountId)}
-                  onDelete={(accountId) => deleteDialog.show(accountId)}
-                  onReauth={() => oauthDialog.show()}
-                />
               </>
             ) : (
               <EmptyState
@@ -320,11 +309,34 @@ export function AccountsPage() {
           if (!deleteDialog.data) {
             return;
           }
-          void deleteMutation.mutateAsync(deleteDialog.data).finally(() => {
+          const deletedAccountId = deleteDialog.data;
+          void deleteMutation.mutateAsync(deletedAccountId).finally(() => {
+            if (deletedAccountId === selectedAccountId) {
+              handleCloseAccountDetail();
+            }
             deleteDialog.hide();
           });
         }}
       />
+
+      <Dialog open={selectedAccount != null} onOpenChange={(open) => !open && handleCloseAccountDetail()}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto p-6 sm:max-w-4xl">
+          <DialogTitle className="sr-only">Account details</DialogTitle>
+          <DialogDescription className="sr-only">
+            Usage, token state, and actions for the selected account.
+          </DialogDescription>
+          <AccountDetail
+            account={selectedAccount}
+            variant="dialog"
+            showAccountId={selectedAccount ? duplicateAccountIds.has(selectedAccount.accountId) : false}
+            busy={mutationBusy}
+            onPause={(accountId) => void pauseMutation.mutateAsync(accountId)}
+            onResume={(accountId) => void resumeMutation.mutateAsync(accountId)}
+            onDelete={(accountId) => deleteDialog.show(accountId)}
+            onReauth={() => oauthDialog.show()}
+          />
+        </DialogContent>
+      </Dialog>
 
       <AccountGroupDialog
         open={groupDialog.open}

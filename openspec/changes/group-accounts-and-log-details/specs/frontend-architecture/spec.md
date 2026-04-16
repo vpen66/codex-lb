@@ -39,6 +39,12 @@ The Accounts page SHALL provide group-oriented account management. It MUST let o
 - **AND** it renders the member accounts for that group
 - **AND** the operator can still open account-specific details and actions for any member account
 
+#### Scenario: Open account detail in a modal
+
+- **WHEN** an operator selects a member account card in the Accounts page
+- **THEN** the app opens that account's usage and token detail in a modal dialog
+- **AND** the operator does not need to scroll below the member list to inspect the selected account
+
 #### Scenario: Filter grouped accounts by status
 
 - **WHEN** an operator applies an account status filter on the Accounts page
@@ -51,7 +57,7 @@ The Accounts page SHALL provide group-oriented account management. It MUST let o
 - **WHEN** an operator navigates to the Accounts page from a request-log account link
 - **THEN** the page resolves the account's persisted group automatically
 - **AND** it selects that account inside the group
-- **AND** the usage/detail panel renders the selected account instead of a different group member
+- **AND** the usage/detail dialog renders the selected account instead of a different group member
 
 ### Requirement: Request logs display fast-mode service tier
 When a request log entry includes `service_tier`, the dashboard request-log API response MUST expose it and the recent-requests UI MUST render it alongside the model label.
