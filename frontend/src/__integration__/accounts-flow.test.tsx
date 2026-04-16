@@ -19,7 +19,7 @@ describe("accounts flow integration", () => {
     await user.click(await screen.findByRole("option", { name: "Paused" }));
     expect(await screen.findByRole("button", { name: /Operations/ })).toBeInTheDocument();
     expect(screen.queryByText("primary@example.com")).not.toBeInTheDocument();
-    expect(await screen.findByText("secondary@example.com")).toBeInTheDocument();
+    expect((await screen.findAllByText("secondary@example.com")).length).toBeGreaterThan(0);
 
     await user.click(screen.getByRole("combobox"));
     await user.click(await screen.findByRole("option", { name: "All statuses" }));

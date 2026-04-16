@@ -15,6 +15,12 @@ The Dashboard page SHALL display summary metric cards, primary and secondary usa
 - **WHEN** one or more accounts have no persisted group
 - **THEN** the dashboard renders a visible `Ungrouped` item in grouped quota and grouped account sections
 
+#### Scenario: Dashboard group cards open from the full card surface
+
+- **WHEN** an operator clicks anywhere on a dashboard group card
+- **THEN** the app navigates to the Accounts page for that group
+- **AND** the operator does not need to target a separate `Open Group` control
+
 ### Requirement: Accounts page
 
 The Accounts page SHALL provide group-oriented account management. It MUST let operators create groups, edit group membership, browse accounts within a selected group, and drill into member-account details without losing existing import, add-account, pause, resume, delete, or re-authenticate flows.
@@ -32,6 +38,20 @@ The Accounts page SHALL provide group-oriented account management. It MUST let o
 - **THEN** the page shows the group's aggregated quota summary
 - **AND** it renders the member accounts for that group
 - **AND** the operator can still open account-specific details and actions for any member account
+
+#### Scenario: Filter grouped accounts by status
+
+- **WHEN** an operator applies an account status filter on the Accounts page
+- **THEN** the page preserves the grouped layout
+- **AND** it only renders groups that still contain at least one member account with the selected status
+- **AND** each rendered group only lists member accounts that match the selected status
+
+#### Scenario: Open an account from request logs
+
+- **WHEN** an operator navigates to the Accounts page from a request-log account link
+- **THEN** the page resolves the account's persisted group automatically
+- **AND** it selects that account inside the group
+- **AND** the usage/detail panel renders the selected account instead of a different group member
 
 ### Requirement: Request logs display fast-mode service tier
 When a request log entry includes `service_tier`, the dashboard request-log API response MUST expose it and the recent-requests UI MUST render it alongside the model label.
