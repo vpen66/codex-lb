@@ -4,7 +4,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FRONTEND_DIR="$ROOT_DIR/frontend"
-STATE_DIR="$ROOT_DIR/.codex-dev"
+STATE_DIR="$ROOT_DIR/codex-dev-log"
 PID_FILE="$STATE_DIR/pids"
 BACKEND_LOG_FILE="$STATE_DIR/backend.log"
 FRONTEND_LOG_FILE="$STATE_DIR/frontend.log"
