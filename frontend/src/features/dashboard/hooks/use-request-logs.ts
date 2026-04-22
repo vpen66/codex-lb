@@ -1,10 +1,13 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 import {
+  deleteRequestLogsInRange,
   getRequestLogOptions,
   getRequestLogs,
+  type RequestLogsDeleteRange,
   type RequestLogFacetFilters,
   type RequestLogsListFilters,
 } from "@/features/dashboard/api";
@@ -94,6 +97,7 @@ function timeframeToSinceIso(timeframe: FilterState["timeframe"]): string | unde
 }
 
 export function useRequestLogs() {
+  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filters = useMemo(() => parseFilterState(searchParams), [searchParams]);
@@ -136,6 +140,25 @@ export function useRequestLogs() {
     refetchOnWindowFocus: true,
   });
 
+  const deleteRangeMutation = useMutation({
+    mutationFn: (range: RequestLogsDeleteRange) => deleteRequestLogsInRange(range),
+    onSuccess: async (response) => {
+      if (response.deletedCount > 0) {
+        toast.success(
+          response.deletedCount === 1
+            ? "Deleted 1 request log"
+            : `Deleted ${response.deletedCount} request logs`,
+        );
+      } else {
+        toast.warning("No request logs matched the selected range");
+      }
+      await queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Failed to delete request logs");
+    },
+  });
+
   const updateFilters = (patch: Partial<FilterState>) => {
     const nextState: FilterState = {
       ...filters,
@@ -150,6 +173,7 @@ export function useRequestLogs() {
     facetFilters,
     logsQuery,
     optionsQuery,
+    deleteRangeMutation,
     updateFilters,
   };
 }

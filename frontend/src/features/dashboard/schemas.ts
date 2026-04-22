@@ -154,6 +154,10 @@ export const RequestLogsResponseSchema = z.object({
   hasMore: z.boolean(),
 });
 
+export const RequestLogsDeleteResponseSchema = z.object({
+  deletedCount: z.number().int().nonnegative(),
+});
+
 export const RequestLogModelOptionSchema = z.object({
   model: z.string(),
   reasoningEffort: z.string().nullable(),
@@ -184,6 +188,7 @@ export type UsageWindow = z.infer<typeof UsageWindowSchema>;
 export type RequestLog = z.infer<typeof RequestLogSchema>;
 export type RequestLogDetail = z.infer<typeof RequestLogDetailSchema>;
 export type RequestLogsResponse = z.infer<typeof RequestLogsResponseSchema>;
+export type RequestLogsDeleteResponse = z.infer<typeof RequestLogsDeleteResponseSchema>;
 export type RequestLogFilterOptions = z.infer<typeof RequestLogFilterOptionsSchema>;
 export type FilterState = z.infer<typeof FilterStateSchema>;
 export type Depletion = z.infer<typeof DepletionSchema>;

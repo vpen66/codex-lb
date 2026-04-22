@@ -14,6 +14,10 @@ from app.modules.request_logs.repository import RequestLogsRepository
 from app.modules.request_logs.schemas import RequestLogDetailResponse, RequestLogEntry
 
 
+class InvalidRequestLogsDeleteRangeError(ValueError):
+    pass
+
+
 @dataclass(frozen=True, slots=True)
 class RequestLogModelOption:
     model: str
@@ -45,6 +49,13 @@ class RequestLogsPage:
 class RequestLogsService:
     def __init__(self, repo: RequestLogsRepository) -> None:
         self._repo = repo
+
+    async def delete_range(self, *, since: datetime | None, until: datetime | None) -> int:
+        if since is None or until is None:
+            raise InvalidRequestLogsDeleteRangeError("Both since and until are required")
+        if since > until:
+            raise InvalidRequestLogsDeleteRangeError("since must be earlier than or equal to until")
+        return await self._repo.delete_in_range(since=since, until=until)
 
     async def list_recent(
         self,
