@@ -21,13 +21,18 @@ _RESPONSES_INCLUDE_ALLOWLIST = {
     "web_search_call.action.sources",
 }
 
-UNSUPPORTED_TOOL_TYPES = {
-    "file_search",
-    "code_interpreter",
-    "computer_use",
-    "computer_use_preview",
-    "image_generation",
-}
+
+RESPONSES_UNSUPPORTED_TOOL_TYPES: frozenset[str] = frozenset()
+
+CHAT_UNSUPPORTED_TOOL_TYPES = frozenset(
+    {
+        "file_search",
+        "code_interpreter",
+        "computer_use",
+        "computer_use_preview",
+        "image_generation",
+    }
+)
 
 _TOOL_TYPE_ALIASES = {
     "web_search_preview": "web_search",

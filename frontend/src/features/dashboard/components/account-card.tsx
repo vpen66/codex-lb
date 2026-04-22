@@ -18,6 +18,7 @@ type AccountAction = "details" | "resume" | "reauth";
 export type AccountCardProps = {
   account: AccountSummary;
   showAccountId?: boolean;
+  onSelect?: (accountId: string) => void;
   onAction?: (account: AccountSummary, action: AccountAction) => void;
 };
 
@@ -65,7 +66,7 @@ function QuotaBar({
   );
 }
 
-export function AccountCard({ account, showAccountId = false, onAction }: AccountCardProps) {
+export function AccountCard({ account, showAccountId = false, onSelect, onAction }: AccountCardProps) {
   const blurred = usePrivacyStore((s) => s.blurred);
   const status = normalizeStatus(account.status);
   const primaryRemaining = account.usage?.primaryRemainingPercent ?? null;
@@ -85,7 +86,10 @@ export function AccountCard({ account, showAccountId = false, onAction }: Accoun
   const idSuffix = showAccountId ? ` | ID ${compactId}` : "";
 
   return (
-    <div className="card-hover rounded-xl border bg-card p-4">
+    <div
+      className={cn("card-hover rounded-xl border bg-card p-4", onSelect ? "cursor-pointer" : "")}
+      onClick={onSelect ? () => onSelect(account.accountId) : undefined}
+    >
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
@@ -120,7 +124,10 @@ export function AccountCard({ account, showAccountId = false, onAction }: Accoun
           size="sm"
           variant="ghost"
           className="h-7 gap-1.5 rounded-lg text-xs text-muted-foreground hover:text-foreground"
-          onClick={() => onAction?.(account, "details")}
+          onClick={(event) => {
+            event.stopPropagation();
+            onAction?.(account, "details");
+          }}
         >
           <ExternalLink className="h-3 w-3" />
           Details
@@ -131,7 +138,10 @@ export function AccountCard({ account, showAccountId = false, onAction }: Accoun
             size="sm"
             variant="ghost"
             className="h-7 gap-1.5 rounded-lg text-xs text-emerald-600 hover:bg-emerald-500/10 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
-            onClick={() => onAction?.(account, "resume")}
+            onClick={(event) => {
+              event.stopPropagation();
+              onAction?.(account, "resume");
+            }}
           >
             <Play className="h-3 w-3" />
             Resume
@@ -143,7 +153,10 @@ export function AccountCard({ account, showAccountId = false, onAction }: Accoun
             size="sm"
             variant="ghost"
             className="h-7 gap-1.5 rounded-lg text-xs text-amber-600 hover:bg-amber-500/10 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
-            onClick={() => onAction?.(account, "reauth")}
+            onClick={(event) => {
+              event.stopPropagation();
+              onAction?.(account, "reauth");
+            }}
           >
             <RotateCcw className="h-3 w-3" />
             Re-auth

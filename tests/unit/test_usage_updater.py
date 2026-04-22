@@ -689,6 +689,39 @@ def test_mark_usage_refresh_auth_cooldown_ignores_non_auth_status(monkeypatch) -
 
 
 @pytest.mark.asyncio
+async def test_usage_updater_deactivates_on_401_with_deactivated_message(monkeypatch) -> None:
+    monkeypatch.setenv("CODEX_LB_USAGE_REFRESH_ENABLED", "true")
+    from app.core.clients.usage import UsageFetchError
+    from app.core.config.settings import get_settings
+
+    get_settings.cache_clear()
+
+    async def stub_fetch_usage_401(**_: Any) -> UsagePayload:
+        raise UsageFetchError(
+            401,
+            "Your OpenAI account has been deactivated, please check your email for more information.",
+        )
+
+    monkeypatch.setattr("app.modules.usage.updater.fetch_usage", stub_fetch_usage_401)
+
+    usage_repo = StubUsageRepository()
+    accounts_repo = StubAccountsRepository()
+    updater = UsageUpdater(usage_repo, accounts_repo=accounts_repo)
+
+    acc = _make_account("acc_401_deactivated", "workspace_401_deactivated", email="gone@example.com")
+    accounts_repo.accounts_by_id[acc.id] = acc
+
+    await updater.refresh_accounts([acc], latest_usage={})
+
+    assert len(accounts_repo.status_updates) == 1
+    update = accounts_repo.status_updates[0]
+    assert update["account_id"] == acc.id
+    assert update["status"] == AccountStatus.DEACTIVATED
+    assert "deactivated" in (update["deactivation_reason"] or "").lower()
+    assert acc.status == AccountStatus.DEACTIVATED
+
+
+@pytest.mark.asyncio
 async def test_usage_updater_does_not_deactivate_on_5xx(monkeypatch) -> None:
     monkeypatch.setenv("CODEX_LB_USAGE_REFRESH_ENABLED", "true")
     from app.core.clients.usage import UsageFetchError
@@ -887,6 +920,32 @@ async def test_usage_updater_refresh_accounts_returns_false_on_401_retry_failure
 
     assert refreshed is False
     assert len(usage_repo.entries) == 0
+
+
+@pytest.mark.asyncio
+async def test_usage_updater_skips_already_deactivated_accounts(monkeypatch) -> None:
+    monkeypatch.setenv("CODEX_LB_USAGE_REFRESH_ENABLED", "true")
+    from app.core.config.settings import get_settings
+
+    get_settings.cache_clear()
+
+    async def should_not_fetch_usage(**_: Any) -> UsagePayload:
+        raise AssertionError("fetch_usage should not be called for deactivated accounts")
+
+    monkeypatch.setattr("app.modules.usage.updater.fetch_usage", should_not_fetch_usage)
+
+    usage_repo = StubUsageRepository()
+    accounts_repo = StubAccountsRepository()
+    updater = UsageUpdater(usage_repo, accounts_repo=accounts_repo)
+
+    acc = _make_account("acc_deactivated_skip", "workspace_deactivated_skip", email="skip@example.com")
+    acc.status = AccountStatus.DEACTIVATED
+    accounts_repo.accounts_by_id[acc.id] = acc
+
+    refreshed = await updater.refresh_accounts([acc], latest_usage={})
+
+    assert refreshed is False
+    assert len(accounts_repo.status_updates) == 0
 
 
 @pytest.mark.parametrize(

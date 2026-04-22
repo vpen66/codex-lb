@@ -7,12 +7,14 @@ import { AccountTokenInfo } from "@/features/accounts/components/account-token-i
 import { AccountUsagePanel } from "@/features/accounts/components/account-usage-panel";
 import type { AccountSummary } from "@/features/accounts/schemas";
 import { useAccountTrends } from "@/features/accounts/hooks/use-accounts";
+import { cn } from "@/lib/utils";
 import { formatCompactAccountId } from "@/utils/account-identifiers";
 
 export type AccountDetailProps = {
   account: AccountSummary | null;
   showAccountId?: boolean;
   busy: boolean;
+  variant?: "inline" | "dialog";
   onPause: (accountId: string) => void;
   onResume: (accountId: string) => void;
   onDelete: (accountId: string) => void;
@@ -23,6 +25,7 @@ export function AccountDetail({
   account,
   showAccountId = false,
   busy,
+  variant = "inline",
   onPause,
   onResume,
   onDelete,
@@ -32,6 +35,9 @@ export function AccountDetail({
   const blurred = usePrivacyStore((s) => s.blurred);
 
   if (!account) {
+    if (variant === "dialog") {
+      return null;
+    }
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-dashed p-12">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
@@ -52,7 +58,14 @@ export function AccountDetail({
   const idSuffix = showAccountId ? ` (${compactId})` : "";
 
   return (
-    <div key={account.accountId} className="animate-fade-in-up space-y-4 rounded-xl border bg-card p-5">
+    <section
+      key={account.accountId}
+      aria-label="Selected account details"
+      className={cn(
+        "space-y-4",
+        variant === "inline" ? "animate-fade-in-up rounded-xl border bg-card p-5" : "min-w-0",
+      )}
+    >
       {/* Account header */}
       <div>
         <h2 className="text-base font-semibold">
@@ -75,6 +88,6 @@ export function AccountDetail({
         onDelete={onDelete}
         onReauth={onReauth}
       />
-    </div>
+    </section>
   );
 }

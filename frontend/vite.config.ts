@@ -22,10 +22,10 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": proxyTarget,
-      "/v1": proxyTarget,
-      "/backend-api": proxyTarget,
-      "/health": proxyTarget,
+      "^/api(?:/|$)": proxyTarget,
+      "^/v1(?:/|$)": proxyTarget,
+      "^/backend-api(?:/|$)": proxyTarget,
+      "^/health(?:/|$)": proxyTarget,
     },
   },
   build: {

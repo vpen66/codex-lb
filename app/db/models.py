@@ -48,6 +48,27 @@ class StickySessionKind(str, Enum):
     PROMPT_CACHE = "prompt_cache"
 
 
+class AccountGroup(Base):
+    __tablename__ = "account_groups"
+    __table_args__ = (UniqueConstraint("name", name="uq_account_groups_name"),)
+
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
+
+    accounts: Mapped[list["Account"]] = relationship(
+        "Account",
+        back_populates="account_group",
+        lazy="selectin",
+    )
+
+
 class Account(Base):
     __tablename__ = "accounts"
 
@@ -55,6 +76,11 @@ class Account(Base):
     chatgpt_account_id: Mapped[str | None] = mapped_column(String, nullable=True)
     email: Mapped[str] = mapped_column(String, nullable=False)
     plan_type: Mapped[str] = mapped_column(String, nullable=False)
+    account_group_id: Mapped[str | None] = mapped_column(
+        String,
+        ForeignKey("account_groups.id", ondelete="SET NULL"),
+        nullable=True,
+    )
 
     access_token_encrypted: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     refresh_token_encrypted: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
@@ -608,6 +634,7 @@ Index(
     UsageHistory.id.desc(),
 )
 Index("idx_accounts_email", Account.email)
+Index("idx_accounts_account_group_id", Account.account_group_id)
 Index("idx_api_keys_name", ApiKey.name)
 Index("idx_logs_account_time", RequestLog.account_id, RequestLog.requested_at)
 Index("idx_logs_requested_at", RequestLog.requested_at)

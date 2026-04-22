@@ -60,6 +60,7 @@ describe("dashboard flow integration", () => {
     renderWithProviders(<App />);
 
     expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+    expect(await screen.findByText("Groups")).toBeInTheDocument();
     expect(await screen.findByText("Request Logs")).toBeInTheDocument();
 
     await waitFor(() => {
@@ -101,5 +102,33 @@ describe("dashboard flow integration", () => {
       expect(requestLogCalls).toBeGreaterThan(logsAfterFilter);
     });
     expect(overviewCalls).toBe(overviewAfterTimeframe);
+  });
+
+  it("navigates from the recent-requests table to the request-log detail page", async () => {
+    const user = userEvent.setup({ delay: null });
+
+    window.history.pushState({}, "", "/dashboard");
+    renderWithProviders(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+
+    await user.click(await screen.findAllByRole("button", { name: "View Details" }).then((buttons) => buttons[0]!));
+
+    expect(await screen.findByRole("heading", { name: "Request Log" })).toBeInTheDocument();
+    expect(await screen.findByText("Token Breakdown")).toBeInTheDocument();
+  });
+
+  it("navigates to the grouped accounts view when a dashboard group card is clicked", async () => {
+    const user = userEvent.setup({ delay: null });
+
+    window.history.pushState({}, "", "/dashboard");
+    renderWithProviders(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+
+    await user.click(await screen.findByRole("button", { name: /Operations/ }));
+
+    expect(await screen.findByRole("heading", { name: "Accounts" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Operations" })).toBeInTheDocument();
   });
 });

@@ -4,10 +4,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { RefreshCw } from "lucide-react";
 
 import { AlertMessage } from "@/components/alert-message";
-import { useAccountMutations } from "@/features/accounts/hooks/use-accounts";
-import { AccountCards } from "@/features/dashboard/components/account-cards";
 import { DashboardSkeleton } from "@/features/dashboard/components/dashboard-skeleton";
 import { OverviewTimeframeSelect } from "@/features/dashboard/components/filters/overview-timeframe-select";
+import { GroupCards } from "@/features/dashboard/components/group-cards";
 import { RequestFilters } from "@/features/dashboard/components/filters/request-filters";
 import { RecentRequestsTable } from "@/features/dashboard/components/recent-requests-table";
 import { StatsGrid } from "@/features/dashboard/components/stats-grid";
@@ -18,7 +17,6 @@ import { buildDashboardView } from "@/features/dashboard/utils";
 import {
   DEFAULT_OVERVIEW_TIMEFRAME,
   parseOverviewTimeframe,
-  type AccountSummary,
   type OverviewTimeframe,
 } from "@/features/dashboard/schemas";
 import { useThemeStore } from "@/hooks/use-theme";
@@ -38,7 +36,6 @@ export function DashboardPage() {
   );
   const dashboardQuery = useDashboard(overviewTimeframe);
   const { filters, logsQuery, optionsQuery, updateFilters } = useRequestLogs();
-  const { resumeMutation } = useAccountMutations();
 
   const isRefreshing = dashboardQuery.isFetching || logsQuery.isFetching;
 
@@ -59,21 +56,11 @@ export function DashboardPage() {
     [searchParams, setSearchParams],
   );
 
-  const handleAccountAction = useCallback(
-    (account: AccountSummary, action: string) => {
-      switch (action) {
-        case "details":
-          navigate(`/accounts?selected=${account.accountId}`);
-          break;
-        case "resume":
-          void resumeMutation.mutateAsync(account.accountId);
-          break;
-        case "reauth":
-          navigate(`/accounts?selected=${account.accountId}`);
-          break;
-      }
+  const handleOpenGroup = useCallback(
+    (groupKey: string) => {
+      navigate(`/accounts?group=${encodeURIComponent(groupKey)}`);
     },
-    [navigate, resumeMutation],
+    [navigate],
   );
 
   const overview = dashboardQuery.data;
@@ -175,10 +162,13 @@ export function DashboardPage() {
 
           <section className="space-y-4">
             <div className="flex items-center gap-3">
-              <h2 className="text-[13px] font-medium uppercase tracking-wider text-muted-foreground">Accounts</h2>
+              <h2 className="text-[13px] font-medium uppercase tracking-wider text-muted-foreground">Groups</h2>
               <div className="h-px flex-1 bg-border" />
             </div>
-            <AccountCards accounts={overview?.accounts ?? []} onAction={handleAccountAction} />
+            <GroupCards
+              groups={view.groups}
+              onOpenGroup={(group) => handleOpenGroup(group.key)}
+            />
           </section>
 
           <section className="space-y-4">

@@ -37,6 +37,7 @@ from app.core.resilience.bulkhead import BulkheadMiddleware, get_bulkhead
 from app.core.resilience.memory_monitor import configure as configure_memory_monitor
 from app.core.usage.refresh_scheduler import build_usage_refresh_scheduler
 from app.db.session import SessionLocal, close_db, init_background_db, init_db
+from app.modules.account_groups import api as account_groups_api
 from app.modules.accounts import api as accounts_api
 from app.modules.api_keys import api as api_keys_api
 from app.modules.audit import api as audit_api
@@ -352,6 +353,7 @@ def create_app() -> FastAPI:
     app.include_router(proxy_api.usage_router)
     app.include_router(audit_api.router)
     app.include_router(accounts_api.router)
+    app.include_router(account_groups_api.router)
     app.include_router(dashboard_api.router)
     app.include_router(usage_api.router)
     app.include_router(request_logs_api.router)

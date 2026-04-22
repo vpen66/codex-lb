@@ -7,6 +7,7 @@ from datetime import datetime
 from sqlalchemy import delete, func, select, text, update
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.db.models import Account, AccountStatus, DashboardSettings, RequestLog, StickySession, UsageHistory
 
@@ -40,7 +41,11 @@ class AccountsRepository:
         return await self._session.get(Account, account_id)
 
     async def list_accounts(self) -> list[Account]:
-        result = await self._session.execute(select(Account).order_by(Account.email))
+        result = await self._session.execute(
+            select(Account)
+            .options(selectinload(Account.account_group))
+            .order_by(Account.email)
+        )
         return list(result.scalars().all())
 
     async def list_request_usage_summary_by_account(

@@ -55,6 +55,9 @@ docker run -d --name codex-lb \
 
 # or uvx
 uvx codex-lb
+
+uv run fastapi run app/main.py --reload --port 2455
+
 ```
 
 Open [localhost:2455](http://localhost:2455) → Add account → Done.

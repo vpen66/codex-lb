@@ -291,6 +291,8 @@ class UsageUpdater:
             payload = await fetch_usage(
                 access_token=access_token,
                 account_id=usage_account_id,
+                log_account_id=account.id,
+                log_account_email=account.email,
             )
         except UsageFetchError as exc:
             if _should_deactivate_for_usage_error(exc):
@@ -309,6 +311,8 @@ class UsageUpdater:
                 payload = await fetch_usage(
                     access_token=access_token,
                     account_id=usage_account_id,
+                    log_account_id=account.id,
+                    log_account_email=account.email,
                 )
             except UsageFetchError as retry_exc:
                 if _should_deactivate_for_usage_error(retry_exc):
@@ -753,3 +757,10 @@ def _clear_usage_refresh_state() -> None:
     _usage_refresh_auth_cooldowns.clear()
     _last_successful_refresh.clear()
     _USAGE_REFRESH_SINGLEFLIGHT.clear()
+def _should_deactivate_for_usage_error(status_code: int, message: str | None = None) -> bool:
+    if status_code in _DEACTIVATING_USAGE_STATUS_CODES:
+        return True
+    if status_code != 401:
+        return False
+    normalized_message = (message or "").strip().lower()
+    return "deactivated" in normalized_message

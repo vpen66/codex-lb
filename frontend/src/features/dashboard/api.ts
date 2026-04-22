@@ -3,6 +3,7 @@ import { get } from "@/lib/api-client";
 import {
   DEFAULT_OVERVIEW_TIMEFRAME,
   DashboardOverviewSchema,
+  RequestLogDetailSchema,
   RequestLogFilterOptionsSchema,
   RequestLogsResponseSchema,
   type OverviewTimeframe,
@@ -72,6 +73,10 @@ export function getRequestLogs(params: RequestLogsListFilters = {}) {
   }
   const suffix = query.size > 0 ? `?${query.toString()}` : "";
   return get(`${REQUEST_LOGS_PATH}${suffix}`, RequestLogsResponseSchema);
+}
+
+export function getRequestLogDetail(logId: number) {
+  return get(`${REQUEST_LOGS_PATH}/${logId}`, RequestLogDetailSchema);
 }
 
 export function getRequestLogOptions(params: RequestLogFacetFilters = {}) {

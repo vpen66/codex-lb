@@ -62,6 +62,8 @@ class AccountSummary(DashboardModel):
     display_name: str
     plan_type: str
     status: str
+    account_group_id: str | None = None
+    account_group_name: str | None = None
     usage: AccountUsage | None = None
     reset_at_primary: datetime | None = None
     reset_at_secondary: datetime | None = None

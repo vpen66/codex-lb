@@ -1,20 +1,12 @@
 import { Inbox } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { isEmailLabel } from "@/components/blur-email";
-import { CopyButton } from "@/components/copy-button";
 import { usePrivacyStore } from "@/hooks/use-privacy";
 import { EmptyState } from "@/components/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -25,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import { PaginationControls } from "@/features/dashboard/components/filters/pagination-controls";
 import type { AccountSummary, RequestLog } from "@/features/dashboard/schemas";
+import { UNGROUPED_GROUP_KEY } from "@/features/account-groups/utils";
 import { REQUEST_STATUS_LABELS } from "@/utils/constants";
 import {
   formatDateTimeInline,
@@ -80,7 +73,7 @@ export function RecentRequestsTable({
   onLimitChange,
   onOffsetChange,
 }: RecentRequestsTableProps) {
-  const [selectedRequest, setSelectedRequest] = useState<RequestLog | null>(null);
+  const navigate = useNavigate();
   const blurred = usePrivacyStore((s) => s.blurred);
 
   const accountLabelMap = useMemo(() => {
@@ -101,6 +94,18 @@ export function RecentRequestsTable({
       }
     }
     return ids;
+  }, [accounts]);
+
+  const accountRouteMap = useMemo(() => {
+    const index = new Map<string, string>();
+    for (const account of accounts) {
+      const params = new URLSearchParams({
+        group: account.accountGroupId ?? UNGROUPED_GROUP_KEY,
+        account: account.accountId,
+      });
+      index.set(account.accountId, `/accounts?${params.toString()}`);
+    }
+    return index;
   }, [accounts]);
 
   if (requests.length === 0) {
@@ -136,6 +141,9 @@ export function RecentRequestsTable({
             {requests.map((request) => {
               const time = formatTimeLong(request.requestedAt);
               const accountLabel = request.accountId ? (accountLabelMap.get(request.accountId) ?? request.accountId) : "—";
+              const accountRoute = request.accountId
+                ? (accountRouteMap.get(request.accountId) ?? `/accounts?${new URLSearchParams({ account: request.accountId }).toString()}`)
+                : null;
               const isEmailLabel = !!(request.accountId && emailLabelIds.has(request.accountId));
               const errorPreview = request.errorMessage || request.errorCode || "-";
               const hasError = !!(request.errorCode || request.errorMessage);
@@ -154,10 +162,24 @@ export function RecentRequestsTable({
                     </div>
                   </TableCell>
                   <TableCell className="truncate align-top text-sm">
-                    {isEmailLabel && blurred ? (
-                      <span className="privacy-blur">{accountLabel}</span>
+                    {accountRoute ? (
+                      <button
+                        type="button"
+                        className="max-w-full truncate text-left font-medium text-foreground transition-colors hover:text-primary"
+                        onClick={() => navigate(accountRoute)}
+                      >
+                        {isEmailLabel && blurred ? (
+                          <span className="privacy-blur">{accountLabel}</span>
+                        ) : (
+                          accountLabel
+                        )}
+                      </button>
                     ) : (
-                      accountLabel
+                      isEmailLabel && blurred ? (
+                        <span className="privacy-blur">{accountLabel}</span>
+                      ) : (
+                        accountLabel
+                      )
                     )}
                   </TableCell>
                   <TableCell className="align-top">
@@ -238,13 +260,21 @@ export function RecentRequestsTable({
                           variant="ghost"
                           size="sm"
                           className="h-6 px-2 text-[11px]"
-                          onClick={() => setSelectedRequest(request)}
+                          onClick={() => navigate(`/request-logs/${request.logId}`)}
                         >
                           View Details
                         </Button>
                       </div>
                     ) : (
-                      <span className="text-xs text-muted-foreground">-</span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-[11px]"
+                        onClick={() => navigate(`/request-logs/${request.logId}`)}
+                      >
+                        View Details
+                      </Button>
                     )}
                   </TableCell>
                 </TableRow>
