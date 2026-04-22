@@ -99,3 +99,52 @@
       INFO   127.0.0.1:56498 - "GET /api/request-logs/options HTTP/1.1" 200
       INFO   127.0.0.1:56498 - "GET /api/dashboard/overview?timeframe=7d        
              HTTP/1.1" 200
+      INFO   127.0.0.1:56503 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56503 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:56503 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56521 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56521 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:56521 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56559 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56559 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:56562 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56569 - "GET /api/request-logs?limit=100&offset=0        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56572 - "GET /api/request-logs?limit=100&offset=300      
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56572 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:56577 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56586 - "GET /api/request-logs?limit=100&offset=200      
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56586 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:56589 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56592 - "DELETE                                          
+             /api/request-logs?since=2026-04-20T16%3A00%3A00.000Z&until=2026-04-
+             22T10%3A16%3A00.000Z HTTP/1.1" 200
+      INFO   127.0.0.1:56594 - "GET /api/request-logs?limit=100&offset=200      
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56593 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:56592 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56592 - "GET /api/request-logs?limit=100&offset=0        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56613 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:56614 - "GET /api/request-logs?limit=100&offset=0        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:56613 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [98487]
+      INFO   Stopping reloader process [98485]
+
