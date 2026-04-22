@@ -82,6 +82,12 @@ class Account(Base):
         nullable=True,
     )
 
+    account_group: Mapped["AccountGroup"] = relationship(
+        "AccountGroup",
+        back_populates="accounts",
+        lazy="selectin",
+    )
+
     access_token_encrypted: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     refresh_token_encrypted: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     id_token_encrypted: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)

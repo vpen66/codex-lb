@@ -20,7 +20,6 @@ import type { AccountSummary, RequestLog } from "@/features/dashboard/schemas";
 import { UNGROUPED_GROUP_KEY } from "@/features/account-groups/utils";
 import { REQUEST_STATUS_LABELS } from "@/utils/constants";
 import {
-  formatDateTimeInline,
   formatCompactNumber,
   formatCurrency,
   formatModelLabel,
@@ -295,86 +294,7 @@ export function RecentRequestsTable({
           onOffsetChange={onOffsetChange}
         />
       </div>
-
-      <Dialog open={selectedRequest !== null} onOpenChange={(open) => { if (!open) setSelectedRequest(null); }}>
-        <DialogContent className="max-h-[85vh] sm:max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Request Details</DialogTitle>
-            <DialogDescription>Inspect request metadata and copy the fields you need.</DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 overflow-y-auto">
-            <div className="space-y-3 rounded-md border bg-muted/30 p-4">
-              <RequestDetailField
-                label="Request ID"
-                value={selectedRequest?.requestId ?? "—"}
-                mono
-                copyValue={selectedRequest?.requestId ?? ""}
-                copyLabel="Copy Request ID"
-                compactCopy
-              />
-              <div className="grid gap-3 sm:grid-cols-3">
-                <RequestDetailField label="Status" value={selectedRequest ? (REQUEST_STATUS_LABELS[selectedRequest.status] ?? selectedRequest.status) : "—"} />
-                <RequestDetailField label="Model" value={selectedRequest ? formatModelLabel(selectedRequest.model, selectedRequest.reasoningEffort, selectedRequest.actualServiceTier ?? selectedRequest.serviceTier) : "—"} mono />
-                <RequestDetailField label="Plan" value={selectedRequest?.planType ? formatSlug(selectedRequest.planType) : "—"} />
-                <RequestDetailField label="Transport" value={selectedRequest?.transport ? (TRANSPORT_LABELS[selectedRequest.transport] ?? selectedRequest.transport) : "—"} />
-                <RequestDetailField label="Time" value={selectedRequest ? formatDateTimeInline(selectedRequest.requestedAt) : "—"} />
-                <RequestDetailField label="Error Code" value={selectedRequest?.errorCode ?? "—"} mono />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <h3 className="text-sm font-medium">Full Error</h3>
-                {selectedRequest?.errorMessage ? (
-                  <CopyButton value={selectedRequest.errorMessage} label="Copy Error" iconOnly />
-                ) : null}
-              </div>
-              <div className="max-h-[36vh] overflow-y-auto rounded-md bg-muted/50 p-3">
-                <p className="whitespace-pre-wrap break-words font-mono text-xs leading-relaxed">
-                  {selectedRequest?.errorMessage ?? selectedRequest?.errorCode ?? "No error detail recorded."}
-                </p>
-              </div>
-            </div>
-          </div>
-          <DialogFooter showCloseButton />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
 
-type RequestDetailFieldProps = {
-  label: string;
-  value: string;
-  mono?: boolean;
-  copyValue?: string;
-  copyLabel?: string;
-  compactCopy?: boolean;
-};
-
-function RequestDetailField({
-  label,
-  value,
-  mono = false,
-  copyValue,
-  copyLabel = "Copy",
-  compactCopy = false,
-}: RequestDetailFieldProps) {
-  return (
-    <div className="space-y-1">
-      <div className="flex items-center gap-2">
-        <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/80">
-          {label}
-        </div>
-        {copyValue ? (
-          <CopyButton value={copyValue} label={copyLabel} iconOnly={compactCopy} />
-        ) : null}
-      </div>
-      <div className="flex flex-col items-start gap-2">
-        <p className={`min-w-0 flex-1 break-all text-sm leading-relaxed ${mono ? "font-mono" : ""}`}>
-          {value}
-        </p>
-      </div>
-    </div>
-  );
-}
