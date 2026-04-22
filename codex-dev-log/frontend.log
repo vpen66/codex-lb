@@ -1,39 +1,6 @@
 $ vite
 
-  VITE v7.3.1  ready in 143 ms
+  VITE v7.3.1  ready in 212 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
-17:53:28 [vite] (client) hmr update /src/App.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css, /src/components/status-badge.tsx
-17:53:28 [vite] (client) hmr update /src/features/accounts/components/account-detail.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/accounts/components/accounts-page.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/components/layout/status-bar.tsx, /src/features/dashboard/components/dashboard-page.tsx, /src/features/dashboard/components/request-log-detail-page.tsx, /src/features/accounts/components/accounts-page.tsx, /src/features/accounts/components/account-detail.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/components/layout/status-bar.tsx, /src/features/dashboard/components/request-log-detail-page.tsx, /src/features/dashboard/components/dashboard-page.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/dashboard/components/account-card.tsx, /src/index.css
-17:53:28 [vite] vite.config.ts changed, restarting server...
-17:53:28 [vite] (client) hmr update /src/features/dashboard/components/dashboard-page.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/dashboard/components/recent-requests-table.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/components/layout/status-bar.tsx, /src/features/dashboard/components/dashboard-page.tsx, /src/features/dashboard/components/request-log-detail-page.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/dashboard/components/dashboard-page.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css, /src/features/accounts/components/account-group-summary-card.tsx, /src/features/dashboard/components/account-card.tsx, /src/features/accounts/components/account-usage-panel.tsx, /src/features/dashboard/components/group-card.tsx
-17:53:28 [vite] (client) hmr update /src/index.css, /src/features/accounts/components/accounts-page.tsx
-17:53:28 [vite] (client) hmr update /src/features/accounts/components/accounts-page.tsx, /src/index.css
-17:53:28 [vite] (client) page reload src/features/account-groups/schemas.ts
-17:53:28 [vite] (client) hmr update /src/features/accounts/components/accounts-page.tsx, /src/features/dashboard/components/dashboard-page.tsx, /src/features/dashboard/components/recent-requests-table.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/accounts/components/account-group-dialog.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/accounts/components/account-group-sidebar.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/accounts/components/account-group-summary-card.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/index.css, /src/features/dashboard/components/group-card.tsx
-17:53:28 [vite] (client) hmr update /src/features/dashboard/components/group-cards.tsx, /src/index.css
-17:53:28 [vite] (client) hmr update /src/features/dashboard/components/request-log-detail-page.tsx, /src/index.css
-17:53:28 [vite] (client) page reload src/features/dashboard/hooks/use-request-log-detail.ts
-17:53:28 [vite] server restarted.

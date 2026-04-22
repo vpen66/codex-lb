@@ -5,8 +5,6 @@ import { RefreshCw } from "lucide-react";
 
 import { AlertMessage } from "@/components/alert-message";
 import { Button } from "@/components/ui/button";
-import { useAccountMutations } from "@/features/accounts/hooks/use-accounts";
-import { AccountCards } from "@/features/dashboard/components/account-cards";
 import { DashboardSkeleton } from "@/features/dashboard/components/dashboard-skeleton";
 import { OverviewTimeframeSelect } from "@/features/dashboard/components/filters/overview-timeframe-select";
 import { RequestLogDeleteDialog } from "@/features/dashboard/components/request-log-delete-dialog";
@@ -41,7 +39,6 @@ export function DashboardPage() {
   );
   const dashboardQuery = useDashboard(overviewTimeframe);
   const { filters, listFilters, logsQuery, optionsQuery, deleteRangeMutation, updateFilters } = useRequestLogs();
-  const { resumeMutation } = useAccountMutations();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteDialogInitialSince, setDeleteDialogInitialSince] = useState("");
   const [deleteDialogInitialUntil, setDeleteDialogInitialUntil] = useState("");
