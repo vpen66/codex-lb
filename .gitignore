@@ -53,5 +53,5 @@ certs/
 .venv
 
 .omx/
-.codex-dev/
+codex-dev-log/
 codex-dev-log/
