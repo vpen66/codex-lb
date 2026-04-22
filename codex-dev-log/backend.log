@@ -1,0 +1,283 @@
+
+   FastAPI   Starting production server 🚀
+ 
+             Searching for package file structure from directories with         
+             __init__.py files                                                  
+             Importing from /Users/vpen/github-projects/codex-lb
+ 
+    module   📁 app            
+             ├── 🐍 __init__.py
+             └── 🐍 main.py    
+ 
+      code   Importing the FastAPI app object from the module with the following
+             code:                                                              
+ 
+             from app.main import app
+ 
+       app   Using import string: app.main:app
+ 
+    server   Server started at http://0.0.0.0:2455
+    server   Documentation at http://0.0.0.0:2455/docs
+ 
+             Logs:
+ 
+      INFO   Will watch for changes in these directories:                       
+             ['/Users/vpen/github-projects/codex-lb']
+      INFO   Uvicorn running on http://0.0.0.0:2455 (Press CTRL+C to quit)
+      INFO   Started reloader process [71762] using WatchFiles
+      INFO   Started server process [71764]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+      INFO   127.0.0.1:54731 - "GET /docs HTTP/1.1" 200
+      INFO   127.0.0.1:54764 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54765 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54762 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54835 - "GET /api/request-logs?limit=25&offset=0         
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54836 - "GET /api/request-logs/options HTTP/1.1" 200
+      INFO   127.0.0.1:54836 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54856 - "GET /api/account-groups HTTP/1.1" 200
+      INFO   127.0.0.1:54855 - "GET /api/accounts HTTP/1.1" 200
+      INFO   127.0.0.1:54873 - "GET                                             
+             /api/accounts/1a3dea76-5008-4294-9535-aac8e273c39f_f8b3d60b/trends 
+             HTTP/1.1" 200
+      INFO   127.0.0.1:54966 - "WebSocket /backend-api/codex/responses"
+      INFO   connection open
+      INFO   127.0.0.1:54997 - "WebSocket /backend-api/codex/responses"
+      INFO   connection open
+      INFO   connection closed
+Usage fetch failed request_id=None status=401 account_id=4ad20930-e813-4ac8-92c6-9bb4ae6144b5_6588ac0b upstream_account_id=4ad20930-e813-4ac8-92c6-9bb4ae6144b5 email=vp985+000023@proton.me message=Encountered invalidated oauth token for user, failing request
+Token refresh failed request_id=None status=401
+      INFO   127.0.0.1:55052 - "WebSocket /backend-api/codex/responses"
+      INFO   connection open
+      INFO   connection closed
+      INFO   connection closed
+   WARNING   WatchFiles detected changes in                                     
+             'app/modules/request_logs/repository.py',                          
+             'app/modules/request_logs/api.py',                                 
+             'tests/integration/test_request_logs_api.py',                      
+             'app/modules/account_groups/service.py',                           
+             'app/modules/account_groups/__init__.py',                          
+             'app/core/openai/requests.py',                                     
+             'app/modules/request_logs/mappers.py',                             
+             'tests/integration/test_dashboard_overview.py',                    
+             'app/modules/accounts/mappers.py', 'app/core/auth/dependencies.py',
+             'app/db/models.py', 'app/dependencies.py',                         
+             'app/db/alembic/versions/20260422_000000_merge_account_groups_and_r
+             equest_log_heads.py', 'app/modules/accounts/schemas.py',           
+             'app/modules/accounts/repository.py', 'app/main.py',               
+             'app/modules/request_logs/schemas.py',                             
+             'app/modules/account_groups/repository.py',                        
+             'app/db/alembic/versions/20260416_000000_add_account_groups.py',   
+             'app/core/openai/chat_requests.py',                                
+             'tests/integration/test_account_groups_api.py',                    
+             'app/core/clients/usage.py', 'tests/unit/test_usage_updater.py',   
+             'app/modules/account_groups/api.py',                               
+             'app/modules/request_logs/service.py',                             
+             'app/modules/account_groups/schemas.py',                           
+             'app/modules/usage/updater.py'. Reloading...
+
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [71764]
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 163, in _get_terminal_color
+    tty.setcbreak(tty_fd)
+    ~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tty.py", line 72, in setcbreak
+    tcsetattr(fd, when, new)
+    ~~~~~~~~~^^^^^^^^^^^^^^^
+termios.error: (5, 'Input/output error')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 583, in configure
+    formatters[name] = self.configure_formatter(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^
+                                        formatters[name])
+                                        ^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 693, in configure_formatter
+    result = self.configure_custom(config)
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 487, in configure_custom
+    result = c(**kwargs)
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/fastapi_cli/utils/cli.py", line 12, in __init__
+    self.toolkit = get_rich_toolkit()
+                   ~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/fastapi_cli/utils/cli.py", line 67, in get_rich_toolkit
+    style=TaggedStyle(tag_width=11),
+          ~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/styles/tagged.py", line 33, in __init__
+    super().__init__(theme=theme)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/styles/base.py", line 59, in __init__
+    self.background_color = get_terminal_background_color(background_color)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 225, in get_terminal_background_color
+    return _get_terminal_color("background", default_color)
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 213, in _get_terminal_color
+    termios.tcsetattr(tty_fd, termios.TCSAFLUSH, old_settings)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+termios.error: (5, 'Input/output error')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    config.configure_logging()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 370, in configure_logging
+    logging.config.dictConfig(self.log_config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 946, in dictConfig
+    dictConfigClass(config).configure()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 586, in configure
+    raise ValueError('Unable to configure '
+                     'formatter %r' % name) from e
+ValueError: Unable to configure formatter 'default'
+   WARNING   WatchFiles detected changes in                                     
+             'app/modules/request_logs/schemas.py',                             
+             'app/modules/request_logs/repository.py',                          
+             'app/modules/request_logs/api.py',                                 
+             'app/modules/request_logs/service.py',                             
+             'tests/integration/test_request_logs_api.py'. Reloading...
+Process SpawnProcess-3:
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 163, in _get_terminal_color
+    tty.setcbreak(tty_fd)
+    ~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tty.py", line 72, in setcbreak
+    tcsetattr(fd, when, new)
+    ~~~~~~~~~^^^^^^^^^^^^^^^
+termios.error: (5, 'Input/output error')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 583, in configure
+    formatters[name] = self.configure_formatter(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^
+                                        formatters[name])
+                                        ^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 693, in configure_formatter
+    result = self.configure_custom(config)
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 487, in configure_custom
+    result = c(**kwargs)
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/fastapi_cli/utils/cli.py", line 12, in __init__
+    self.toolkit = get_rich_toolkit()
+                   ~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/fastapi_cli/utils/cli.py", line 67, in get_rich_toolkit
+    style=TaggedStyle(tag_width=11),
+          ~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/styles/tagged.py", line 33, in __init__
+    super().__init__(theme=theme)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/styles/base.py", line 59, in __init__
+    self.background_color = get_terminal_background_color(background_color)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 225, in get_terminal_background_color
+    return _get_terminal_color("background", default_color)
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 213, in _get_terminal_color
+    termios.tcsetattr(tty_fd, termios.TCSAFLUSH, old_settings)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+termios.error: (5, 'Input/output error')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    config.configure_logging()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 370, in configure_logging
+    logging.config.dictConfig(self.log_config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 946, in dictConfig
+    dictConfigClass(config).configure()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 586, in configure
+    raise ValueError('Unable to configure '
+                     'formatter %r' % name) from e
+ValueError: Unable to configure formatter 'default'
+   WARNING   WatchFiles detected changes in 'app/modules/request_logs/api.py'.  
+             Reloading...
+Process SpawnProcess-4:
+Traceback (most recent call last):
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 163, in _get_terminal_color
+    tty.setcbreak(tty_fd)
+    ~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tty.py", line 72, in setcbreak
+    tcsetattr(fd, when, new)
+    ~~~~~~~~~^^^^^^^^^^^^^^^
+termios.error: (5, 'Input/output error')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 583, in configure
+    formatters[name] = self.configure_formatter(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^
+                                        formatters[name])
+                                        ^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 693, in configure_formatter
+    result = self.configure_custom(config)
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 487, in configure_custom
+    result = c(**kwargs)
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/fastapi_cli/utils/cli.py", line 12, in __init__
+    self.toolkit = get_rich_toolkit()
+                   ~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/fastapi_cli/utils/cli.py", line 67, in get_rich_toolkit
+    style=TaggedStyle(tag_width=11),
+          ~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/styles/tagged.py", line 33, in __init__
+    super().__init__(theme=theme)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/styles/base.py", line 59, in __init__
+    self.background_color = get_terminal_background_color(background_color)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 225, in get_terminal_background_color
+    return _get_terminal_color("background", default_color)
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/rich_toolkit/utils/colors.py", line 213, in _get_terminal_color
+    termios.tcsetattr(tty_fd, termios.TCSAFLUSH, old_settings)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+termios.error: (5, 'Input/output error')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    config.configure_logging()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/github-projects/codex-lb/.venv/lib/python3.14/site-packages/uvicorn/config.py", line 370, in configure_logging
+    logging.config.dictConfig(self.log_config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 946, in dictConfig
+    dictConfigClass(config).configure()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/vpen/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/logging/config.py", line 586, in configure
+    raise ValueError('Unable to configure '
+                     'formatter %r' % name) from e
+ValueError: Unable to configure formatter 'default'

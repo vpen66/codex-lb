@@ -1,4 +1,4 @@
-import { act, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HttpResponse, http } from "msw";
 import { describe, expect, it } from "vitest";
@@ -101,5 +101,65 @@ describe("dashboard flow integration", () => {
       expect(requestLogCalls).toBeGreaterThan(logsAfterFilter);
     });
     expect(overviewCalls).toBe(overviewAfterTimeframe);
+  });
+
+  it("deletes request logs for a selected time range and refreshes dashboard data", async () => {
+    const user = userEvent.setup({ delay: null });
+    const logs = createDefaultRequestLogs();
+
+    let overviewCalls = 0;
+    let requestLogCalls = 0;
+    const deleteCalls: Array<{ since: string | null; until: string | null }> = [];
+
+    server.use(
+      http.get("/api/dashboard/overview", () => {
+        overviewCalls += 1;
+        return HttpResponse.json(createDashboardOverview());
+      }),
+      http.get("/api/request-logs", () => {
+        requestLogCalls += 1;
+        return HttpResponse.json(createRequestLogsResponse(logs, logs.length, false));
+      }),
+      http.get("/api/request-logs/options", () =>
+        HttpResponse.json(createRequestLogFilterOptions()),
+      ),
+      http.delete("/api/request-logs", ({ request }) => {
+        const url = new URL(request.url);
+        deleteCalls.push({
+          since: url.searchParams.get("since"),
+          until: url.searchParams.get("until"),
+        });
+        return HttpResponse.json({ deletedCount: 2 });
+      }),
+    );
+
+    window.history.pushState({}, "", "/dashboard?timeframe=24h");
+    renderWithProviders(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+    await waitFor(() => expect(requestLogCalls).toBeGreaterThan(0));
+    const overviewAfterLoad = overviewCalls;
+    const requestLogsAfterLoad = requestLogCalls;
+
+    await user.click(screen.getByRole("button", { name: "Delete Range" }));
+    expect(await screen.findByRole("dialog", { name: "Delete Request Logs" })).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText("From"), {
+      target: { value: "2026-01-01T09:00" },
+    });
+    fireEvent.change(screen.getByLabelText("To"), {
+      target: { value: "2026-01-01T11:00" },
+    });
+
+    await user.click(screen.getByRole("button", { name: "Delete Logs" }));
+
+    await waitFor(() => expect(deleteCalls).toHaveLength(1));
+    expect(deleteCalls[0].since).toBe(new Date("2026-01-01T09:00").toISOString());
+    expect(deleteCalls[0].until).toBe(new Date("2026-01-01T11:00").toISOString());
+
+    await waitFor(() => {
+      expect(overviewCalls).toBeGreaterThan(overviewAfterLoad);
+      expect(requestLogCalls).toBeGreaterThan(requestLogsAfterLoad);
+    });
   });
 });

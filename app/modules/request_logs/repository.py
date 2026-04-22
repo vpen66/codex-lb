@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import cast as typing_cast
 
 import anyio
-from sqlalchemy import Integer, String, and_, cast, func, literal_column, or_, select
+from sqlalchemy import Integer, String, and_, cast, delete, func, literal_column, or_, select
 from sqlalchemy import exc as sa_exc
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.elements import ColumnElement
@@ -26,6 +26,19 @@ class _RequestLogFilters:
 class RequestLogsRepository:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
+
+    async def delete_in_range(self, *, since: datetime, until: datetime) -> int:
+        stmt = delete(RequestLog).where(
+            RequestLog.requested_at >= since,
+            RequestLog.requested_at <= until,
+        )
+        try:
+            result = await self._session.execute(stmt)
+            await self._session.commit()
+            return int(result.rowcount or 0)
+        except BaseException:
+            await _safe_rollback(self._session)
+            raise
 
     async def list_since(self, since: datetime) -> list[RequestLog]:
         result = await self._session.execute(select(RequestLog).where(RequestLog.requested_at >= since))

@@ -21,6 +21,7 @@ import {
 	createOauthStartResponse,
 	createOauthStatusResponse,
 	createRequestLogFilterOptions,
+	createRequestLogsDeleteResponse,
 	createRequestLogsResponse,
 	type DashboardAuthSession,
 	type DashboardSettings,
@@ -309,6 +310,43 @@ export const handlers = [
 			includeStatuses: false,
 		});
 		return HttpResponse.json(requestLogOptionsFromEntries(filtered));
+	}),
+
+	http.delete("/api/request-logs", ({ request }) => {
+		const url = new URL(request.url);
+		const since = parseDateValue(url.searchParams.get("since"));
+		const until = parseDateValue(url.searchParams.get("until"));
+		if (since === null || until === null) {
+			return HttpResponse.json(
+				{
+					error: {
+						code: "invalid_request_log_delete_range",
+						message: "Both since and until are required",
+					},
+				},
+				{ status: 400 },
+			);
+		}
+		if (since > until) {
+			return HttpResponse.json(
+				{
+					error: {
+						code: "invalid_request_log_delete_range",
+						message: "since must be earlier than or equal to until",
+					},
+				},
+				{ status: 400 },
+			);
+		}
+
+		const before = state.requestLogs.length;
+		state.requestLogs = state.requestLogs.filter((entry) => {
+			const timestamp = new Date(entry.requestedAt).getTime();
+			return timestamp < since || timestamp > until;
+		});
+		return HttpResponse.json(
+			createRequestLogsDeleteResponse(before - state.requestLogs.length),
+		);
 	}),
 
 	http.get("/api/accounts", () => {

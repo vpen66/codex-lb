@@ -31,6 +31,7 @@ import type {
 	DashboardOverview,
 	RequestLog,
 	RequestLogFilterOptions,
+	RequestLogsDeleteResponse,
 	RequestLogsResponse,
 	OverviewTimeframe,
 } from "@/features/dashboard/schemas";
@@ -39,6 +40,7 @@ import {
 	DashboardOverviewSchema,
 	RequestLogFilterOptionsSchema,
 	RequestLogSchema,
+	RequestLogsDeleteResponseSchema,
 	RequestLogsResponseSchema,
 } from "@/features/dashboard/schemas";
 import type { DashboardSettings } from "@/features/settings/schemas";
@@ -54,6 +56,7 @@ export type {
 	AccountTrendsResponse,
 	DashboardOverview,
 	RequestLogsResponse,
+	RequestLogsDeleteResponse,
 	RequestLogFilterOptions,
 	DashboardSettings,
 	OauthStartResponse,
@@ -303,6 +306,14 @@ export function createRequestLogsResponse(
 		requests,
 		total,
 		hasMore,
+	});
+}
+
+export function createRequestLogsDeleteResponse(
+	deletedCount: number,
+): RequestLogsDeleteResponse {
+	return RequestLogsDeleteResponseSchema.parse({
+		deletedCount,
 	});
 }
 

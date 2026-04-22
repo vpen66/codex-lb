@@ -35,6 +35,10 @@ class RequestLogsResponse(DashboardModel):
     has_more: bool
 
 
+class RequestLogsDeleteResponse(DashboardModel):
+    deleted_count: int
+
+
 class RequestLogModelOption(DashboardModel):
     model: str
     reasoning_effort: str | None = None

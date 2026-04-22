@@ -26,6 +26,7 @@ const EXPECTED_ENDPOINTS = [
 	"GET /api/dashboard/overview",
 	"GET /api/request-logs",
 	"GET /api/request-logs/options",
+	"DELETE /api/request-logs",
 	// accounts
 	"GET /api/accounts",
 	"POST /api/accounts/import",

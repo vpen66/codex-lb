@@ -1,13 +1,15 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { RefreshCw } from "lucide-react";
 
 import { AlertMessage } from "@/components/alert-message";
+import { Button } from "@/components/ui/button";
 import { useAccountMutations } from "@/features/accounts/hooks/use-accounts";
 import { AccountCards } from "@/features/dashboard/components/account-cards";
 import { DashboardSkeleton } from "@/features/dashboard/components/dashboard-skeleton";
 import { OverviewTimeframeSelect } from "@/features/dashboard/components/filters/overview-timeframe-select";
+import { RequestLogDeleteDialog } from "@/features/dashboard/components/request-log-delete-dialog";
 import { RequestFilters } from "@/features/dashboard/components/filters/request-filters";
 import { RecentRequestsTable } from "@/features/dashboard/components/recent-requests-table";
 import { StatsGrid } from "@/features/dashboard/components/stats-grid";
@@ -23,6 +25,7 @@ import {
 } from "@/features/dashboard/schemas";
 import { useThemeStore } from "@/hooks/use-theme";
 import { REQUEST_STATUS_LABELS } from "@/utils/constants";
+import { toLocalDateTime } from "@/utils/formatters";
 import { formatModelLabel, formatSlug } from "@/utils/formatters";
 
 const MODEL_OPTION_DELIMITER = ":::";
@@ -37,14 +40,32 @@ export function DashboardPage() {
     [searchParams],
   );
   const dashboardQuery = useDashboard(overviewTimeframe);
-  const { filters, logsQuery, optionsQuery, updateFilters } = useRequestLogs();
+  const { filters, listFilters, logsQuery, optionsQuery, deleteRangeMutation, updateFilters } = useRequestLogs();
   const { resumeMutation } = useAccountMutations();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteDialogInitialSince, setDeleteDialogInitialSince] = useState("");
+  const [deleteDialogInitialUntil, setDeleteDialogInitialUntil] = useState("");
 
   const isRefreshing = dashboardQuery.isFetching || logsQuery.isFetching;
 
   const handleRefresh = useCallback(() => {
     void queryClient.invalidateQueries({ queryKey: ["dashboard"] });
   }, [queryClient]);
+
+  const handleOpenDeleteDialog = useCallback(() => {
+    setDeleteDialogInitialSince(toLocalDateTime(listFilters.since ?? null));
+    setDeleteDialogInitialUntil(toLocalDateTime(new Date().toISOString()));
+    setDeleteDialogOpen(true);
+  }, [listFilters.since]);
+
+  const handleDeleteRange = useCallback(
+    async (range: { since: string; until: string }) => {
+      await deleteRangeMutation.mutateAsync(range);
+      updateFilters({ offset: 0 });
+      setDeleteDialogOpen(false);
+    },
+    [deleteRangeMutation, updateFilters],
+  );
 
   const handleOverviewTimeframeChange = useCallback(
     (timeframe: OverviewTimeframe) => {
@@ -185,6 +206,15 @@ export function DashboardPage() {
             <div className="flex items-center gap-3">
               <h2 className="text-[13px] font-medium uppercase tracking-wider text-muted-foreground">Request Logs</h2>
               <div className="h-px flex-1 bg-border" />
+              <Button
+                type="button"
+                size="sm"
+                variant="destructive"
+                onClick={handleOpenDeleteDialog}
+                disabled={deleteRangeMutation.isPending}
+              >
+                Delete Range
+              </Button>
             </div>
             <RequestFilters
               filters={filters}
@@ -221,6 +251,14 @@ export function DashboardPage() {
                 onOffsetChange={(offset) => updateFilters({ offset })}
               />
             </div>
+            <RequestLogDeleteDialog
+              open={deleteDialogOpen}
+              pending={deleteRangeMutation.isPending}
+              initialSince={deleteDialogInitialSince}
+              initialUntil={deleteDialogInitialUntil}
+              onOpenChange={setDeleteDialogOpen}
+              onConfirm={handleDeleteRange}
+            />
           </section>
         </>
       )}

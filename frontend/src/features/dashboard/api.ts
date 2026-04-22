@@ -1,9 +1,10 @@
-import { get } from "@/lib/api-client";
+import { del, get } from "@/lib/api-client";
 
 import {
   DEFAULT_OVERVIEW_TIMEFRAME,
   DashboardOverviewSchema,
   RequestLogFilterOptionsSchema,
+  RequestLogsDeleteResponseSchema,
   RequestLogsResponseSchema,
   type OverviewTimeframe,
 } from "@/features/dashboard/schemas";
@@ -27,6 +28,11 @@ export type RequestLogFacetFilters = {
   until?: string;
   accountIds?: string[];
   modelOptions?: string[];
+};
+
+export type RequestLogsDeleteRange = {
+  since: string;
+  until: string;
 };
 
 export type DashboardOverviewParams = {
@@ -86,4 +92,11 @@ export function getRequestLogOptions(params: RequestLogFacetFilters = {}) {
   appendMany(query, "modelOption", params.modelOptions);
   const suffix = query.size > 0 ? `?${query.toString()}` : "";
   return get(`${REQUEST_LOGS_PATH}/options${suffix}`, RequestLogFilterOptionsSchema);
+}
+
+export function deleteRequestLogsInRange(range: RequestLogsDeleteRange) {
+  const query = new URLSearchParams();
+  query.set("since", range.since);
+  query.set("until", range.until);
+  return del(`${REQUEST_LOGS_PATH}?${query.toString()}`, RequestLogsDeleteResponseSchema);
 }

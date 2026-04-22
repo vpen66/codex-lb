@@ -2,15 +2,19 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 
+from app.core.audit.service import AuditService
 from app.core.auth.dependencies import set_dashboard_error_format, validate_dashboard_session
+from app.core.exceptions import DashboardBadRequestError
 from app.dependencies import RequestLogsContext, get_request_logs_context
 from app.modules.request_logs.schemas import (
     RequestLogFilterOptionsResponse,
     RequestLogModelOption,
+    RequestLogsDeleteResponse,
     RequestLogsResponse,
 )
+from app.modules.request_logs.service import InvalidRequestLogsDeleteRangeError
 from app.modules.request_logs.service import RequestLogModelOption as ServiceRequestLogModelOption
 
 router = APIRouter(
@@ -71,6 +75,30 @@ async def list_request_logs(
         total=page.total,
         has_more=page.has_more,
     )
+
+
+@router.delete("", response_model=RequestLogsDeleteResponse)
+async def delete_request_logs(
+    request: Request,
+    since: datetime | None = Query(default=None),
+    until: datetime | None = Query(default=None),
+    context: RequestLogsContext = Depends(get_request_logs_context),
+) -> RequestLogsDeleteResponse:
+    try:
+        deleted_count = await context.service.delete_range(since=since, until=until)
+    except InvalidRequestLogsDeleteRangeError as exc:
+        raise DashboardBadRequestError(str(exc), code="invalid_request_log_delete_range") from exc
+
+    AuditService.log_async(
+        "request_logs_deleted",
+        actor_ip=request.client.host if request.client else None,
+        details={
+            "since": since.isoformat() if since is not None else None,
+            "until": until.isoformat() if until is not None else None,
+            "deleted_count": deleted_count,
+        },
+    )
+    return RequestLogsDeleteResponse(deleted_count=deleted_count)
 
 
 @router.get("/options", response_model=RequestLogFilterOptionsResponse)
