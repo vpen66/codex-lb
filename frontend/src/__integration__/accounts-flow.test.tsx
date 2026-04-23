@@ -1,4 +1,4 @@
-import { act, screen, waitFor, within } from "@testing-library/react";
+import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -77,5 +77,66 @@ describe("accounts flow integration", () => {
         expect(within(accountDetail).getByRole("button", { name: "Resume" })).toBeInTheDocument();
       });
     }
+  });
+
+  it("supports dragging a member card into another group", async () => {
+    const user = userEvent.setup({ delay: null });
+    const dragStore = new Map<string, string>();
+    const dataTransfer = {
+      dropEffect: "move",
+      effectAllowed: "all",
+      files: [],
+      items: [],
+      types: [],
+      clearData: () => {},
+      getData: (key: string) => dragStore.get(key) ?? "",
+      setData: (key: string, value: string) => {
+        dragStore.set(key, value);
+      },
+      setDragImage: () => {},
+    };
+
+    window.history.pushState({}, "", "/accounts");
+    renderWithProviders(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Accounts" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /Operations/ })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "New Group" }));
+    await user.type(await screen.findByLabelText("Group Name"), "VIP");
+    await user.click(screen.getByRole("button", { name: "Create Group" }));
+
+    await user.click(await screen.findByRole("button", { name: /Operations/ }));
+
+    const membersHeading = await screen.findByRole("heading", { name: "Members" });
+    const membersSection = membersHeading.closest("section");
+    if (!membersSection) {
+      throw new Error("Members section not found");
+    }
+
+    const sourceText = within(membersSection).getByText("secondary@example.com");
+    const sourceCard = sourceText.closest("[draggable='true']");
+    if (!sourceCard) {
+      throw new Error("Draggable account card not found");
+    }
+
+    const vipGroupButton = await screen.findByRole("button", { name: /VIP/ });
+
+    fireEvent.dragStart(sourceCard, { dataTransfer });
+    fireEvent.dragOver(vipGroupButton, { dataTransfer });
+    fireEvent.drop(vipGroupButton, { dataTransfer });
+    fireEvent.dragEnd(sourceCard, { dataTransfer });
+
+    await waitFor(() => {
+      expect(screen.getByRole("heading", { name: "VIP", hidden: true })).toBeInTheDocument();
+    });
+
+    const updatedMembersHeading = await screen.findByRole("heading", { name: "Members" });
+    const updatedMembersSection = updatedMembersHeading.closest("section");
+    if (!updatedMembersSection) {
+      throw new Error("Updated members section not found");
+    }
+
+    expect(await within(updatedMembersSection).findByText("secondary@example.com")).toBeInTheDocument();
   });
 });

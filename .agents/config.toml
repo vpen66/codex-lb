@@ -1,4 +1,4 @@
-model_provider = "codex-lb"
+#model_provider = "codex-lb"
 model_instructions_file = "/Users/vpen/.codex/prompts/system-prompt.md"
 
 [plugins."build-ios-apps@openai-curated"]

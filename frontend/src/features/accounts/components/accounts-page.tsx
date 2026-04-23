@@ -18,7 +18,7 @@ import { ImportDialog } from "@/features/accounts/components/import-dialog";
 import { useAccounts } from "@/features/accounts/hooks/use-accounts";
 import { useOauth } from "@/features/accounts/hooks/use-oauth";
 import { useAccountGroups } from "@/features/account-groups/hooks/use-account-groups";
-import { buildAccountGroupBuckets } from "@/features/account-groups/utils";
+import { buildAccountGroupBuckets, UNGROUPED_GROUP_KEY } from "@/features/account-groups/utils";
 import { AccountCard } from "@/features/dashboard/components/account-card";
 import { buildDuplicateAccountIdSet } from "@/utils/account-identifiers";
 import { getErrorMessageOrNull } from "@/utils/errors";
@@ -30,6 +30,8 @@ const OauthDialog = lazy(() =>
 export function AccountsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [statusFilter, setStatusFilter] = useState("all");
+  const [draggedAccountId, setDraggedAccountId] = useState<string | null>(null);
+  const [dropTargetGroupKey, setDropTargetGroupKey] = useState<string | null>(null);
   const {
     accountsQuery,
     importMutation,
@@ -148,6 +150,61 @@ export function AccountsPage() {
     return persistedGroups.find((group) => group.id === resolvedSelectedGroup.id) ?? null;
   }, [persistedGroups, resolvedSelectedGroup]);
 
+  const handleAccountDragStart = useCallback((accountId: string) => {
+    setDraggedAccountId(accountId);
+    setDropTargetGroupKey(null);
+  }, []);
+
+  const handleAccountDragEnd = useCallback(() => {
+    setDraggedAccountId(null);
+    setDropTargetGroupKey(null);
+  }, []);
+
+  const handleDropAccountIntoGroup = useCallback(async (accountId: string, targetGroupKey: string) => {
+    const sourceGroup = allGroups.find((group) => group.accountIds.includes(accountId)) ?? null;
+    if (!sourceGroup || sourceGroup.key === targetGroupKey) {
+      setDropTargetGroupKey(null);
+      return;
+    }
+
+    try {
+      if (targetGroupKey === UNGROUPED_GROUP_KEY) {
+        if (!sourceGroup.id) {
+          return;
+        }
+        await updateGroupMutation.mutateAsync({
+          groupId: sourceGroup.id,
+          payload: {
+            name: sourceGroup.name,
+            accountIds: sourceGroup.accountIds.filter((candidate) => candidate !== accountId),
+          },
+        });
+      } else {
+        const targetGroup = persistedGroups.find((group) => group.id === targetGroupKey) ?? null;
+        if (!targetGroup) {
+          return;
+        }
+        const targetAccountIds =
+          allGroups.find((group) => group.id === targetGroup.id)?.accountIds ?? targetGroup.accountIds;
+        await updateGroupMutation.mutateAsync({
+          groupId: targetGroup.id,
+          payload: {
+            name: targetGroup.name,
+            accountIds: [...new Set([...targetAccountIds, accountId])],
+          },
+        });
+      }
+
+      const nextSearchParams = new URLSearchParams(searchParams);
+      nextSearchParams.set("group", targetGroupKey);
+      nextSearchParams.delete("account");
+      setSearchParams(nextSearchParams);
+    } finally {
+      setDraggedAccountId(null);
+      setDropTargetGroupKey(null);
+    }
+  }, [allGroups, persistedGroups, searchParams, setSearchParams, updateGroupMutation]);
+
   const hasAnyGroupData = allGroups.length > 0;
 
   return (
@@ -196,7 +253,11 @@ export function AccountsPage() {
               groups={groups}
               selectedGroupKey={resolvedSelectedGroup?.key ?? null}
               statusFilter={statusFilter}
+              draggedAccountId={draggedAccountId}
+              dropTargetGroupKey={dropTargetGroupKey}
               onSelect={handleSelectGroup}
+              onDropTargetChange={setDropTargetGroupKey}
+              onDropAccount={handleDropAccountIntoGroup}
               onStatusFilterChange={setStatusFilter}
               onCreateGroup={() => groupDialog.show({ mode: "create", groupId: null })}
             />
@@ -234,7 +295,11 @@ export function AccountsPage() {
                           <AccountCard
                             account={account}
                             showAccountId={duplicateAccountIds.has(account.accountId)}
+                            draggable={!mutationBusy}
+                            dragging={draggedAccountId === account.accountId}
                             onSelect={handleSelectAccount}
+                            onDragStart={handleAccountDragStart}
+                            onDragEnd={handleAccountDragEnd}
                             onAction={(currentAccount, action) => {
                               if (action === "details") {
                                 handleSelectAccount(currentAccount.accountId);

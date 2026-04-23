@@ -1,7 +1,7 @@
 $ vite
 
-  VITE v7.3.1  ready in 212 ms
+  VITE v7.3.1  ready in 114 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
-error: script "dev" exited with code 143
+10:39:45 [vite] (client) hmr update /src/features/dashboard/components/account-card.tsx, /src/index.css

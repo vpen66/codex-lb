@@ -20,7 +20,11 @@ type AccountGroupSidebarProps = {
   groups: AccountGroupBucket[];
   selectedGroupKey: string | null;
   statusFilter: string;
+  draggedAccountId: string | null;
+  dropTargetGroupKey: string | null;
   onSelect: (groupKey: string) => void;
+  onDropTargetChange: (groupKey: string | null) => void;
+  onDropAccount: (accountId: string, groupKey: string) => void | Promise<void>;
   onStatusFilterChange: (status: string) => void;
   onCreateGroup: () => void;
 };
@@ -29,7 +33,11 @@ export function AccountGroupSidebar({
   groups,
   selectedGroupKey,
   statusFilter,
+  draggedAccountId,
+  dropTargetGroupKey,
   onSelect,
+  onDropTargetChange,
+  onDropAccount,
   onStatusFilterChange,
   onCreateGroup,
 }: AccountGroupSidebarProps) {
@@ -83,11 +91,31 @@ export function AccountGroupSidebar({
               key={group.key}
               type="button"
               onClick={() => onSelect(group.key)}
+              onDragOver={(event) => {
+                const accountId = draggedAccountId || event.dataTransfer.getData("text/plain");
+                if (!accountId) {
+                  return;
+                }
+                event.preventDefault();
+                if (dropTargetGroupKey !== group.key) {
+                  onDropTargetChange(group.key);
+                }
+              }}
+              onDrop={(event) => {
+                const accountId = draggedAccountId || event.dataTransfer.getData("text/plain");
+                if (!accountId) {
+                  return;
+                }
+                event.preventDefault();
+                void onDropAccount(accountId, group.key);
+              }}
               className={cn(
                 "w-full rounded-2xl border p-3 text-left transition-colors",
+                draggedAccountId && "transition-all",
                 selectedGroupKey === group.key
                   ? "border-primary/40 bg-primary/5"
                   : "bg-card hover:bg-accent/40",
+                dropTargetGroupKey === group.key && "border-primary bg-primary/10 shadow-[0_0_0_1px_hsl(var(--primary)/0.3)]",
               )}
             >
               <div className="flex items-start justify-between gap-2">

@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Clock, ExternalLink, Play, RotateCcw } from "lucide-react";
 
 import { usePrivacyStore } from "@/hooks/use-privacy";
@@ -14,11 +15,16 @@ import {
 import { formatPercentNullable, formatQuotaResetLabel, formatSlug } from "@/utils/formatters";
 
 type AccountAction = "details" | "resume" | "reauth";
+const DRAG_PREVIEW_SCALE = 0.5;
 
 export type AccountCardProps = {
   account: AccountSummary;
   showAccountId?: boolean;
+  draggable?: boolean;
+  dragging?: boolean;
   onSelect?: (accountId: string) => void;
+  onDragStart?: (accountId: string) => void;
+  onDragEnd?: () => void;
   onAction?: (account: AccountSummary, action: AccountAction) => void;
 };
 
@@ -66,7 +72,45 @@ function QuotaBar({
   );
 }
 
-export function AccountCard({ account, showAccountId = false, onSelect, onAction }: AccountCardProps) {
+function createDragPreview(element: HTMLDivElement): HTMLDivElement {
+  const rect = element.getBoundingClientRect();
+  const preview = document.createElement("div");
+  const clone = element.cloneNode(true) as HTMLDivElement;
+
+  preview.style.position = "fixed";
+  // Keep the helper node off-screen so only the browser drag image is visible.
+  preview.style.top = "-10000px";
+  preview.style.left = "-10000px";
+  preview.style.width = `${rect.width * DRAG_PREVIEW_SCALE}px`;
+  preview.style.height = `${rect.height * DRAG_PREVIEW_SCALE}px`;
+  preview.style.overflow = "hidden";
+  preview.style.pointerEvents = "none";
+  preview.style.opacity = "0.95";
+  preview.style.zIndex = "9999";
+
+  clone.style.width = `${rect.width}px`;
+  clone.style.height = `${rect.height}px`;
+  clone.style.margin = "0";
+  clone.style.transform = `scale(${DRAG_PREVIEW_SCALE})`;
+  clone.style.transformOrigin = "top left";
+
+  preview.appendChild(clone);
+  document.body.appendChild(preview);
+  return preview;
+}
+
+export function AccountCard({
+  account,
+  showAccountId = false,
+  draggable = false,
+  dragging = false,
+  onSelect,
+  onDragStart,
+  onDragEnd,
+  onAction,
+}: AccountCardProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const dragPreviewRef = useRef<HTMLDivElement | null>(null);
   const blurred = usePrivacyStore((s) => s.blurred);
   const status = normalizeStatus(account.status);
   const primaryRemaining = account.usage?.primaryRemainingPercent ?? null;
@@ -87,8 +131,40 @@ export function AccountCard({ account, showAccountId = false, onSelect, onAction
 
   return (
     <div
-      className={cn("card-hover rounded-xl border bg-card p-4", onSelect ? "cursor-pointer" : "")}
+      className={cn(
+        "card-hover rounded-xl border bg-card p-4",
+        onSelect ? "cursor-pointer" : "",
+        draggable ? "cursor-grab active:cursor-grabbing" : "",
+        dragging ? "opacity-60" : "",
+      )}
+      draggable={draggable}
+      aria-grabbed={draggable ? dragging : undefined}
       onClick={onSelect ? () => onSelect(account.accountId) : undefined}
+      onDragStart={
+        draggable
+          ? (event) => {
+              const previewSource = rootRef.current;
+              event.dataTransfer.effectAllowed = "move";
+              event.dataTransfer.setData("text/plain", account.accountId);
+              if (previewSource) {
+                const preview = createDragPreview(previewSource);
+                dragPreviewRef.current = preview;
+                event.dataTransfer.setDragImage(preview, preview.offsetWidth * DRAG_PREVIEW_SCALE * 0.5, 16);
+              }
+              onDragStart?.(account.accountId);
+            }
+          : undefined
+      }
+      onDragEnd={
+        draggable
+          ? () => {
+              dragPreviewRef.current?.remove();
+              dragPreviewRef.current = null;
+              onDragEnd?.();
+            }
+          : undefined
+      }
+      ref={rootRef}
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
