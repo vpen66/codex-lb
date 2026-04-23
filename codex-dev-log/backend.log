@@ -68,3 +68,9 @@
       INFO   127.0.0.1:50241 - "GET /api/accounts HTTP/1.1" 200
       INFO   127.0.0.1:50241 - "GET /api/dashboard/overview?timeframe=7d        
              HTTP/1.1" 200
+      INFO   127.0.0.1:50280 - "GET /api/account-groups HTTP/1.1" 200
+      INFO   127.0.0.1:50280 - "GET /api/accounts HTTP/1.1" 200
+      INFO   127.0.0.1:50287 - "GET /api/account-groups HTTP/1.1" 200
+      INFO   127.0.0.1:50287 - "GET /api/accounts HTTP/1.1" 200
+      INFO   127.0.0.1:50287 - "GET /api/dashboard/overview?timeframe=7d        
+             HTTP/1.1" 200

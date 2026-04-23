@@ -56,3 +56,4 @@ certs/
 codex-dev-log/!/codex-dev-log/backend.log
 
 !/codex-dev-log/frontend.log
+codex-dev-log/
