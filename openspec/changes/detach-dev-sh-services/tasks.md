@@ -5,6 +5,7 @@
 - [x] 2.1 Update `scripts/dev.sh` so backend and frontend processes are detached from the launching terminal session.
 - [x] 2.2 Preserve log redirection and PID tracking for `status` and `stop`.
 - [x] 2.3 Make `start` recover from a partial stale PID state before relaunching services.
+- [x] 2.4 Add a `--no-reload` backend mode for stable local service runs while editing Python files.
 
 ## 3. Validation
 - [ ] 3.1 Verify `./scripts/dev.sh start`, `status`, and `stop` continue to work with detached services.

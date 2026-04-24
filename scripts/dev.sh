@@ -18,12 +18,13 @@ RESET="$(printf '\033[0m')"
 backend_pid=""
 frontend_pid=""
 follow_logs=0
+backend_reload="${CODEX_LB_DEV_RELOAD:-1}"
 
 usage() {
   cat <<'EOF'
 Usage:
-  ./scripts/dev.sh start [--log]
-  ./scripts/dev.sh restart [--log]
+  ./scripts/dev.sh start [--log] [--no-reload]
+  ./scripts/dev.sh restart [--log] [--no-reload]
   ./scripts/dev.sh stop
   ./scripts/dev.sh status
 EOF
@@ -166,10 +167,15 @@ log_prefixer() {
 }
 
 start_backend() {
+  local backend_args=(uv run fastapi run app/main.py --port 2455)
+  if backend_reload_enabled; then
+    backend_args+=(--reload)
+  fi
+
   : >"$BACKEND_LOG_FILE"
   (
     cd "$ROOT_DIR"
-    exec nohup uv run fastapi run app/main.py --reload --port 2455 </dev/null >>"$BACKEND_LOG_FILE" 2>&1
+    exec nohup "${backend_args[@]}" </dev/null >>"$BACKEND_LOG_FILE" 2>&1
   ) &
   backend_pid=$!
 }
@@ -235,11 +241,18 @@ follow_log_files() {
 
 parse_start_args() {
   follow_logs=0
+  backend_reload="${CODEX_LB_DEV_RELOAD:-1}"
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --log)
         follow_logs=1
+        ;;
+      --no-reload)
+        backend_reload=0
+        ;;
+      --reload)
+        backend_reload=1
         ;;
       *)
         echo "Unknown start option: $1" >&2
@@ -249,6 +262,21 @@ parse_start_args() {
     esac
     shift
   done
+}
+
+backend_reload_enabled() {
+  case "$(printf '%s' "$backend_reload" | tr '[:upper:]' '[:lower:]')" in
+    1|true|yes|on)
+      return 0
+      ;;
+    0|false|no|off)
+      return 1
+      ;;
+    *)
+      echo "Invalid CODEX_LB_DEV_RELOAD value: $backend_reload" >&2
+      exit 1
+      ;;
+  esac
 }
 
 cmd_start() {
@@ -296,7 +324,11 @@ cmd_start() {
   frontend_pid=""
   remove_pid_file
 
-  echo "[dev] starting backend on http://127.0.0.1:2455"
+  if backend_reload_enabled; then
+    echo "[dev] starting backend on http://127.0.0.1:2455 with reload enabled"
+  else
+    echo "[dev] starting backend on http://127.0.0.1:2455 with reload disabled"
+  fi
   start_backend
   write_pid_file
 
@@ -413,4 +445,4 @@ main() {
   esac
 }
 
-main "${1:-}"
+main "$@"

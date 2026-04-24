@@ -22,3 +22,19 @@ The `scripts/dev.sh` launcher MUST start the local backend and frontend services
 - **AND** only one of the recorded backend or frontend processes is still running
 - **THEN** `./scripts/dev.sh start` stops the remaining partial process state
 - **AND** the launcher starts a fresh backend and frontend pair instead of failing with "services already running"
+
+### Requirement: dev.sh supports stable backend execution without Python reload
+
+The `scripts/dev.sh` launcher MUST provide an explicit mode that starts the backend without FastAPI reload watching so developers can keep a stable local service running while editing Python files.
+
+#### Scenario: Start without backend reload
+
+- **WHEN** a developer runs `./scripts/dev.sh start --no-reload`
+- **THEN** the launcher starts the backend without passing FastAPI's `--reload` option
+- **AND** editing Python files does not automatically restart the running backend
+
+#### Scenario: Restart without backend reload
+
+- **WHEN** a developer runs `./scripts/dev.sh restart --no-reload`
+- **THEN** the launcher restarts the local services
+- **AND** the relaunched backend runs without FastAPI reload watching
