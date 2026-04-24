@@ -196,8 +196,10 @@ export function AccountsPage() {
       }
 
       const nextSearchParams = new URLSearchParams(searchParams);
-      nextSearchParams.set("group", targetGroupKey);
       nextSearchParams.delete("account");
+      if (sourceGroup.key !== UNGROUPED_GROUP_KEY || sourceGroup.accountIds.length <= 1) {
+        nextSearchParams.set("group", targetGroupKey);
+      }
       setSearchParams(nextSearchParams);
     } finally {
       setDraggedAccountId(null);

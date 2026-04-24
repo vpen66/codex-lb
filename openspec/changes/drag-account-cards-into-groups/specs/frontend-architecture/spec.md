@@ -11,6 +11,15 @@ The Accounts page SHALL let operators move a visible member account into another
 - **AND** the dragged account appears under the destination group
 - **AND** the account is removed from its previous persisted group automatically
 
+#### Scenario: Keep browsing ungrouped accounts during multi-account assignment
+
+- **GIVEN** the operator is browsing the synthetic `Ungrouped` bucket
+- **AND** more than one account is currently visible in `Ungrouped`
+- **WHEN** the operator drags one ungrouped account card onto a persisted group in the Accounts page sidebar
+- **THEN** the page persists the membership update
+- **AND** the page keeps `Ungrouped` selected so the operator can continue assigning the remaining ungrouped accounts
+- **AND** the moved account is removed from the visible `Ungrouped` member list
+
 #### Scenario: Move an account card into the ungrouped bucket
 
 - **WHEN** an operator drags a member account card onto the synthetic `Ungrouped` bucket in the Accounts page sidebar

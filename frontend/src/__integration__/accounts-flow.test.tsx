@@ -5,6 +5,23 @@ import { describe, expect, it } from "vitest";
 import App from "@/App";
 import { renderWithProviders } from "@/test/utils";
 
+function createDataTransfer() {
+  const dragStore = new Map<string, string>();
+  return {
+    dropEffect: "move",
+    effectAllowed: "all",
+    files: [],
+    items: [],
+    types: [],
+    clearData: () => {},
+    getData: (key: string) => dragStore.get(key) ?? "",
+    setData: (key: string, value: string) => {
+      dragStore.set(key, value);
+    },
+    setDragImage: () => {},
+  };
+}
+
 describe("accounts flow integration", () => {
   it("supports group creation, account selection, and pause/resume actions", async () => {
     const user = userEvent.setup({ delay: null });
@@ -81,20 +98,7 @@ describe("accounts flow integration", () => {
 
   it("supports dragging a member card into another group", async () => {
     const user = userEvent.setup({ delay: null });
-    const dragStore = new Map<string, string>();
-    const dataTransfer = {
-      dropEffect: "move",
-      effectAllowed: "all",
-      files: [],
-      items: [],
-      types: [],
-      clearData: () => {},
-      getData: (key: string) => dragStore.get(key) ?? "",
-      setData: (key: string, value: string) => {
-        dragStore.set(key, value);
-      },
-      setDragImage: () => {},
-    };
+    const dataTransfer = createDataTransfer();
 
     window.history.pushState({}, "", "/accounts");
     renderWithProviders(<App />);
@@ -138,5 +142,56 @@ describe("accounts flow integration", () => {
     }
 
     expect(await within(updatedMembersSection).findByText("secondary@example.com")).toBeInTheDocument();
+  });
+
+  it("keeps browsing ungrouped accounts after dragging one into a group when more remain", async () => {
+    const user = userEvent.setup({ delay: null });
+    const dataTransfer = createDataTransfer();
+
+    await fetch("/api/accounts/import", { method: "POST", body: new FormData() });
+    await fetch("/api/accounts/import", { method: "POST", body: new FormData() });
+
+    window.history.pushState({}, "", "/accounts");
+    renderWithProviders(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Accounts" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "New Group" }));
+    await user.type(await screen.findByLabelText("Group Name"), "VIP");
+    await user.click(screen.getByRole("button", { name: "Create Group" }));
+
+    await user.click(await screen.findByRole("button", { name: /Ungrouped/ }));
+
+    const membersHeading = await screen.findByRole("heading", { name: "Members" });
+    const membersSection = membersHeading.closest("section");
+    if (!membersSection) {
+      throw new Error("Members section not found");
+    }
+
+    const sourceText = await within(membersSection).findByText("imported-3@example.com");
+    const sourceCard = sourceText.closest("[draggable='true']");
+    if (!sourceCard) {
+      throw new Error("Draggable ungrouped account card not found");
+    }
+
+    const vipGroupButton = await screen.findByRole("button", { name: /VIP/ });
+
+    fireEvent.dragStart(sourceCard, { dataTransfer });
+    fireEvent.dragOver(vipGroupButton, { dataTransfer });
+    fireEvent.drop(vipGroupButton, { dataTransfer });
+    fireEvent.dragEnd(sourceCard, { dataTransfer });
+
+    await waitFor(() => {
+      expect(screen.getByRole("heading", { name: "Ungrouped", hidden: true })).toBeInTheDocument();
+    });
+
+    const updatedMembersHeading = await screen.findByRole("heading", { name: "Members" });
+    const updatedMembersSection = updatedMembersHeading.closest("section");
+    if (!updatedMembersSection) {
+      throw new Error("Updated members section not found");
+    }
+
+    expect(within(updatedMembersSection).queryByText("imported-3@example.com")).not.toBeInTheDocument();
+    expect(await within(updatedMembersSection).findByText("imported-4@example.com")).toBeInTheDocument();
   });
 });
