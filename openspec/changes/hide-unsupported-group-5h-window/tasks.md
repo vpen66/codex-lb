@@ -1,0 +1,2 @@
+- [x] 1. Update group quota aggregation to ignore unsupported primary windows.
+- [x] 2. Add regression coverage for weekly-only grouped accounts.

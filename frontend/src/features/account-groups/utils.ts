@@ -73,10 +73,14 @@ export function buildAccountGroupBuckets(
     if (account.status !== "active") {
       existing.issueCount += 1;
     }
-    existing.primaryCapacityCredits += account.capacityCreditsPrimary ?? 0;
-    existing.primaryRemainingCredits += account.remainingCreditsPrimary ?? 0;
-    existing.secondaryCapacityCredits += account.capacityCreditsSecondary ?? 0;
-    existing.secondaryRemainingCredits += account.remainingCreditsSecondary ?? 0;
+    if (account.windowMinutesPrimary != null) {
+      existing.primaryCapacityCredits += account.capacityCreditsPrimary ?? 0;
+      existing.primaryRemainingCredits += account.remainingCreditsPrimary ?? 0;
+    }
+    if (account.windowMinutesSecondary != null) {
+      existing.secondaryCapacityCredits += account.capacityCreditsSecondary ?? 0;
+      existing.secondaryRemainingCredits += account.remainingCreditsSecondary ?? 0;
+    }
     buckets.set(key, existing);
   }
 

@@ -1,0 +1,3 @@
+- [x] 1. Remove member preview content from dashboard group cards.
+- [x] 2. Remove member snapshot content from account-group summary header.
+- [x] 3. Add regression coverage for both components.

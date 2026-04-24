@@ -1,4 +1,4 @@
-import { FolderKanban, PencilLine, Users } from "lucide-react";
+import { FolderKanban, PencilLine } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { AccountGroupBucket } from "@/features/account-groups/utils";
@@ -64,30 +64,19 @@ export function AccountGroupSummaryCard({ group, onEdit }: AccountGroupSummaryCa
         ) : null}
       </div>
 
-      <div className="mt-5 grid gap-4 md:grid-cols-[0.8fr_1.2fr]">
-        <div className="rounded-2xl border bg-muted/25 p-4">
-          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            <Users className="h-3.5 w-3.5" />
-            Member Snapshot
-          </div>
-          <p className="mt-3 text-sm leading-relaxed">
-            {group.accounts.slice(0, 4).map((account) => account.email).join(" · ") || "No accounts assigned yet."}
-          </p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <SummaryQuota
-            label="5h Remaining"
-            percent={group.primaryRemainingPercent}
-            remaining={group.primaryRemainingCredits}
-            capacity={group.primaryCapacityCredits}
-          />
-          <SummaryQuota
-            label="Weekly Remaining"
-            percent={group.secondaryRemainingPercent}
-            remaining={group.secondaryRemainingCredits}
-            capacity={group.secondaryCapacityCredits}
-          />
-        </div>
+      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        <SummaryQuota
+          label="5h Remaining"
+          percent={group.primaryRemainingPercent}
+          remaining={group.primaryRemainingCredits}
+          capacity={group.primaryCapacityCredits}
+        />
+        <SummaryQuota
+          label="Weekly Remaining"
+          percent={group.secondaryRemainingPercent}
+          remaining={group.secondaryRemainingCredits}
+          capacity={group.secondaryCapacityCredits}
+        />
       </div>
     </div>
   );

@@ -1097,6 +1097,29 @@ class ProxyService:
         )
         await self._close_http_bridge_session(session)
 
+    async def _evict_http_bridge_session_after_upstream_failure(
+        self,
+        session: "_HTTPBridgeSession",
+        *,
+        reason: str,
+        detail: str | None = None,
+    ) -> None:
+        async with self._http_bridge_lock:
+            if self._http_bridge_sessions.get(session.key) is session:
+                self._http_bridge_sessions.pop(session.key, None)
+            self._unregister_http_bridge_turn_states_locked(session)
+            self._unregister_http_bridge_previous_response_ids_locked(session)
+        _log_http_bridge_event(
+            "evict_upstream_failure",
+            session.key,
+            account_id=session.account.id,
+            model=session.request_model,
+            detail=f"{reason}: {detail}" if detail else reason,
+            cache_key_family=session.key.affinity_kind,
+            model_class=_extract_model_class(session.request_model) if session.request_model else None,
+        )
+        await self._close_http_bridge_session(session)
+
     async def _stream_http_bridge_session_events(
         self,
         session: "_HTTPBridgeSession",
@@ -4027,7 +4050,10 @@ class ProxyService:
             await self._unregister_http_bridge_turn_states(session)
             await self._unregister_http_bridge_previous_response_ids(session)
         if session.upstream_reader is not None:
-            await _await_cancelled_task(session.upstream_reader, label="http bridge upstream reader")
+            if session.upstream_reader is asyncio.current_task():
+                session.upstream_reader = None
+            else:
+                await _await_cancelled_task(session.upstream_reader, label="http bridge upstream reader")
         try:
             await session.upstream.close()
         except Exception:
@@ -4518,11 +4544,11 @@ class ProxyService:
                 api_key=None,
                 response_create_gate=session.response_create_gate,
             )
-            session.closed = True
-            try:
-                await session.upstream.close()
-            except Exception:
-                logger.debug("Failed to close HTTP bridge upstream websocket after send failure", exc_info=True)
+            await self._evict_http_bridge_session_after_upstream_failure(
+                session,
+                reason="send_failure",
+                detail=str(exc) or None,
+            )
             # Always raise 502 so the client can retry with
             # previous_response_id intact.  Returning 400
             # previous_response_not_found causes the client to drop
@@ -5154,6 +5180,8 @@ class ProxyService:
         if terminal_request_state.event_queue is not None:
             await terminal_request_state.event_queue.put(None)
 
+        evict_after_terminal_error = False
+        terminal_error_detail: str | None = None
         if event_type in {"response.failed", "response.incomplete", "error"}:
             error_code = None
             if event_type == "error":
@@ -5162,12 +5190,20 @@ class ProxyService:
             elif event and event.response:
                 error = event.response.error
                 error_code = _normalize_error_code(error.code if error else None, error.type if error else None)
+            terminal_error_status = _http_bridge_terminal_error_status(
+                request_state=terminal_request_state,
+                payload=payload,
+            )
+            evict_after_terminal_error = terminal_error_status is not None and terminal_error_status >= 500
+            terminal_error_detail = (
+                f"status={terminal_error_status}, code={error_code}" if terminal_error_status is not None else error_code
+            )
             _log_http_bridge_event(
                 "terminal_error",
                 session.key,
                 account_id=session.account.id,
                 model=session.request_model,
-                detail=error_code,
+                detail=terminal_error_detail,
                 pending_count=await self._http_bridge_pending_count(session),
                 cache_key_family=session.key.affinity_kind,
                 model_class=_extract_model_class(session.request_model) if session.request_model else None,
@@ -5184,6 +5220,12 @@ class ProxyService:
             upstream_control=session.upstream_control,
             response_create_gate=session.response_create_gate,
         )
+        if evict_after_terminal_error:
+            await self._evict_http_bridge_session_after_upstream_failure(
+                session,
+                reason="terminal_5xx",
+                detail=terminal_error_detail,
+            )
 
     async def _refresh_websocket_api_key_policy(self, api_key: ApiKeyData | None) -> ApiKeyData | None:
         if api_key is None:
@@ -7914,6 +7956,26 @@ def _http_error_status_from_payload(payload: dict[str, JsonValue] | None) -> int
     return None
 
 
+def _http_bridge_terminal_error_status(
+    *,
+    request_state: _WebSocketRequestState | None,
+    payload: dict[str, JsonValue] | None,
+) -> int | None:
+    if request_state is not None and request_state.error_http_status_override is not None:
+        return request_state.error_http_status_override
+    status = _http_error_status_from_payload(payload)
+    if status is not None:
+        return status
+    if not isinstance(payload, dict):
+        return None
+    response_payload = payload.get("response")
+    if isinstance(response_payload, dict):
+        status_value = response_payload.get("status_code")
+        if isinstance(status_value, int):
+            return status_value
+    return None
+
+
 def _openai_error_envelope_from_response_failed_payload(
     payload: dict[str, JsonValue] | None,
 ) -> OpenAIErrorEnvelope:
@@ -10294,6 +10356,7 @@ def _log_http_bridge_event(
         "retry_precreated",
         "reconnect",
         "terminal_error",
+        "evict_upstream_failure",
         "capacity_exhausted_active_sessions",
         "owner_mismatch",
         "owner_forward_fail",

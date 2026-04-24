@@ -267,6 +267,7 @@ HTTP `/v1/responses` now uses an internal upstream websocket session bridge by d
 - `http_bridge_event event=queue_full`
 - `http_bridge_event event=capacity_exhausted_active_sessions`
 - `http_bridge_event event=terminal_error`
+- `http_bridge_event event=evict_upstream_failure`
 
 These log lines include a hashed bridge key, account id, model, and optional detail.
 

@@ -1,5 +1,4 @@
 import { AlertTriangle, ArrowUpRight, FolderKanban, Users } from "lucide-react";
-import { usePrivacyStore } from "@/hooks/use-privacy";
 import type { AccountGroupBucket } from "@/features/account-groups/utils";
 import { cn } from "@/lib/utils";
 import { quotaBarColor, quotaBarTrack } from "@/utils/account-status";
@@ -42,9 +41,6 @@ function GroupQuotaBar({
 }
 
 export function GroupCard({ group, onOpen }: GroupCardProps) {
-  const blurred = usePrivacyStore((s) => s.blurred);
-  const memberPreview = group.accounts.slice(0, 3).map((account) => account.email).join(" · ");
-
   return (
     <div
       role={onOpen ? "button" : undefined}
@@ -100,13 +96,6 @@ export function GroupCard({ group, onOpen }: GroupCardProps) {
           remaining={group.secondaryRemainingCredits}
           capacity={group.secondaryCapacityCredits}
         />
-      </div>
-
-      <div className="mt-4 rounded-xl border border-dashed bg-muted/35 p-3">
-        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Members</div>
-        <p className={cn("mt-1 text-sm leading-relaxed", blurred ? "privacy-blur" : "")}>
-          {memberPreview || "No accounts assigned"}
-        </p>
       </div>
 
       <div className="mt-4 flex items-center justify-end gap-1.5 text-xs font-medium text-muted-foreground">
