@@ -12,11 +12,12 @@ from datetime import datetime, timezone
 from typing import Mapping, Protocol
 
 from app.core.auth.refresh import RefreshError
-from app.core.balancer import PERMANENT_FAILURE_CODES
+from app.core.balancer import PERMANENT_FAILURE_CODES, QUOTA_EXCEEDED_COOLDOWN_SECONDS
 from app.core.clients.usage import UsageFetchError, fetch_usage
 from app.core.config.settings import get_settings
 from app.core.crypto import TokenEncryptor
 from app.core.plan_types import coerce_account_plan_type
+from app.core.usage.quota import apply_usage_quota
 from app.core.usage.models import AdditionalRateLimitPayload, UsagePayload
 from app.core.utils.request_id import get_request_id
 from app.core.utils.time import utcnow
@@ -420,6 +421,16 @@ class UsageUpdater:
                 window_minutes=_window_minutes(secondary.limit_window_seconds),
             )
             usage_written = usage_written or _usage_entry_written(entry)
+
+        await self._reconcile_account_status_from_usage(
+            account,
+            primary_used=float(primary.used_percent) if primary and primary.used_percent is not None else None,
+            primary_reset=_reset_at(primary.reset_at, primary.reset_after_seconds, now_epoch) if primary else None,
+            primary_window_minutes=_window_minutes(primary.limit_window_seconds) if primary else None,
+            secondary_used=float(secondary.used_percent) if secondary and secondary.used_percent is not None else None,
+            secondary_reset=_reset_at(secondary.reset_at, secondary.reset_after_seconds, now_epoch) if secondary else None,
+            now_epoch=now_epoch,
+        )
         return AccountRefreshResult(usage_written=usage_written)
 
     async def _deactivate_for_client_error(self, account: Account, exc: UsageFetchError) -> None:
@@ -473,6 +484,62 @@ class UsageUpdater:
         account.status = stored.status
         account.deactivation_reason = stored.deactivation_reason
         account.reset_at = stored.reset_at
+        account.blocked_at = stored.blocked_at
+
+    async def _reconcile_account_status_from_usage(
+        self,
+        account: Account,
+        *,
+        primary_used: float | None,
+        primary_reset: int | None,
+        primary_window_minutes: int | None,
+        secondary_used: float | None,
+        secondary_reset: int | None,
+        now_epoch: int,
+    ) -> None:
+        if self._accounts_repo is None:
+            return
+        if account.status not in (AccountStatus.QUOTA_EXCEEDED, AccountStatus.RATE_LIMITED):
+            return
+
+        runtime_reset = float(account.reset_at) if account.reset_at is not None else None
+        blocked_at = float(account.blocked_at) if account.blocked_at is not None else None
+
+        if account.status == AccountStatus.QUOTA_EXCEEDED:
+            cooldown_ready = blocked_at is not None and now_epoch >= blocked_at + QUOTA_EXCEEDED_COOLDOWN_SECONDS
+            if secondary_used is not None and secondary_used < 100.0 and cooldown_ready:
+                runtime_reset = None
+
+        status, _, reset_at = apply_usage_quota(
+            status=account.status,
+            primary_used=primary_used,
+            primary_reset=primary_reset,
+            primary_window_minutes=primary_window_minutes,
+            runtime_reset=runtime_reset,
+            secondary_used=secondary_used,
+            secondary_reset=secondary_reset,
+        )
+
+        next_reset_at = int(reset_at) if reset_at is not None else None
+        next_blocked_at = account.blocked_at if status in (AccountStatus.QUOTA_EXCEEDED, AccountStatus.RATE_LIMITED) else None
+
+        if (
+            status == account.status
+            and next_reset_at == account.reset_at
+            and next_blocked_at == account.blocked_at
+        ):
+            return
+
+        await self._accounts_repo.update_status(
+            account.id,
+            status,
+            account.deactivation_reason,
+            next_reset_at,
+            blocked_at=next_blocked_at,
+        )
+        account.status = status
+        account.reset_at = next_reset_at
+        account.blocked_at = next_blocked_at
 
 
 def _credits_snapshot(payload: UsagePayload) -> tuple[bool | None, bool | None, float | None]:
@@ -757,10 +824,3 @@ def _clear_usage_refresh_state() -> None:
     _usage_refresh_auth_cooldowns.clear()
     _last_successful_refresh.clear()
     _USAGE_REFRESH_SINGLEFLIGHT.clear()
-def _should_deactivate_for_usage_error(status_code: int, message: str | None = None) -> bool:
-    if status_code in _DEACTIVATING_USAGE_STATUS_CODES:
-        return True
-    if status_code != 401:
-        return False
-    normalized_message = (message or "").strip().lower()
-    return "deactivated" in normalized_message

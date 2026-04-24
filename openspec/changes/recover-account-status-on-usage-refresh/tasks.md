@@ -1,0 +1,3 @@
+- [x] 1. Update the background usage refresh flow to reconcile recoverable account status from fresh usage snapshots.
+- [x] 2. Add regression tests covering `quota_exceeded` recovery through usage refresh.
+- [ ] 3. Validate OpenSpec artifacts with `openspec validate --specs`.
