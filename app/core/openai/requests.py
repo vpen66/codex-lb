@@ -74,7 +74,28 @@ def normalize_tool_choice(choice: JsonValue | None) -> JsonValue | None:
     return choice
 
 
-def validate_tool_types(tools: list[JsonValue], *, allow_builtin_tools: bool = False) -> list[JsonValue]:
+def validate_tool_types(
+    tools: list[JsonValue],
+    *,
+    allow_builtin_tools: bool = False,
+    unsupported_tool_types: frozenset[str] | None = None,
+) -> list[JsonValue]:
+    """
+    标准化并校验 tools 字段里的工具类型。
+
+    这个函数之前只接受 `unsupported_tool_types`，
+    后来又改成了 `allow_builtin_tools`。
+    现在两个调用方式在代码库里都还存在，所以这里做成兼容写法，
+    这样旧调用方和新调用方都能继续工作。
+    """
+
+    if allow_builtin_tools:
+        disallowed_tool_types: frozenset[str] = frozenset()
+    elif unsupported_tool_types is not None:
+        disallowed_tool_types = unsupported_tool_types
+    else:
+        disallowed_tool_types = RESPONSES_UNSUPPORTED_TOOL_TYPES
+
     normalized_tools: list[JsonValue] = []
     for tool in tools:
         if not is_json_mapping(tool):
@@ -88,7 +109,7 @@ def validate_tool_types(tools: list[JsonValue], *, allow_builtin_tools: bool = F
                 tool = dict(tool_mapping)
                 tool["type"] = normalized_type
                 tool_type = normalized_type
-            if not allow_builtin_tools and tool_type in UNSUPPORTED_TOOL_TYPES:
+            if tool_type in disallowed_tool_types:
                 raise ValueError(f"Unsupported tool type: {tool_type}")
         normalized_tools.append(tool)
     return normalized_tools
