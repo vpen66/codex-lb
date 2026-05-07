@@ -27,6 +27,7 @@ from app.core.metrics.prometheus import MULTIPROCESS_MODE, PROMETHEUS_AVAILABLE,
 from app.core.middleware import (
     add_api_firewall_middleware,
     add_dashboard_auth_proxy_middleware,
+    add_http_exchange_logging_middleware,
     add_request_decompression_middleware,
     add_request_id_middleware,
 )
@@ -319,8 +320,9 @@ def create_app() -> FastAPI:
     app.add_middleware(cast(Any, InFlightMiddleware))
     add_dashboard_auth_proxy_middleware(app)
     add_request_decompression_middleware(app)
-    add_request_id_middleware(app)
     add_api_firewall_middleware(app)
+    add_http_exchange_logging_middleware(app)
+    add_request_id_middleware(app)
     app.add_middleware(cast(Any, MetricsMiddleware), enabled=settings.metrics_enabled)
     if settings.backpressure_max_concurrent_requests > 0:
         app.add_middleware(

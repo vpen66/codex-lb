@@ -175,6 +175,8 @@ class Settings(BaseSettings):
     log_proxy_request_shape_raw_cache_key: bool = False
     log_proxy_request_payload: bool = False
     log_proxy_service_tier_trace: bool = False
+    log_http_exchange: bool = False
+    log_http_exchange_max_body_bytes: int = Field(default=16 * 1024, gt=0)
     log_upstream_request_summary: bool = False
     log_upstream_request_payload: bool = False
     max_decompressed_body_bytes: int = Field(default=32 * 1024 * 1024, gt=0)
