@@ -5,6 +5,7 @@ Closing the terminal window that launched `./scripts/dev.sh start` currently tea
 - Detach the `scripts/dev.sh` backend and frontend child processes from the launching terminal session.
 - Ensure the detached services do not read from the closing TTY and continue writing to the existing log files.
 - Keep the existing PID-file based `status` and `stop` workflow intact.
+- Default the backend launch to FastAPI reload disabled, while keeping an explicit reload opt-in for developers who want file watching.
 
 ## Impact
 - Affects the local developer launcher at `scripts/dev.sh`.

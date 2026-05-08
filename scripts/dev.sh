@@ -18,13 +18,13 @@ RESET="$(printf '\033[0m')"
 backend_pid=""
 frontend_pid=""
 follow_logs=0
-backend_reload="${CODEX_LB_DEV_RELOAD:-1}"
+backend_reload="${CODEX_LB_DEV_RELOAD:-0}"
 
 usage() {
   cat <<'EOF'
 Usage:
-  ./scripts/dev.sh start [--log] [--no-reload]
-  ./scripts/dev.sh restart [--log] [--no-reload]
+  ./scripts/dev.sh start [--log] [reload|--reload|no-reload|--no-reload]
+  ./scripts/dev.sh restart [--log] [reload|--reload|no-reload|--no-reload]
   ./scripts/dev.sh stop
   ./scripts/dev.sh status
 EOF
@@ -241,17 +241,17 @@ follow_log_files() {
 
 parse_start_args() {
   follow_logs=0
-  backend_reload="${CODEX_LB_DEV_RELOAD:-1}"
+  backend_reload="${CODEX_LB_DEV_RELOAD:-0}"
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --log)
         follow_logs=1
         ;;
-      --no-reload)
+      no-reload|--no-reload)
         backend_reload=0
         ;;
-      --reload)
+      reload|--reload)
         backend_reload=1
         ;;
       *)
